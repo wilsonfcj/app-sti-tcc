@@ -2,5 +2,12 @@
 <resources>
     <color name="colorPrimary">#008577</color>
     <color name="colorPrimaryDark">#00574B</color>
-    <color name="colorAccent">#D81B60</color>
+    <color name="colorAccent">#EA2127</color>
+    <color name="colorRipple">#C5CAE9</color>
+
+    <color name="backgournd_splash">@color/colorPrimary</color>
+    <color name="icon_splash">#FFFFFF</color>
+    <color name="white">#FFFFFF</color>
+    <color name="backgournd_login">#8AC53F</color>
+
 </resources>

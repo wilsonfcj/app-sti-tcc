@@ -9,7 +9,7 @@ android {
     buildToolsVersion "29.0.2"
     defaultConfig {
         applicationId "com.ifsc.lages.sti.tcc"
-        minSdkVersion 16
+        minSdkVersion 17
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
@@ -27,7 +27,7 @@ android {
 
         / * "Dev" * /
         dev {
-            buildConfigField "String", "WS_URL", "\"https://app-tcc-sti-desenv.herokuapp.com/\""
+            buildConfigField "String", "WS_URL", "\"https://api-sti-tcc.herokuapp.com/api/\""
             buildConfigField "String", "VERSION_APP", "\"D\""
         }
 
@@ -65,7 +65,7 @@ dependencies {
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
-    implementation "com.google.android.material:material:1.1.0"
+    implementation 'com.google.android.material:material:1.0.0'
 
     //    bibliotecas para realizara conexão com o WS
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"
@@ -77,5 +77,8 @@ dependencies {
     implementation "io.reactivex.rxjava2:rxjava:${version_rxJava}"
     implementation "io.reactivex.rxjava2:rxkotlin:${version_rxKotlin}"
 
+    implementation 'com.ornach.nobobutton:nobobutton:1.6'
+
+    implementation 'com.github.rtoshiro.mflibrary:mflibrary:1.0.0'
 
 }

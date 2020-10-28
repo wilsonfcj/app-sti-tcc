@@ -1,4 +1,14 @@
 <resources>
     <string name="app_name">STI TCC</string>
     <string name="action_settings">Settings</string>
+    <string name="prompt_logar_com_leitor">Logar com leitor</string>
+    <string name="prompt_guardar_meu_cpf">Guardar meu CPF</string>
+    <string name="prompt_ok">Ok</string>
+    <string name="prompt_senha">Senha</string>
+    <string name="prompt_acessar">Acessar</string>
+    <string name="prompt_cpf">CPF</string>
+
+    <string name="error_login_invalido">CPF Inválido</string>
+    <string name="error_senha_invalida">Senha deve conter no mínimo 6 caracteres</string>
+    <string name="error_conection">Sem conexão com a internet, verifique sua conexão para continuar!</string>
 </resources>
