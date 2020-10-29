@@ -8,8 +8,20 @@
     <string name="prompt_senha">Senha</string>
     <string name="prompt_acessar">Acessar</string>
     <string name="prompt_cpf">CPF</string>
+    <string name="prompt_name">Nome</string>
+    <string name="prompt_cell_fone">Telefone</string>
+    <string name="prompt_email">E-mail</string>
+    <string name="prompt_password">Senha</string>
+    <string name="prompt_birthday">Data Nascimento</string>
+    <string name="prompt_education_institution">Instituição</string>
+    <string name="prompt_user_type">Tipo Usuário</string>
+    <string name="prompt_registration">Matricula</string>
+    <string name="prompt_yers_join">Ano Ingresso</string>
+    <string name="prompt_next">Próximo</string>
+    <string name="prompt_register">Cadastre-se agora</string>
 
     <string name="error_login_invalido">CPF Inválido</string>
     <string name="error_senha_invalida">Senha deve conter no mínimo 6 caracteres</string>
     <string name="error_conection">Sem conexão com a internet, verifique sua conexão para continuar!</string>
+
 </resources>

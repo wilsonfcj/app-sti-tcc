@@ -4,6 +4,10 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
+apply plugin: 'realm-android'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.2"
@@ -80,5 +84,10 @@ dependencies {
     implementation 'com.ornach.nobobutton:nobobutton:1.6'
 
     implementation 'com.github.rtoshiro.mflibrary:mflibrary:1.0.0'
+    implementation 'de.hdodenhof:circleimageview:3.0.0'
 
+    implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha09"
+    implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha09"
+
+    implementation 'com.anton46:collection-picker:1.0.2'
 }

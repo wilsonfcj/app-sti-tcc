@@ -1,12 +1,13 @@
-package com.ifsc.lages.sti.tcc
+package com.ifsc.lages.sti.tcc.ui.main
 
 import android.os.Bundle
 import com.google.android.material.snackbar.Snackbar
 import androidx.appcompat.app.AppCompatActivity
 import android.view.Menu
 import android.view.MenuItem
+import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.user.User
-import com.ifsc.lages.sti.tcc.ui.LoginActivity
+import com.ifsc.lages.sti.tcc.ui.login.LoginActivity
 import com.ifsc.lages.sti.tcc.utilidades.ActivityUtil
 
 import kotlinx.android.synthetic.main.activity_main.*

@@ -10,6 +10,7 @@ import android.graphics.drawable.Drawable
 import android.os.Build
 import android.view.View
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
@@ -25,7 +26,8 @@ import com.ifsc.lages.sti.tcc.R
 *
 * */
 abstract class BaseActivty : AppCompatActivity(), MapElement {
-    var toolbar: Toolbar? = null
+    var mToolbar: Toolbar? = null
+    var txtTitleToolbar: TextView? = null
         private set
     var  alertDialog : AlertDialog? = null
 
@@ -48,26 +50,39 @@ abstract class BaseActivty : AppCompatActivity(), MapElement {
     }
 
     override fun mapComponents() {
-//        toolbar = findViewById(R.id.main_toolbar)
-//      O código abaixo equivale à if(toolbar != null)
-        toolbar?.let {
+        txtTitleToolbar = findViewById(R.id.action_bar_title_1)
+        mToolbar = findViewById(R.id.main_toolbar)
+        mToolbar?.let {
             setSupportActionBar(it)
         }
     }
 
-    override fun mapActionComponents() {}
-    
-    fun isDisplayHomeAsUpEnable(value : Boolean) {
-        supportActionBar!!.setDisplayHomeAsUpEnabled(value)
-        supportActionBar!!.setDisplayShowHomeEnabled(value)
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            toolbar!!.navigationIcon = getDrawable(R.drawable.ic_arrow_back)
+    fun setTitleToolbar(aTitle: String) {
+        if (txtTitleToolbar == null) {
+            mToolbar?.title = aTitle
         } else {
-            toolbar!!.navigationIcon = resources.getDrawable(R.drawable.ic_arrow_back)
+            txtTitleToolbar?.text = aTitle
         }
-        toolbar!!.setContentInsetsAbsolute(0, 0)
-        toolbar!!.contentInsetStartWithNavigation = 0
-        toolbar!!.contentInsetStartWithNavigation = 0
+    }
+
+    override fun mapActionComponents() {}
+
+    fun setDisplayHomeAs(boolean: Boolean) {
+        supportActionBar!!.setDisplayHomeAsUpEnabled(boolean)
+        if (boolean) {
+            setColor()
+        }
+    }
+
+    fun setColor() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            mToolbar?.navigationIcon
+                ?.setColorFilter(getColor(R.color.white), PorterDuff.Mode.SRC_ATOP)
+        }
+    }
+
+    fun getToolbar(): Toolbar? {
+        return this.mToolbar
     }
 
     open fun createRestListener() {}

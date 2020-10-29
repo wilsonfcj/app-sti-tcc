@@ -4,7 +4,8 @@ import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
 import androidx.appcompat.app.AppCompatActivity
-import com.ifsc.lages.sti.tcc.ui.LoginActivity
+import com.ifsc.lages.sti.tcc.ui.login.LoginActivity
+import com.ifsc.lages.sti.tcc.ui.main.MainActivity
 import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
 import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
 

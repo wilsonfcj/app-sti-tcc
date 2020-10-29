@@ -5,8 +5,7 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:background="@drawable/shape_splash"/>
+        android:layout_height="match_parent"/>
 
     <ImageView
         android:id="@+id/image_ifsc"
@@ -14,9 +13,8 @@
         android:layout_height="wrap_content"
         android:scaleType="fitXY"
         android:layout_centerInParent="true"
-        android:src="@drawable/ic_app"
-        android:visibility="visible"
-        android:tint="@color/colorPrimary"/>
+        android:src="@drawable/ic_splash"
+        android:visibility="visible"/>
 
 
     <TextView

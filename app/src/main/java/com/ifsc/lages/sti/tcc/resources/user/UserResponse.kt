@@ -36,12 +36,23 @@ sealed class UserResponse {
         var registration: Long? = null,
 
         @SerializedName("AnoIngresso")
-        var anoIngresso: Long? = null
+        var anoIngresso: Long? = null,
+
+        @SerializedName("DisciplinasInteressadas")
+        var matters : MutableList<Matter>? = null
     )
 
     open class EducationalInstitution (
         @SerializedName("Id")
         var _id: Long? = null,
+
+        @SerializedName("Nome")
+        var name: String? = null
+    )
+
+    open class Matter (
+        @SerializedName("Codigo")
+        var cod: Int? = null,
 
         @SerializedName("Nome")
         var name: String? = null

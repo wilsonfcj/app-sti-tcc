@@ -1,4 +1,4 @@
-package com.ifsc.lages.sti.tcc.ui
+package com.ifsc.lages.sti.tcc.ui.login
 
 import android.content.Context
 import androidx.lifecycle.LiveData

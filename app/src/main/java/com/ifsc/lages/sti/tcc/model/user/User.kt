@@ -2,6 +2,7 @@ package com.ifsc.lages.sti.tcc.model.user
 
 import android.content.Context
 import com.google.gson.annotations.SerializedName
+import com.ifsc.lages.sti.tcc.model.matter.Matter
 import com.ifsc.lages.sti.tcc.resources.user.UserResponse
 import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
 import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
@@ -18,7 +19,7 @@ class User {
     var userType: String? = null
     var registration: Long? = null
     var anoIngresso: Long? = null
-
+    var matter: MutableList<Matter>? = null
 
     object UserMappper {
 
@@ -31,11 +32,18 @@ class User {
             user.email = it.email
             user.phone = it.phone
 
-            var instituition = EducationalInstitution()
-            instituition._id = it.educationalInstitution?._id
-            instituition.name = it.educationalInstitution?.name
+            if(it.educationalInstitution != null) {
+                var instituition = EducationalInstitution()
+                instituition._id = it.educationalInstitution?._id
+                instituition.name = it.educationalInstitution?.name
+                user.educationalInstitution = instituition
+            }
 
-            user.educationalInstitution = instituition
+            if(it.matters != null) {
+                var matter = Matter.MatterMappper.transform(it._id!!, it.matters!!)
+                user.matter = matter
+            }
+
             user.imageUser = it.imageUser
             user.userType = it.userType
             user.registration = it.registration
@@ -87,6 +95,11 @@ class User {
             if(t.educationalInstitution != null) {
                 SharedPreferencesUtil.put(context, KeyPrefs.EDUCATION_INSTITUITION_ID, t.educationalInstitution?._id)
                 SharedPreferencesUtil.put(context, KeyPrefs.EDUCATION_INSTITUITION_NOME, t.educationalInstitution?.name)
+            }
+
+            if(t.matter != null) {
+                Matter.DB.deleteAll(t._id!!)
+                Matter.DB.insertOrUpdateAll(t.matter!!)
             }
         }
     }

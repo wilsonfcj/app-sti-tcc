@@ -1,4 +1,4 @@
-package com.ifsc.lages.sti.tcc.ui
+package com.ifsc.lages.sti.tcc.ui.login
 
 import android.os.Bundle
 import android.os.Handler
@@ -20,9 +20,10 @@ import androidx.transition.TransitionManager
 import br.com.sistemainfo.tip.utilities.KeyboardUtil
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.google.android.material.textfield.TextInputLayout
-import com.ifsc.lages.sti.tcc.MainActivity
+import com.ifsc.lages.sti.tcc.ui.main.MainActivity
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.user.User
+import com.ifsc.lages.sti.tcc.ui.register.RegisterUserActivity
 import com.ifsc.lages.sti.tcc.utilidades.*
 
 
@@ -31,15 +32,16 @@ class LoginActivity : BaseActivty() {
     private val TAG = "LoginActivity"
 
     private var mShowingKeyboard: Boolean = false
-    private var hasPermission = false
-    private var firstPermission = true
-    private var idUser : Long? = null
+//    private var hasPermission = false
+//    private var firstPermission = true
+//    private var idUser : Long? = null
     private var login : Button? = null
     var loginUserHelper : TextInputLayout? = null
     var passwordHelper : TextInputLayout? = null
     var loginUser : EditText? = null
     var password : EditText? = null
     var chip : SwitchCompat? = null
+    var containerRegister : FrameLayout? = null
 
     private var viewModel :  LoginViewModel? = null
 
@@ -79,7 +81,9 @@ class LoginActivity : BaseActivty() {
 
 
    override fun createRestListener() {
-       viewModel = ViewModelProvider(this, LoginViewModelFactory(this@LoginActivity)).get(LoginViewModel::class.java)
+       viewModel = ViewModelProvider(this,
+           LoginViewModelFactory(this@LoginActivity)
+       ).get(LoginViewModel::class.java)
        viewModel!!.loginViewMonitoring.observe(this, androidx.lifecycle.Observer {
            hideLoading()
            if(it.error!!.not()) {
@@ -94,7 +98,7 @@ class LoginActivity : BaseActivty() {
 
     fun setRememberCPF(it : User) {
         if(chip!!.isChecked) {
-            SharedPreferencesUtil.put(this@LoginActivity, KeyPrefs.USER_REMEMBER_CPF, it!!.cpf)
+            SharedPreferencesUtil.put(this@LoginActivity, KeyPrefs.USER_REMEMBER_CPF, it.cpf)
         } else {
             SharedPreferencesUtil.put(this@LoginActivity, KeyPrefs.USER_REMEMBER_CPF, "")
         }
@@ -118,11 +122,10 @@ class LoginActivity : BaseActivty() {
 //        TODO usar este botão
         chip = findViewById(R.id.chip)
         val chipTouch = findViewById<SwitchCompat>(R.id.chip2)
-        val recoveryLogin = findViewById<TextView>(R.id.recoveryPassword)
-        val logoTip = findViewById<ImageView>(R.id.logoTip)
-        val imageRegister = findViewById<ImageView>(R.id.imageRegister)
-        val registerUser = findViewById<TextView>(R.id.txt_open_password)
-        val containerRegister = findViewById<FrameLayout>(R.id.container_register)
+//        val recoveryLogin = findViewById<TextView>(R.id.recoveryPassword)
+//        val logoTip = findViewById<ImageView>(R.id.logoTip)
+//        val registerUser = findViewById<TextView>(R.id.txt_open_password)
+        containerRegister = findViewById<FrameLayout>(R.id.container_register)
 
         EditTextMask.addCpfMask(loginUser!!)
         getCpfRemember()
@@ -163,7 +166,15 @@ class LoginActivity : BaseActivty() {
         viewModel?.registerMonitoring(loginUser?.text.toString().removeMask(), password?.text.toString())
     }
 
+    fun eventRegister() {
+        ActivityUtil.Builder(applicationContext, RegisterUserActivity::class.java).build()
+    }
+
     override fun mapActionComponents() {
+        containerRegister?.setOnClickListener {
+            eventRegister()
+        }
+
         login?.setOnClickListener {
             eventLogin()
         }

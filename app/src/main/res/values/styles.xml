@@ -24,7 +24,7 @@
     </style>
 
     <style name="LoginActivityStyle" parent="Theme.AppCompat.Light.DarkActionBar">
-        <item name="colorControlNormal">@color/white</item>
+        <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorAccent</item>
         <item name="colorControlHighlight">@color/colorAccent</item>
     </style>
@@ -33,7 +33,20 @@
     <style name="TextHelperlAppearance.Login" parent="TextAppearance.Design.HelperText">
         <!-- Floating label appearance here -->
         <item name="android:textStyle">italic</item>
-        <item name="android:textColor">@color/white</item>
+        <item name="android:textColor">@color/colorAccent</item>
+    </style>
+
+    <style name="ToolbarStyle"  parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:color">@color/colorToolbar</item>
+        <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+
+    <style name="Toolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
+        <item name="android:tint">@android:color/white</item>
     </style>
 
 </resources>
