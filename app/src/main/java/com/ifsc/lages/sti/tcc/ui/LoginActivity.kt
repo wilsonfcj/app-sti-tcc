@@ -7,7 +7,9 @@ import android.text.TextWatcher
 import android.text.method.PasswordTransformationMethod
 import android.util.Log
 import android.view.animation.AccelerateDecelerateInterpolator
+import android.view.inputmethod.EditorInfo
 import android.widget.*
+import android.widget.TextView.OnEditorActionListener
 import androidx.appcompat.widget.SwitchCompat
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.constraintlayout.widget.ConstraintSet
@@ -20,9 +22,9 @@ import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.google.android.material.textfield.TextInputLayout
 import com.ifsc.lages.sti.tcc.MainActivity
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.utilidades.ActivityUtil
-import com.ifsc.lages.sti.tcc.utilidades.EditTextMask
-import com.ifsc.lages.sti.tcc.utilidades.StringUtil
+import com.ifsc.lages.sti.tcc.model.user.User
+import com.ifsc.lages.sti.tcc.utilidades.*
+
 
 class LoginActivity : BaseActivty() {
 
@@ -37,6 +39,7 @@ class LoginActivity : BaseActivty() {
     var passwordHelper : TextInputLayout? = null
     var loginUser : EditText? = null
     var password : EditText? = null
+    var chip : SwitchCompat? = null
 
     private var viewModel :  LoginViewModel? = null
 
@@ -80,14 +83,29 @@ class LoginActivity : BaseActivty() {
        viewModel!!.loginViewMonitoring.observe(this, androidx.lifecycle.Observer {
            hideLoading()
            if(it.error!!.not()) {
-               ActivityUtil.Builder(applicationContext, MainActivity::class.java)
-                   .build()
+               setRememberCPF(it.success!!)
+               ActivityUtil.Builder(applicationContext, MainActivity::class.java).build()
+               finish()
            } else {
                Toast.makeText(this@LoginActivity, it.message, Toast.LENGTH_LONG).show()
            }
        })
    }
 
+    fun setRememberCPF(it : User) {
+        if(chip!!.isChecked) {
+            SharedPreferencesUtil.put(this@LoginActivity, KeyPrefs.USER_REMEMBER_CPF, it!!.cpf)
+        } else {
+            SharedPreferencesUtil.put(this@LoginActivity, KeyPrefs.USER_REMEMBER_CPF, "")
+        }
+    }
+
+    fun getCpfRemember() {
+        var cpf = SharedPreferencesUtil.get(this@LoginActivity, KeyPrefs.USER_REMEMBER_CPF, "")
+        if(cpf.isNotEmpty()) {
+            loginUser?.setText(cpf)
+        }
+    }
 
     override fun mapComponents() {
         super.mapComponents()
@@ -98,7 +116,7 @@ class LoginActivity : BaseActivty() {
         password = findViewById(R.id.password)
 
 //        TODO usar este botão
-        val chip = findViewById<SwitchCompat>(R.id.chip)
+        chip = findViewById(R.id.chip)
         val chipTouch = findViewById<SwitchCompat>(R.id.chip2)
         val recoveryLogin = findViewById<TextView>(R.id.recoveryPassword)
         val logoTip = findViewById<ImageView>(R.id.logoTip)
@@ -107,17 +125,13 @@ class LoginActivity : BaseActivty() {
         val containerRegister = findViewById<FrameLayout>(R.id.container_register)
 
         EditTextMask.addCpfMask(loginUser!!)
+        getCpfRemember()
 
         password?.apply { transformationMethod = PasswordTransformationMethod() }
-        findViewById<LinearLayout>(R.id.containerChipCpf).setOnClickListener {
-            chip.performClick()
-        }
 
         findViewById<LinearLayout>(R.id.containerChipTouch).setOnClickListener {
             chipTouch.performClick()
         }
-
-        chip?.setOnCheckedChangeListener { _, isChecked -> }
         chipTouch?.setOnCheckedChangeListener { _, isChecked -> }
 
         loginUser?.afterTextChanged {
@@ -133,12 +147,25 @@ class LoginActivity : BaseActivty() {
                 password?.text.toString()
             )
         }
+
+        password?.setOnEditorActionListener(OnEditorActionListener { view, actionId, event ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if(login!!.isEnabled) {
+                    eventLogin()
+                }
+            }
+            false
+        })
+    }
+
+    fun eventLogin() {
+        showLoading("Autenticando usuário")
+        viewModel?.registerMonitoring(loginUser?.text.toString().removeMask(), password?.text.toString())
     }
 
     override fun mapActionComponents() {
         login?.setOnClickListener {
-            showLoading("Autenticando usuário")
-            viewModel?.registerMonitoring(loginUser?.text.toString().removeMask(), password?.text.toString())
+            eventLogin()
         }
 
         KeyboardUtil.addKeyboardToggleListener(

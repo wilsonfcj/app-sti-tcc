@@ -1,7 +1,10 @@
 package com.ifsc.lages.sti.tcc.model.user
 
+import android.content.Context
 import com.google.gson.annotations.SerializedName
 import com.ifsc.lages.sti.tcc.resources.user.UserResponse
+import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
+import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
 
 class User {
     var _id: Long? = null
@@ -47,6 +50,44 @@ class User {
                 listRes.add(transform(it))
             }
             return listRes
+        }
+    }
+
+    object UserShared {
+        fun clear(context : Context) {
+            var cpfRemember = SharedPreferencesUtil.get(context, KeyPrefs.USER_REMEMBER_CPF, "")
+            SharedPreferencesUtil.clear(context)
+            SharedPreferencesUtil.put(context, KeyPrefs.USER_REMEMBER_CPF, cpfRemember)
+        }
+
+        fun save(context : Context, t : User) {
+            SharedPreferencesUtil.put(context, KeyPrefs.USER_ID, t._id)
+            SharedPreferencesUtil.put(context, KeyPrefs.USER_CPF, t.cpf)
+            SharedPreferencesUtil.put(context, KeyPrefs.USER_BIRTH_DAY, t.birthDay)
+            SharedPreferencesUtil.put(context, KeyPrefs.USER_NAME, t.name)
+            SharedPreferencesUtil.put(context, KeyPrefs.USER_TYPE, t.userType)
+            SharedPreferencesUtil.put(context, KeyPrefs.USER_REGISTRATION, t.registration)
+
+            if(t.email != null) {
+                SharedPreferencesUtil.put(context, KeyPrefs.USER_EMAIL, t.email)
+            }
+
+            if(t.phone != null) {
+                SharedPreferencesUtil.put(context, KeyPrefs.USER_PHONE, t.phone)
+            }
+
+            if(t.imageUser != null) {
+                SharedPreferencesUtil.put(context, KeyPrefs.USER_PHOTO, t.imageUser)
+            }
+
+            if(t.anoIngresso != null) {
+                SharedPreferencesUtil.put(context, KeyPrefs.USER_YEAR_JOIN, t.anoIngresso)
+            }
+
+            if(t.educationalInstitution != null) {
+                SharedPreferencesUtil.put(context, KeyPrefs.EDUCATION_INSTITUITION_ID, t.educationalInstitution?._id)
+                SharedPreferencesUtil.put(context, KeyPrefs.EDUCATION_INSTITUITION_NOME, t.educationalInstitution?.name)
+            }
         }
     }
 }
