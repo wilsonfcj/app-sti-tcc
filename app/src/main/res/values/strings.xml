@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">STI TCC</string>
     <string name="action_settings">Settings</string>
+    <string name="action_exit">Exit</string>
     <string name="prompt_logar_com_leitor">Logar com leitor</string>
     <string name="prompt_guardar_meu_cpf">Guardar meu CPF</string>
     <string name="prompt_ok">Ok</string>
