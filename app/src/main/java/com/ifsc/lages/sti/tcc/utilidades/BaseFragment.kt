@@ -2,8 +2,9 @@ package com.ifsc.lages.sti.tcc.utilidades
 
 import android.app.ProgressDialog
 import androidx.fragment.app.Fragment
+import br.edu.ifsc.cancontrol.utilidades.MapElement
 
-abstract class BaseFragment : Fragment() {
+abstract class BaseFragment : Fragment(), MapElement {
 
     private var progressDialog : ProgressDialog? = null
 

@@ -20,8 +20,17 @@
     <string name="prompt_next">Próximo</string>
     <string name="prompt_register">Cadastre-se agora</string>
 
+    <string name="prompt_teacher">Professor</string>
+    <string name="prompt_student">Aluno</string>
+
     <string name="error_login_invalido">CPF Inválido</string>
+    <string name="error_invalid_cpf">Informe um CPF válido</string>
     <string name="error_senha_invalida">Senha deve conter no mínimo 6 caracteres</string>
     <string name="error_conection">Sem conexão com a internet, verifique sua conexão para continuar!</string>
-
+    <string name="error_invalid_name">Insira o nome completo</string>
+    <string name="error_invalid_phone">Insira um telefone válido</string>
+    <string name="error_invalid_email">E-mail inválido</string>
+    <string name="error_invalid_birthday">Informe a data de nascimento</string>
+    <string name="error_invalid_education">Informe a instituição</string>
+    <string name="error_invalid_user_type">Informe o tipo de usuário</string>
 </resources>

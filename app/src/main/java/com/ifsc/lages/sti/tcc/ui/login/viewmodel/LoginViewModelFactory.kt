@@ -1,4 +1,4 @@
-package com.ifsc.lages.sti.tcc.ui.login
+package com.ifsc.lages.sti.tcc.ui.login.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.ViewModel

@@ -16,7 +16,7 @@ class User {
     var phone: String? = null
     var educationalInstitution: EducationalInstitution? = null
     var imageUser: String? = null
-    var userType: String? = null
+    var userType: Int? = null
     var registration: Long? = null
     var anoIngresso: Long? = null
     var matter: MutableList<Matter>? = null

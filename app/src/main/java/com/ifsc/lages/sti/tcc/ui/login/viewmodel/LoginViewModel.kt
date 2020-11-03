@@ -1,4 +1,4 @@
-package com.ifsc.lages.sti.tcc.ui.login
+package com.ifsc.lages.sti.tcc.ui.login.viewmodel
 
 import android.content.Context
 import androidx.lifecycle.LiveData
@@ -9,8 +9,6 @@ import com.ifsc.lages.sti.tcc.model.user.User
 import com.ifsc.lages.sti.tcc.resources.BaseView
 import com.ifsc.lages.sti.tcc.resources.user.UserRepository
 import com.ifsc.lages.sti.tcc.utilidades.ConnectionUtil
-import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
-import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
 import io.reactivex.observers.DisposableObserver
 
 class LoginViewModel (var activity: Context, var repository : UserRepository) : ViewModel()  {

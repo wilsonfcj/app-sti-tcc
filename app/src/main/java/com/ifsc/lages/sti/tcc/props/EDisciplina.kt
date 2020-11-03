@@ -1,0 +1,64 @@
+package com.ifsc.lages.sti.tcc.props
+
+enum class EDisciplina(var codigo: Int, var descricao: String) {
+
+    DEFAULT(-1, "Sem disciplina"),
+
+    //	FASE 1
+    INTRODUCAO_A_PROGRAMACAO(0, "INTRODUÇÃO À PROGRAMAÇÃO"),
+    ELETRONICA_DIGITAL(1, "ELETRÔNICA DIGITAL"),
+    MATEMÁTICA_DISCRETA(2, "MATEMÁTICA DISCRETA"),
+
+    //	FASE 2
+    PROGRAMACAO_ORIENTADA_A_OBJETOS(3, "PROGRAMAÇÃO ORIENTADA A OBJETOS"),
+    ALGEBRA_LINEAR_E_GEOMETRIA_ANALITICA(4, "ÁLGEBRA LINEAR E GEOMETRIA ANALÍTICA"),
+    ARQUITETURA_E_ORGANIZACAO_DE_COMPUTADORES(5, "ARQUITETURA E ORGANIZAÇÃO DE COMPUTADORES"),
+    INTRODUCAO_AS_REDES_DE_COMPUTADORES(6, "INTRODUÇÃO ÀS REDES DE COMPUTADORES"),
+    LINGUAGENS_E_PARADIGMAS_DE_PROGRAMACAO(7, "LINGUAGENS E PARADIGMAS DE PROGRAMAÇÃO"),
+
+    //	FASE 3
+    ESTRUTURAS_DE_DADOS(8, "ESTRUTURAS DE DADOS"),
+    SISTEMAS_OPERACIONAIS(9, "SISTEMAS OPERACIONAIS"),
+    DESENVOLVIMENTO_DE_APLICAÇÕES_ORIENTADAS_A_OBJETOS(10, "DESENVOLVIMENTO DE APLICAÇÕES ORIENTADAS A OBJETOS"),
+    REDES_DE_COMPUTADORES(11, "REDES DE COMPUTADORES"),
+
+    CALCULO(12, "CÁLCULO"),
+
+    //	FASE 3
+    LABORATORIO_DE_PROGRAMACAO(13, "LABORATÓRIO DE PROGRAMAÇÃO"),
+    BANCO_DE_DADOS(14, "BANCO DE DADOS"),
+    COMPILADORES(15, "COMPILADORES"),
+    ENGENHARIA_DE_SOFTWARE(16, "ENGENHARIA DE SOFTWARE"),
+    ESTATÍSTICA_E_PROBABILIDADE(17, "ESTATÍSTICA E PROBABILIDADE"),
+
+    //	Fase 6
+    COMPUTACAO_GRAFICA(18, "COMPUTAÇÃO GRÁFICA"),
+    SEGURANÇA_COMPUTACIONAL(19, "SEGURANÇA COMPUTACIONAL"),
+    INTELIGENCIA_ARTIFICIAL(20, "INTELIGÊNCIAARTIFICIAL"),
+    SISTEMAS_DISTRIBUÍDOS(21, "SISTEMAS DISTRIBUÍDOS"),
+
+    //	Fase 7
+    MODELAGEM_E_SIMULACAO(22, "MODELAGEM E SIMULAÇÃO"),
+    GERENCIA_DE_PROJETOS(23, "GERÊNCIA DE PROJETOS");
+
+    companion object {
+        fun getEnum(aCod: Int): EDisciplina {
+            for (lSituacao in values()) {
+                if (lSituacao.codigo == aCod) {
+                    return lSituacao
+                }
+            }
+            return DEFAULT
+        }
+
+        fun getEnum(aSituacao: String?): EDisciplina {
+            for (lSituacao in values()) {
+                if (lSituacao.descricao.equals(aSituacao, ignoreCase = true)) {
+                    return lSituacao
+                }
+            }
+            return DEFAULT
+        }
+    }
+
+}

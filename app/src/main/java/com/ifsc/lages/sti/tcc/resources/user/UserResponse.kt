@@ -30,7 +30,7 @@ sealed class UserResponse {
         var imageUser: String? = null,
 
         @SerializedName("TipoUsuario")
-        var userType: String? = null,
+        var userType: Int? = null,
 
         @SerializedName("Matricula")
         var registration: Long? = null,

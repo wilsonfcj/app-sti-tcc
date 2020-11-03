@@ -23,6 +23,8 @@ import com.google.android.material.textfield.TextInputLayout
 import com.ifsc.lages.sti.tcc.ui.main.MainActivity
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.user.User
+import com.ifsc.lages.sti.tcc.ui.login.viewmodel.LoginViewModel
+import com.ifsc.lages.sti.tcc.ui.login.viewmodel.LoginViewModelFactory
 import com.ifsc.lages.sti.tcc.ui.register.RegisterUserActivity
 import com.ifsc.lages.sti.tcc.utilidades.*
 
@@ -32,9 +34,6 @@ class LoginActivity : BaseActivty() {
     private val TAG = "LoginActivity"
 
     private var mShowingKeyboard: Boolean = false
-//    private var hasPermission = false
-//    private var firstPermission = true
-//    private var idUser : Long? = null
     private var login : Button? = null
     var loginUserHelper : TextInputLayout? = null
     var passwordHelper : TextInputLayout? = null
@@ -79,7 +78,6 @@ class LoginActivity : BaseActivty() {
         return this.isNotBlank() && (StringUtil.isCpfValid(this) || StringUtil.isCNPJValid(this))
     }
 
-
    override fun createRestListener() {
        viewModel = ViewModelProvider(this,
            LoginViewModelFactory(this@LoginActivity)
@@ -122,9 +120,6 @@ class LoginActivity : BaseActivty() {
 //        TODO usar este botão
         chip = findViewById(R.id.chip)
         val chipTouch = findViewById<SwitchCompat>(R.id.chip2)
-//        val recoveryLogin = findViewById<TextView>(R.id.recoveryPassword)
-//        val logoTip = findViewById<ImageView>(R.id.logoTip)
-//        val registerUser = findViewById<TextView>(R.id.txt_open_password)
         containerRegister = findViewById<FrameLayout>(R.id.container_register)
 
         EditTextMask.addCpfMask(loginUser!!)
@@ -135,8 +130,8 @@ class LoginActivity : BaseActivty() {
         findViewById<LinearLayout>(R.id.containerChipTouch).setOnClickListener {
             chipTouch.performClick()
         }
-        chipTouch?.setOnCheckedChangeListener { _, isChecked -> }
 
+        chipTouch?.setOnCheckedChangeListener { _, _ -> }
         loginUser?.afterTextChanged {
             login?.isEnabled = loginDataChanged(
                 loginUser?.text.toString().removeMask(),
@@ -151,14 +146,14 @@ class LoginActivity : BaseActivty() {
             )
         }
 
-        password?.setOnEditorActionListener(OnEditorActionListener { view, actionId, event ->
+        password?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_DONE) {
                 if(login!!.isEnabled) {
                     eventLogin()
                 }
             }
             false
-        })
+        }
     }
 
     fun eventLogin() {

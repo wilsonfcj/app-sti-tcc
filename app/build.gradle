@@ -29,7 +29,7 @@ android {
     flavorDimensions 'apptcc'
     productFlavors {
 
-        / * "Dev" * /
+        / * "Dev" https:\/\/api-sti-tcc.herokuapp.com\/swagger-ui.html * /
         dev {
             buildConfigField "String", "WS_URL", "\"https://api-sti-tcc.herokuapp.com/api/\""
             buildConfigField "String", "VERSION_APP", "\"D\""
@@ -88,6 +88,8 @@ dependencies {
 
     implementation "android.arch.navigation:navigation-fragment-ktx:1.0.0-alpha09"
     implementation "android.arch.navigation:navigation-ui-ktx:1.0.0-alpha09"
-
+    
+    implementation 'com.github.drawers:SpinnerDatePicker:2.0.1'
     implementation 'com.anton46:collection-picker:1.0.2'
+
 }

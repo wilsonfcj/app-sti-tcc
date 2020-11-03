@@ -23,6 +23,14 @@ class RegisterStudentFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_register_student, container, false)
     }
 
+    override fun mapComponents() {
+
+    }
+
+    override fun mapActionComponents() {
+
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
     }

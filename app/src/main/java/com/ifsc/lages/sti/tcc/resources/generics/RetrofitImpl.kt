@@ -35,7 +35,7 @@ class RetrofitImpl(private val url: String = BuildConfig.WS_URL) {
                 var startTimeMillis =
                     lCalendar[Calendar.HOUR_OF_DAY] * 1000 * 60 * 60 + (lCalendar[Calendar.MINUTE] * 1000 * 60).toLong()
                 startTimeMillis -= getTimeOffset(startTimeMillis).toLong()
-                val lDateTeste = Date(startTimeMillis)
+                Date(startTimeMillis)
                 Date(timeInMillis)
             }
         }

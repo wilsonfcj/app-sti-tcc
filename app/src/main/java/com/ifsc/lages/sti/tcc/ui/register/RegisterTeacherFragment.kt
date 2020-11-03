@@ -27,6 +27,14 @@ class RegisterTeacherFragment : BaseFragment() {
         return inflater.inflate(R.layout.fragment_register_teacher, container, false)
     }
 
+    override fun mapComponents() {
+        TODO("Not yet implemented")
+    }
+
+    override fun mapActionComponents() {
+        TODO("Not yet implemented")
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -38,6 +46,6 @@ class RegisterTeacherFragment : BaseFragment() {
 
         val picker = view.findViewById(R.id.collection_item_picker) as CollectionPicker
         picker.items = items
-        picker.setOnItemClickListener { item, position ->  }
+        picker.setOnItemClickListener { _, _ ->  }
     }
 }

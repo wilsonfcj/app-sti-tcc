@@ -51,7 +51,7 @@ object EditTextMask {
         editText.addTextChangedListener(mtw)
     }
 
-    fun addTelefoneMask(editText: EditText?) {
+    fun addTelefoneMask(editText: EditText) {
         val smf13 = SimpleMaskFormatter(TELEFONE13_MASK)
         val mtw13 = MaskTextWatcher(editText, smf13)
         editText!!.addTextChangedListener(mtw13)

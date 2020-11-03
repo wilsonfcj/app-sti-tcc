@@ -1,5 +1,6 @@
 package com.ifsc.lages.sti.tcc.resources
 
+import com.ifsc.lages.sti.tcc.resources.education.InstitutionResponse
 import com.ifsc.lages.sti.tcc.resources.generics.BaseResponse
 import com.ifsc.lages.sti.tcc.resources.user.UserRequest
 import com.ifsc.lages.sti.tcc.resources.user.UserResponse
@@ -20,5 +21,10 @@ interface Api {
 //
 //        @GET("farmer/cpf/")
 //        fun queryUser(@Query("cpf") cpf : String) : Call<UserResponse.Farmer>
+    }
+
+    interface EducationInstitution {
+        @GET("BuscarTodasInstituicao")
+        fun institutions() : Call<BaseResponse<MutableList<InstitutionResponse.EducationalInstitution>>>
     }
 }
