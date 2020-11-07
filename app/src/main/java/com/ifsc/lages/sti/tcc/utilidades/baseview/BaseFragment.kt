@@ -1,4 +1,4 @@
-package com.ifsc.lages.sti.tcc.utilidades
+package com.ifsc.lages.sti.tcc.utilidades.baseview
 
 import android.app.ProgressDialog
 import androidx.fragment.app.Fragment

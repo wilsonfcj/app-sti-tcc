@@ -6,28 +6,51 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
-    <com.google.android.material.appbar.AppBarLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/AppTheme.AppBarOverlay">
+        android:layout_height="wrap_content">
 
-        <androidx.appcompat.widget.Toolbar
-            android:id="@+id/toolbar"
+        <ImageView
+            android:id="@+id/iv_bkg"
             android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:popupTheme="@style/AppTheme.PopupOverlay" />
+            android:layout_height="@dimen/size_background_image"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            android:tint="@color/set_background_transparent"
+            android:src="@drawable/ic_background" />
 
-    </com.google.android.material.appbar.AppBarLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <include layout="@layout/widget_logo_toolbar_transparent"/>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/profile_image"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_centerHorizontal="true"
+                android:layout_gravity="center_horizontal"
+                android:scaleType="centerCrop"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/default_image_user"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:transitionName="@string/transition_avatar"
+                app:civ_border_width="0.5dp" />
+
+        </RelativeLayout>
+
+
+
+
+
+    </RelativeLayout>
 
     <include layout="@layout/content_main" />
 
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/fab"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|end"
-        android:layout_margin="@dimen/fab_margin"
-        app:srcCompat="@android:drawable/ic_dialog_email" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

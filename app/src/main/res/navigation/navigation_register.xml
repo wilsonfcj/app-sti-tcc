@@ -16,25 +16,12 @@
             app:exitAnim="@anim/slide_out_left"
             app:popEnterAnim="@anim/slide_in_left"
             app:popExitAnim="@anim/slide_out_right"/>
-        <action
-            android:id="@+id/action_genericFragment_to_registerTeacherFragment"
-            app:destination="@id/registerTeacherFragment"
-            app:enterAnim="@anim/slide_in_right"
-            app:exitAnim="@anim/slide_out_left"
-            app:popEnterAnim="@anim/slide_in_left"
-            app:popExitAnim="@anim/slide_out_right"/>
 
     </fragment>
 
     <fragment
         android:id="@+id/registerStudentFragment"
-        android:name="com.ifsc.lages.sti.tcc.ui.register.RegisterStudentFragment"
-        tools:layout="@layout/fragment_register_student" />
-
-    <fragment
-        android:id="@+id/registerTeacherFragment"
-        android:name="com.ifsc.lages.sti.tcc.ui.register.RegisterTeacherFragment"
-        tools:layout="@layout/fragment_register_teacher">
-    </fragment>
+        android:name="com.ifsc.lages.sti.tcc.ui.register.RegisterPasswordFragment"
+        tools:layout="@layout/fragment_register_password" />
 
 </navigation>

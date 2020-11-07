@@ -45,6 +45,15 @@
         <item name="android:fontFamily">sans-serif-thin</item>
     </style>
 
+    <style name="ToolbarStyleTransparent"  parent="Theme.AppCompat.DayNight.NoActionBar">
+        <item name="android:textColorSecondary">@android:color/white</item>
+        <item name="android:textColorPrimary">@android:color/white</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:color">@android:color/transparent</item>
+        <item name="toolbarNavigationButtonStyle">@style/Toolbar.Button.Navigation.Tinted</item>
+        <item name="android:fontFamily">sans-serif-thin</item>
+    </style>
+
     <style name="Toolbar.Button.Navigation.Tinted" parent="Widget.AppCompat.Toolbar.Button.Navigation">
         <item name="android:tint">@android:color/white</item>
     </style>
@@ -55,5 +64,10 @@
         <item name="android:colorControlNormal" tools:targetApi="lollipop">@color/colorAccent</item>
     </style>
 
+    <style name="DialogAnimationUpDown">
+        <item name="android:windowEnterAnimation">@anim/slide_up</item>
+        <item name="android:windowExitAnimation">@anim/slide_down</item>
+        <item name="android:backgroundDimEnabled">false</item>
+    </style>
 
 </resources>

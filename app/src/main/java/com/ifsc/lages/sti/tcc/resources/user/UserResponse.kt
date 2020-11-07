@@ -1,6 +1,7 @@
 package com.ifsc.lages.sti.tcc.resources.user
 
 import com.google.gson.annotations.SerializedName
+import java.util.*
 
 sealed class UserResponse {
 
@@ -12,7 +13,7 @@ sealed class UserResponse {
         var cpf: String? = null,
 
         @SerializedName("Nascimento")
-        var birthDay: String? = null,
+        var birthDay: Date? = null,
 
         @SerializedName("Nome")
         var name: String? = null,

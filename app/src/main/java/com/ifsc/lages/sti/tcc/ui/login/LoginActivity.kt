@@ -62,7 +62,7 @@ class LoginActivity : BaseActivty() {
 
         if (!isPasswordValid(password)) {
             passwordHelper?.helperText = null
-            passwordHelper?.helperText =  getString(R.string.error_senha_invalida)
+            passwordHelper?.helperText =  getString(R.string.error_invalid_password)
             return false
         } else {
             passwordHelper?.helperText = null

@@ -4,8 +4,9 @@ import com.ifsc.lages.sti.tcc.resources.user.UserResponse
 import io.realm.Realm
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
+import java.io.Serializable
 
-open class Matter : RealmObject() {
+open class Matter : RealmObject(), Serializable {
 
     @PrimaryKey
     var _id : String? = null

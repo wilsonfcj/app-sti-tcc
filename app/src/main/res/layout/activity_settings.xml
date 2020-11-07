@@ -1,0 +1,311 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:user="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/container_header"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateLayoutChanges="true">
+
+        <ImageView
+            android:id="@+id/iv_bkg"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/size_background_image"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:adjustViewBounds="true"
+            android:fitsSystemWindows="true"
+            android:scaleType="centerCrop"
+            android:tint="@color/set_background_transparent"
+            android:src="@drawable/ic_background" />
+
+        <include layout="@layout/widget_logo_toolbar_transparent"/>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_alignBottom="@id/iv_bkg"
+            android:layout_alignParentStart="true"
+            android:layout_centerVertical="true">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:layout_marginEnd="15dp"
+                android:layout_marginStart="15dp"
+                android:gravity="start|center"
+                android:orientation="horizontal">
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    android:id="@+id/img_view_user"
+                    android:layout_width="@dimen/img_perfil_normal"
+                    android:layout_height="@dimen/img_perfil_normal"
+                    android:layout_margin="@dimen/size_eight"
+                    android:src="@drawable/default_image_user"
+                    android:transitionName="@string/transition_avatar"
+                    app:civ_border_width="1dp" />
+
+                <RelativeLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:gravity="center">
+
+                    <TextView
+                        android:id="@+id/txt_view_user_name"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center_vertical"
+                        android:textSize="@dimen/size_text_name_my_profile"
+                        android:textColor="@color/white"
+                        android:text="Olá, \nLucas Ricardo lOrso teste teste teste teste" />
+
+                </RelativeLayout>
+
+            </LinearLayout>
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/img_view_user_final"
+                android:layout_width="@dimen/img_perfil_final"
+                android:layout_height="?android:actionBarSize"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="8dp"
+                android:alpha="0"
+                android:src="@drawable/default_image_user"
+                app:civ_border_color="@color/colorAccent"
+                app:civ_border_width="1dp" />
+
+            <TextView
+                android:id="@+id/txt_user_name_final"
+                android:layout_width="wrap_content"
+                android:layout_height="?actionBarSize"
+                android:layout_marginEnd="8dp"
+                android:layout_toStartOf="@+id/img_view_user_final"
+                android:alpha="0"
+                android:gravity="center|bottom"
+                android:textColor="@color/white"
+                tools:text="Lucas Ricardo Orso" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:orientation="horizontal">
+
+                <Button
+                    android:id="@+id/button_change_infos"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:text="Alterar Dados"
+                    android:visibility="visible"/>
+
+                <Button
+                    android:id="@+id/button_exit"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_weight="1"
+                    android:background="@null"
+                    android:text="Sair" />
+
+            </LinearLayout>
+
+
+
+        </RelativeLayout>
+
+    </RelativeLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
+                android:id="@+id/custom_email"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                user:nameItem="wilsonfernandes@gmail.com"
+                user:labelItem="@string/prompt_email"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/margin_left_item_my_user"
+                android:layout_marginRight="@dimen/margin_right_item_my_user"
+                user:iconSrcItem="@drawable/ic_email" />
+
+            <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
+                android:id="@+id/custom_phone"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                user:nameItem="(49) 988810383"
+                user:labelItem="@string/prompt_cell_fone"
+                android:layout_marginTop="@dimen/margin_top_item_my_user"
+                android:layout_marginLeft="@dimen/margin_left_item_my_user"
+                android:layout_marginRight="@dimen/margin_right_item_my_user"
+                user:iconSrcItem="@drawable/ic_phone" />
+
+
+            <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
+                android:id="@+id/custom_birth_day"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                user:nameItem="23/10/1995"
+                user:labelItem="@string/prompt_birthday"
+                android:layout_marginTop="@dimen/margin_top_item_my_user"
+                android:layout_marginLeft="@dimen/margin_left_item_my_user"
+                android:layout_marginRight="@dimen/margin_right_item_my_user"
+                user:iconSrcItem="@drawable/ic_perm_contact_calendar" />
+
+            <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
+                android:id="@+id/custom_education_institituion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                user:nameItem="IFSC Câpus Lages"
+                user:labelItem="@string/prompt_education_institution"
+                android:layout_marginTop="@dimen/margin_top_item_my_user"
+                android:layout_marginLeft="@dimen/margin_left_item_my_user"
+                android:layout_marginRight="@dimen/margin_right_item_my_user"
+                user:iconSrcItem="@drawable/ic_action_home" />
+
+
+            <LinearLayout
+                android:id="@+id/container_student"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
+                    android:id="@+id/custom_register_number"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    user:nameItem="15648984654892"
+                    user:labelItem="@string/prompt_registration"
+                    android:layout_marginTop="@dimen/margin_top_item_my_user"
+                    android:layout_marginLeft="@dimen/margin_left_item_my_user"
+                    android:layout_marginRight="@dimen/margin_right_item_my_user"
+                    user:iconSrcItem="@drawable/ic_school" />
+
+                <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
+                    android:id="@+id/custom_register_years_join"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    user:nameItem="2017"
+                    user:labelItem="@string/prompt_yers_join"
+                    android:layout_marginTop="@dimen/margin_top_item_my_user"
+                    android:layout_marginLeft="@dimen/margin_left_item_my_user"
+                    android:layout_marginRight="@dimen/margin_right_item_my_user"
+                    user:iconSrcItem="@drawable/ic_action_calendar_day" />
+
+            </LinearLayout>
+
+            <RelativeLayout
+                android:id="@+id/divider"
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginTop="@dimen/margin_top_item_my_user"
+                android:layout_marginLeft="@dimen/margin_left_item_my_user"
+                android:layout_marginRight="@dimen/margin_left_item_my_user"
+                android:background="@color/divider"/>
+
+
+            <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
+                android:id="@+id/custom_version_code"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/divider"
+                user:nameItem="1.0"
+                user:labelItem="@string/prompt_version"
+                android:layout_marginTop="10dp"
+                android:layout_marginLeft="@dimen/margin_left_item_my_user"
+                android:layout_marginRight="@dimen/margin_right_item_my_user"
+                user:iconSrcItem="@drawable/ic_code" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+
+
+<!--    <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser-->
+<!--        android:id="@+id/custom_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        user:nameItem="Tests Teste"-->
+<!--        user:labelItem="@string/prompt_name"-->
+<!--        android:layout_marginTop="@dimen/margin_top_item_my_user"-->
+<!--        android:layout_marginLeft="@dimen/margin_left_item_my_user"-->
+<!--        android:layout_marginRight="@dimen/margin_right_item_my_user"-->
+<!--        user:iconSrcItem="@drawable/ic_person" />-->
+
+<!--    <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser-->
+<!--        android:id="@+id/custom_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        user:nameItem="Tests Teste"-->
+<!--        user:labelItem="@string/prompt_name"-->
+<!--        android:layout_marginTop="@dimen/margin_top_item_my_user"-->
+<!--        android:layout_marginLeft="@dimen/margin_left_item_my_user"-->
+<!--        android:layout_marginRight="@dimen/margin_right_item_my_user"-->
+<!--        user:iconSrcItem="@drawable/ic_person" />-->
+
+<!--    <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser-->
+<!--        android:id="@+id/custom_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        user:nameItem="Tests Teste"-->
+<!--        user:labelItem="@string/prompt_name"-->
+<!--        android:layout_marginTop="@dimen/margin_top_item_my_user"-->
+<!--        android:layout_marginLeft="@dimen/margin_left_item_my_user"-->
+<!--        android:layout_marginRight="@dimen/margin_right_item_my_user"-->
+<!--        user:iconSrcItem="@drawable/ic_person" />-->
+
+<!--    <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser-->
+<!--        android:id="@+id/custom_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        user:nameItem="Tests Teste"-->
+<!--        user:labelItem="@string/prompt_name"-->
+<!--        android:layout_marginTop="@dimen/margin_top_item_my_user"-->
+<!--        android:layout_marginLeft="@dimen/margin_left_item_my_user"-->
+<!--        android:layout_marginRight="@dimen/margin_right_item_my_user"-->
+<!--        user:iconSrcItem="@drawable/ic_person" />-->
+
+<!--    <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser-->
+<!--        android:id="@+id/custom_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        user:nameItem="Tests Teste"-->
+<!--        user:labelItem="@string/prompt_name"-->
+<!--        android:layout_marginTop="@dimen/margin_top_item_my_user"-->
+<!--        android:layout_marginLeft="@dimen/margin_left_item_my_user"-->
+<!--        android:layout_marginRight="@dimen/margin_right_item_my_user"-->
+<!--        user:iconSrcItem="@drawable/ic_person" />-->
+
+<!--    <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser-->
+<!--        android:id="@+id/custom_name"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        user:nameItem="Tests Teste"-->
+<!--        user:labelItem="@string/prompt_name"-->
+<!--        android:layout_marginTop="@dimen/margin_top_item_my_user"-->
+<!--        android:layout_marginLeft="@dimen/margin_left_item_my_user"-->
+<!--        android:layout_marginRight="@dimen/margin_right_item_my_user"-->
+<!--        user:iconSrcItem="@drawable/ic_person" />-->
+
+</LinearLayout>

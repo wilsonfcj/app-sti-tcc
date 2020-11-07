@@ -6,27 +6,6 @@
     android:layout_height="match_parent">
 
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="vertical">
-
-        <com.anton46.collectionitempicker.CollectionPicker
-            android:id="@+id/collection_item_picker"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            app:cp_addIcon="@drawable/ic_action_add"
-            app:cp_cancelIcon="@drawable/ic_action_add"
-            app:cp_itemBackgroundNormal="@color/colorPrimary"
-            app:cp_itemBackgroundPressed="@color/red"
-            app:cp_itemMargin="5dp"
-            app:cp_textPaddingBottom="5dp"
-            app:cp_textPaddingLeft="10dp"
-            app:cp_textPaddingRight="10dp"
-            app:cp_textPaddingTop="5dp"
-            app:cp_simplified="false" />
-
-    </LinearLayout>
 
 
 </LinearLayout>

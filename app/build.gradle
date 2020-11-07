@@ -91,5 +91,9 @@ dependencies {
     
     implementation 'com.github.drawers:SpinnerDatePicker:2.0.1'
     implementation 'com.anton46:collection-picker:1.0.2'
+    implementation 'com.github.tommykw:TagView:0.0.1'
+
+    implementation 'com.google.android:flexbox:1.0.0'
+    implementation 'com.github.mahimrocky:TagView:1.0.3'
 
 }

@@ -14,11 +14,11 @@ class UserRepository {
             return UserService()
         }
 
-    fun loginUser(cpf : String, password: String) : Single<BaseResponse<UserResponse.Login>> {
+    private fun login(cpf : String, password: String) : Single<BaseResponse<UserResponse.Login>> {
         var request = UserRequest.Login(cpf = cpf, password = password)
         return Single.create {
             try {
-                val response = service.loginUser(request)
+                val response = service.login(request)
                 when {
                     response.success!! -> {
                         it.onSuccess(response)
@@ -31,8 +31,35 @@ class UserRepository {
         }
     }
 
-    fun loginUser(cpf : String, password: String, observer: DisposableObserver<User>){
-        loginUser(cpf, password)
+    fun login(cpf : String, password: String, observer: DisposableObserver<User>){
+        login(cpf, password)
+            .toObservable()
+            .map { User.UserMappper.transform(it.data!!) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(observer)
+    }
+
+    private fun register(user: User, password: String) : Single<BaseResponse<UserResponse.Login>> {
+        var request = UserRequest.Register().transform(user)
+        request.password = password
+        return Single.create {
+            try {
+                val response = service.register(request)
+                when {
+                    response.success!! -> {
+                        it.onSuccess(response)
+                    }
+                    else -> it.onError(Exception(response.message))
+                }
+            } catch (ex : java.lang.Exception) {
+                it.onError(Exception("Erro ao autenticar o usuário"))
+            }
+        }
+    }
+
+    fun register(user: User, password: String, observer: DisposableObserver<User>){
+        register(user, password)
             .toObservable()
             .map { User.UserMappper.transform(it.data!!) }
             .subscribeOn(Schedulers.io())

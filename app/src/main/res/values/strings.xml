@@ -5,19 +5,22 @@
     <string name="prompt_logar_com_leitor">Logar com leitor</string>
     <string name="prompt_guardar_meu_cpf">Guardar meu CPF</string>
     <string name="prompt_ok">Ok</string>
-    <string name="prompt_senha">Senha</string>
     <string name="prompt_acessar">Acessar</string>
     <string name="prompt_cpf">CPF</string>
     <string name="prompt_name">Nome</string>
     <string name="prompt_cell_fone">Telefone</string>
     <string name="prompt_email">E-mail</string>
     <string name="prompt_password">Senha</string>
-    <string name="prompt_birthday">Data Nascimento</string>
+    <string name="prompt_confirm_password">Confirmar Senha</string>
+    <string name="prompt_birthday">Data de nascimento</string>
     <string name="prompt_education_institution">Instituição</string>
     <string name="prompt_user_type">Tipo Usuário</string>
     <string name="prompt_registration">Matricula</string>
     <string name="prompt_yers_join">Ano Ingresso</string>
     <string name="prompt_next">Próximo</string>
+    <string name="prompt_matters">Disciplinas</string>
+
+
     <string name="prompt_register">Cadastre-se agora</string>
 
     <string name="prompt_teacher">Professor</string>
@@ -25,7 +28,6 @@
 
     <string name="error_login_invalido">CPF Inválido</string>
     <string name="error_invalid_cpf">Informe um CPF válido</string>
-    <string name="error_senha_invalida">Senha deve conter no mínimo 6 caracteres</string>
     <string name="error_conection">Sem conexão com a internet, verifique sua conexão para continuar!</string>
     <string name="error_invalid_name">Insira o nome completo</string>
     <string name="error_invalid_phone">Insira um telefone válido</string>
@@ -33,4 +35,24 @@
     <string name="error_invalid_birthday">Informe a data de nascimento</string>
     <string name="error_invalid_education">Informe a instituição</string>
     <string name="error_invalid_user_type">Informe o tipo de usuário</string>
+
+    <string name="error_invalid_register_numer">Informe sua matrícula</string>
+
+    <string name="error_invalid_min_data">Ano deve ser maior que 2000</string>
+    <string name="error_invalid_max_data">Ano deve ser menor ou igual o ano atual</string>
+    <string name="error_invalid_join_yers">Informe o ano de ingresso</string>
+
+    <string name="error_invalid_password">Senha deve conter no mínimo 6 caracteres</string>
+    <string name="error_invalid_confirm_password">Senhas não correspondem</string>
+    <string name="prompt_send_image">Compartilhar imagem</string>
+
+    <string name="transition_avatar" translatable="false">transition_avatar</string>
+    <string name="bem_vindo" translatable="false">Bem vindo(a),</string>
+
+    <string name="title_toolbar_dashboard">DASHBOARD</string>
+    <string name="title_toolbar_my_profile">MEU PERFIL</string>
+
+    <string name="prompt_version">Versão aplicativo</string>
+    <string name="prompt_lagind_generic">Buscando informações</string>
+
 </resources>

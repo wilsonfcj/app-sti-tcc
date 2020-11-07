@@ -1,34 +1,55 @@
 package com.ifsc.lages.sti.tcc.ui.register
 
-import android.annotation.SuppressLint
+import android.Manifest
+import android.app.Activity
+import android.app.AlertDialog
+import android.content.Intent
+import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.media.ExifInterface
+import android.net.Uri
+import android.os.Build
 import android.os.Bundle
+import android.provider.MediaStore
+import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.EditText
-import android.widget.ProgressBar
+import android.widget.*
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
+import androidx.core.content.FileProvider
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import br.edu.ifsc.cancontrol.ui.monitoring.adapter.InstitutionAdapter
 import com.google.android.material.button.MaterialButton
 import com.google.android.material.textfield.TextInputLayout
+import com.ifsc.lages.sti.tcc.BuildConfig
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.user.EducationalInstitution
 import com.ifsc.lages.sti.tcc.model.user.User
+import com.ifsc.lages.sti.tcc.props.EDisciplina
 import com.ifsc.lages.sti.tcc.props.EUserType
 import com.ifsc.lages.sti.tcc.ui.login.afterTextChanged
+import com.ifsc.lages.sti.tcc.ui.register.adapter.MatterInfo
 import com.ifsc.lages.sti.tcc.ui.register.bottomsheet.BottonSheetEducationInstitutionFragment
 import com.ifsc.lages.sti.tcc.ui.register.bottomsheet.BottonSheetUsetTypeFragment
 import com.ifsc.lages.sti.tcc.ui.register.viewmodel.RegisterViewModel
 import com.ifsc.lages.sti.tcc.ui.register.viewmodel.RegisterViewModelFactory
-import com.ifsc.lages.sti.tcc.utilidades.BaseFragment
+import com.ifsc.lages.sti.tcc.utilidades.ActivityRequestCode
 import com.ifsc.lages.sti.tcc.utilidades.EditTextMask
+import com.ifsc.lages.sti.tcc.utilidades.ImageUtil
 import com.ifsc.lages.sti.tcc.utilidades.StringUtil
+import com.ifsc.lages.sti.tcc.utilidades.baseview.BaseFragment
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
+import java.io.*
+import java.text.SimpleDateFormat
 import java.util.*
+import kotlin.collections.ArrayList
+import kotlin.math.max
 
-class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.CallbackOptions, BottonSheetEducationInstitutionFragment.CallbackOptions {
+class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.CallbackOptions, BottonSheetEducationInstitutionFragment.CallbackOptions, MattersListDialogFragment.Listener {
 
     var button : MaterialButton? = null
     var editTextName : EditText? = null
@@ -38,7 +59,11 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
     var editTextBirthDay : EditText? = null
     var editTextEducationInstitution : EditText? = null
     var editTextUserType : EditText? = null
+    var editTextRegisterNumber : EditText? = null
+    var editTextYearsJoin : EditText? = null
 
+    var mImageViewPhotoProfile: ImageView? = null
+    private lateinit var mCurrentPhotoPath: String
 
     var textInputName : TextInputLayout? = null
     var textInputCpf : TextInputLayout? = null
@@ -47,6 +72,10 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
     var textInputBirthDay : TextInputLayout? = null
     var textInputEducationInstitution : TextInputLayout? = null
     var textInputUserType : TextInputLayout? = null
+    var textInputRegistration : TextInputLayout? = null
+    var textInputYearTick: TextInputLayout? = null
+
+    var containerPicker : LinearLayout? = null
     var registerViewModel :  RegisterViewModel? = null
 
     private val calendarBirthday : Calendar = Calendar.getInstance()
@@ -58,12 +87,14 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
     var user : User? = null;
     var typeUser : EUserType? = null
     var educationalInstitution : EducationalInstitution? = null
+    var containerLayout: LinearLayout? = null
+    var bitmap : Bitmap? = null
+    var matters : ArrayList<MatterInfo>? = null
+    var buttonMatters : MaterialButton? = null
+    var mattersSelecteds : ArrayList<MatterInfo>? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-//        arguments?.let {
-//            columnCount = it.getInt(ARG_COLUMN_COUNT)
-//        }
     }
 
     override fun onCreateView(
@@ -73,7 +104,46 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         return inflater.inflate(R.layout.fragment_register_info_generic, container, false)
     }
 
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        if (resultCode == Activity.RESULT_OK) {
+            when (requestCode) {
+                ActivityRequestCode.GALLERY ->
+                    if (data != null) {
+                        bitmap = ImageUtil.gallery(activity!!, data.data)
+                        bitmap?.let { mImageViewPhotoProfile?.setImageBitmap(bitmap) }
+                    }
+                ActivityRequestCode.CAMERA -> {
+                    bitmap = ImageUtil.camera(File(mCurrentPhotoPath), mCurrentPhotoPath)
+                    bitmap?.let { mImageViewPhotoProfile?.setImageBitmap(bitmap) }
+                }
+            }
+        }
+    }
+
+    fun writeFile(input: InputStream, file: File) {
+        var out: OutputStream? = null
+        try {
+            out = FileOutputStream(file)
+            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
+            var len: Int
+            do {
+                len = input.read(buffer)
+                out.write(buffer, 0, len)
+            } while (len > 0)
+        } catch (e: Exception) {
+            e.printStackTrace()
+        } finally {
+            try {
+                out?.close()
+                input.close()
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+        }
+    }
+
     override fun mapComponents() {
+        mImageViewPhotoProfile = view?.findViewById(R.id.profile_image)
         editTextName = view?.findViewById(R.id.edit_text_name)
         editTextPhone = view?.findViewById(R.id.edit_text_cell_fone)
         editTextCpf = view?.findViewById(R.id.edit_text_cpf)
@@ -81,6 +151,10 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         editTextBirthDay = view?.findViewById(R.id.edit_text_birthday)
         editTextEducationInstitution = view?.findViewById(R.id.edit_text_education_institution)
         editTextUserType = view?.findViewById(R.id.edit_text_user_type)
+
+        editTextRegisterNumber = view?.findViewById(R.id.edit_text_registration)
+        editTextYearsJoin = view?.findViewById(R.id.edit_text_year_tick)
+
         button = view?.findViewById(R.id.button_cadastre)
 
         textInputName = view?.findViewById(R.id.text_input_name)
@@ -90,33 +164,123 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         textInputBirthDay = view?.findViewById(R.id.text_input_birthday)
         textInputEducationInstitution = view?.findViewById(R.id.text_input_education_institution)
         textInputUserType = view?.findViewById(R.id.text_input_user_type)
+        textInputRegistration = view?.findViewById(R.id.text_input_registration)
+        textInputYearTick = view?.findViewById(R.id.text_input_year_tick)
 
+        containerPicker = view?.findViewById(R.id.container_picker)
+        containerLayout =  view?.findViewById(R.id.container_info_student)
         progressBar = view?.findViewById(R.id.progress_education)
+        buttonMatters = view!!.findViewById(R.id.button_matters)
 
         EditTextMask.addCpfMask(editTextCpf!!)
         EditTextMask.addTelefoneMask(editTextPhone!!)
+
+        bitmap?.let {
+            mImageViewPhotoProfile?.setImageBitmap(bitmap)
+        }
+
+        mImageViewPhotoProfile!!.setOnClickListener {
+            checkPremission()
+        }
+
+        val items: MutableList<String> = ArrayList()
+        for (disciplina in EDisciplina.values())  {
+            items.add( disciplina.nameSample)
+        }
+
+    }
+
+    fun checkPremission() {
+        val permissionStorage = Manifest.permission.WRITE_EXTERNAL_STORAGE
+        val permissionCamera = Manifest.permission.CAMERA
+
+        if (ContextCompat.checkSelfPermission(
+                activity!!,
+                permissionCamera
+            ) == PackageManager.PERMISSION_DENIED
+            ||
+            ContextCompat.checkSelfPermission(
+                activity!!,
+                permissionStorage
+            ) == PackageManager.PERMISSION_DENIED
+        ) {
+            ActivityCompat.requestPermissions(
+                activity!!,
+                arrayOf(permissionCamera, permissionStorage), 4
+            )
+        } else {
+            //DONE: Solicitar da camera ou galeria
+            val options = arrayOf("Galeria", "Câmera")
+            val builder = AlertDialog.Builder(activity!!)
+            builder
+                .setTitle("Selecione uma Opção")
+                .setItems(options) { dialog, which ->
+                    when {
+                        options[which] == "Galeria" -> {
+                            val intent = Intent()
+                            intent.type = "image/*"
+                            intent.action = Intent.ACTION_GET_CONTENT
+
+                            startActivityForResult(intent, ActivityRequestCode.GALLERY)
+                        }
+                        options[which] == "Câmera" -> {
+                            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+                            var photoFile: File? = null
+                            try {
+                                val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+                                val imageFileName = "JPEG_" + timeStamp + "_"
+                                val storageDir = activity!!.getExternalFilesDir("external_files")
+                                val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+                                mCurrentPhotoPath = image.absolutePath
+                                println(image.absolutePath)
+                                photoFile = image
+                            } catch (ex: IOException) {
+                                println(ex.message)
+                            }
+                            if (photoFile != null) {
+                                val photoURI: Uri? =
+                                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                                        Uri.fromFile(photoFile)
+                                    } else {
+                                        FileProvider.getUriForFile(
+                                            activity!!,
+                                            BuildConfig.APPLICATION_ID + ".fileprovider", photoFile
+                                        )
+                                    }
+                                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                                startActivityForResult(intent, ActivityRequestCode.CAMERA)
+                            }
+                        }
+                        else -> dialog?.dismiss()
+                    }
+                }
+            builder.show()
+        }
     }
 
     override fun mapActionComponents() {
         button?.setOnClickListener {
-            view?.findNavController()!!.navigate(R.id.action_genericFragment_to_registerTeacherFragment)//, bundle)
+            var bundle = Bundle()
+            bundle.putSerializable("user", user)
+            bitmap?.let {
+                val stream = ByteArrayOutputStream()
+                bitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
+                val byteArray = stream.toByteArray()
+                bundle.putByteArray("bitmapImage", byteArray)
+            }
+            mattersSelecteds?.let {  bundle.putSerializable("list_matters", mattersSelecteds) }
+            view?.findNavController()!!.navigate(R.id.action_genericFragment_to_registerStudentFragment, bundle)
         }
 
-        editTextName?.afterTextChanged {
-            enableButtonNext()
-        }
-
-        editTextCpf?.afterTextChanged {
-            enableButtonNext()
-        }
-
-        editTextPhone?.afterTextChanged {
-            enableButtonNext()
-        }
-
-        editTextEmail?.afterTextChanged {
-            enableButtonNext()
-        }
+        editTextName?.afterTextChanged {enableButtonNext()}
+        editTextCpf?.afterTextChanged {enableButtonNext()}
+        editTextPhone?.afterTextChanged {enableButtonNext()}
+        editTextEmail?.afterTextChanged {enableButtonNext()}
+        editTextBirthDay?.afterTextChanged {enableButtonNext()}
+        editTextUserType?.afterTextChanged {enableButtonNext()}
+        editTextEducationInstitution?.afterTextChanged {enableButtonNext()}
+        editTextRegisterNumber?.afterTextChanged {enableButtonNext()}
+        editTextYearsJoin?.afterTextChanged {enableButtonNext()}
 
         editTextEmail?.setOnEditorActionListener { _, actionId, _ ->
             if (actionId == EditorInfo.IME_ACTION_NEXT) {
@@ -124,34 +288,35 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
             }
             false
         }
-
-        editTextBirthDay?.afterTextChanged {
-            enableButtonNext()
-        }
-
         editTextBirthDay?.setOnClickListener {
             showDialogBirthDay()
         }
-
-        editTextUserType?.afterTextChanged {
-            enableButtonNext()
-        }
-
-        editTextEducationInstitution?.afterTextChanged {
-            enableButtonNext()
-        }
-
         editTextEducationInstitution?.setOnClickListener {
             bottonSheetEducationInstitutionFragment = BottonSheetEducationInstitutionFragment.newInstance()
             bottonSheetEducationInstitutionFragment!!.show(activity!!.supportFragmentManager, null)
             bottonSheetEducationInstitutionFragment!!.setListener(this)
         }
-
         editTextUserType?.setOnClickListener {
             bottonSheetUsetTypeFragment = BottonSheetUsetTypeFragment.newInstance()
             bottonSheetUsetTypeFragment!!.show(activity!!.supportFragmentManager, null)
             bottonSheetUsetTypeFragment!!.setListener(this)
         }
+
+        editTextYearsJoin?.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_DONE) {
+                if(button!!.isEnabled) {
+                    button?.performClick()
+                }
+            }
+            false
+        }
+
+        buttonMatters?.setOnClickListener {
+            MattersListDialogFragment.newInstance(createList()).show(childFragmentManager, "TESTE")
+        }
+
+        if(typeUser != null)
+            showDisplayTypeUser()
     }
 
     fun showDialogBirthDay() {
@@ -184,11 +349,7 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         registerViewModel = ViewModelProvider(this, RegisterViewModelFactory(activity!!)).get(RegisterViewModel::class.java)
         registerViewModel!!.queryInstitution.observe(this, androidx.lifecycle.Observer {
             progressBar?.visibility = View.INVISIBLE
-            if(it.error!!.not()) {
-
-            }
         })
-
         registerViewModel?.registerMonitoring()
     }
 
@@ -197,31 +358,13 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
     }
 
     fun validateFileds() : Boolean {
-        if(validateName().not()) {
-            return false
-        }
-        if(validateCPF().not()) {
-            return false
-        }
-        if(validatePhone().not()) {
-            return false
-        }
-
-        if(validateEmail().not()) {
-            return false
-        }
-
-        if(validateBirthaday().not()) {
-            return false
-        }
-
-        if( validateInstituicao().not()) {
-            return false
-        }
-
-        if(validateTypeUser().not()) {
-            return false
-        }
+        if(validateName().not()) { return false }
+        if(validateCPF().not()) { return false }
+        if(validatePhone().not()) { return false }
+        if(validateEmail().not()) { return false }
+        if(validateBirthaday().not()) { return false }
+        if( validateInstituicao().not()) { return false }
+        if(validateTypeUser().not()) { return false }
 
         user = User()
         user?.name = editTextName?.text.toString()
@@ -230,7 +373,23 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         user?.email = editTextEmail?.text.toString()
         user?.educationalInstitution = educationalInstitution
         user?.userType = typeUser!!.code
+        user?.birthDay = calendarBirthday.time
+
+        if(EUserType.STUDENT.code == typeUser!!.code) {
+            if(validateRegister().not()) { return false }
+            if(validateYearsJoin().not()) { return false }
+            user?.registration = editTextRegisterNumber?.text.toString().toLong()
+            user?.anoIngresso = editTextYearsJoin?.text.toString().toLong()
+        } else {
+            if(validateMatters().not()) { return false }
+        }
         return true
+    }
+
+    fun validateMatters() : Boolean {
+        if(mattersSelecteds == null)
+            return false
+        return mattersSelecteds!!.size > 0
     }
 
     fun validateName() : Boolean {
@@ -308,16 +467,88 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         return false
     }
 
+
+    fun validateRegister() : Boolean {
+        var userType = editTextRegisterNumber?.text.toString()
+        textInputRegistration?.helperText = null
+        if (userType.isNotEmpty()) {
+            return true
+        }
+        textInputRegistration?.helperText = getString(R.string.error_invalid_register_numer)
+        return false
+    }
+
+    fun validateYearsJoin() : Boolean {
+        var userType = editTextYearsJoin?.text.toString()
+        textInputYearTick?.helperText = null
+        if (userType.isEmpty()) {
+            textInputYearTick?.helperText = getString(R.string.error_invalid_join_yers)
+            return false
+        }  else if(userType.toInt() < 2000) {
+            textInputYearTick?.helperText = getString(R.string.error_invalid_min_data)
+            return false
+        } else if (userType.toInt() > calendarDateOfIssue.get(Calendar.YEAR)) {
+            textInputYearTick?.helperText = getString(R.string.error_invalid_max_data)
+            return false
+        }
+
+        return true
+    }
+
     override fun onClick(typeUser: EUserType?) {
         this.typeUser = typeUser
+        showDisplayTypeUser()
         editTextUserType?.setText(typeUser!!.description)
         bottonSheetUsetTypeFragment?.dismiss()
+    }
+
+    fun showDisplayTypeUser() {
+        if(typeUser!!.code == EUserType.STUDENT.code) {
+            containerLayout?.visibility = View.VISIBLE
+            containerPicker?.visibility = View.GONE
+            editTextRegisterNumber?.requestFocus()
+        } else {
+            MattersListDialogFragment.newInstance(createList()).show(childFragmentManager, "TESTE")
+            containerPicker?.visibility = View.VISIBLE
+            containerLayout?.visibility = View.GONE
+        }
     }
 
     override fun onClick(educationalInstitution: EducationalInstitution?) {
         this.educationalInstitution = educationalInstitution
         editTextEducationInstitution?.setText(educationalInstitution?.name)
         bottonSheetEducationInstitutionFragment?.dismiss()
+    }
+
+    fun createList() : ArrayList<MatterInfo>{
+        if(matters == null) {
+            matters = ArrayList(EDisciplina.values().size)
+            for (matter in EDisciplina.values()) {
+               var matterInfo = MatterInfo()
+                matterInfo.edisciplina = matter
+                matterInfo.selected = false
+                matters!!.add(matterInfo)
+            }
+        }
+        return matters!!
+    }
+
+    override fun onItemClicked(matterInfo: MatterInfo) {
+        if(mattersSelecteds == null) {
+            mattersSelecteds = ArrayList()
+            addMatterInfo(matterInfo)
+        } else {
+            addMatterInfo(matterInfo)
+        }
+        enableButtonNext()
+    }
+
+    fun addMatterInfo(matterInfo: MatterInfo) {
+        if(mattersSelecteds!!.contains(matterInfo) && matterInfo.selected!!.not()) {
+            mattersSelecteds!!.remove(matterInfo)
+        } else {
+            mattersSelecteds!!.add(matterInfo)
+        }
     }
 }
 

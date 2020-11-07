@@ -1,16 +1,18 @@
 package com.ifsc.lages.sti.tcc.model.user
 
 import android.content.Context
-import com.google.gson.annotations.SerializedName
 import com.ifsc.lages.sti.tcc.model.matter.Matter
 import com.ifsc.lages.sti.tcc.resources.user.UserResponse
 import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
 import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
+import java.io.Serializable
+import java.util.*
+import kotlin.collections.ArrayList
 
-class User {
+class User : Serializable {
     var _id: Long? = null
     var cpf: String? = null
-    var birthDay: String? = null
+    var birthDay: Date? = null
     var name: String? = null
     var email: String? = null
     var phone: String? = null
@@ -24,7 +26,7 @@ class User {
     object UserMappper {
 
         fun transform(it: UserResponse.Login): User {
-            var user =  User()
+            val user =  User()
             user._id = it._id
             user.cpf = it.cpf
             user.birthDay = it.birthDay
@@ -33,14 +35,14 @@ class User {
             user.phone = it.phone
 
             if(it.educationalInstitution != null) {
-                var instituition = EducationalInstitution()
+                val instituition = EducationalInstitution()
                 instituition._id = it.educationalInstitution?._id
                 instituition.name = it.educationalInstitution?.name
                 user.educationalInstitution = instituition
             }
 
             if(it.matters != null) {
-                var matter = Matter.MatterMappper.transform(it._id!!, it.matters!!)
+                val matter = Matter.MatterMappper.transform(it._id!!, it.matters!!)
                 user.matter = matter
             }
 
@@ -48,7 +50,6 @@ class User {
             user.userType = it.userType
             user.registration = it.registration
             user.anoIngresso = it.anoIngresso
-
             return user
         }
 

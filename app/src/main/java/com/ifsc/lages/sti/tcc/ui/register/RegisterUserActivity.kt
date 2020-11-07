@@ -1,8 +1,6 @@
 package com.ifsc.lages.sti.tcc.ui.register
 
 import android.os.Bundle
-import android.os.PersistableBundle
-import android.view.View
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
 
@@ -21,5 +19,4 @@ class RegisterUserActivity : BaseActivty() {
     override fun mapActionComponents() {
         super.mapActionComponents()
     }
-
 }

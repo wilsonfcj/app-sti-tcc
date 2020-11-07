@@ -6,9 +6,15 @@
     <color name="colorRipple">#C5CAE9</color>
     <color name="colorToolbar">#008577</color>
 
+    <color name="textPrimary">#000000</color>
+    <color name="textSecondary">#555555</color>
+
     <color name="backgournd_splash">@color/colorPrimary</color>
     <color name="icon_splash">#FFFFFF</color>
     <color name="white">#FFFFFF</color>
     <color name="backgournd_login">#00A794</color>
+    <color name="icons">#008577</color>
+    <color name="set_background_transparent">#BA008577</color>
 
+    <color name="divider">#BDBDBD</color>
 </resources>

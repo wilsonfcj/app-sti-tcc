@@ -13,14 +13,8 @@ interface Api {
         @POST("Login")
         fun login(@Body request : UserRequest.Login) : Call<BaseResponse<UserResponse.Login>>
 
-//        @POST("farmer")
-//        fun registerUser(@Body request : UserRequest.UserBase) : Call<UserResponse.Farmer>
-//
-//        @PUT("farmer/{id}")
-//        fun updateUser(@Path("id") id : Long?, @Body request : UserRequest.UserBase) : Call<UserRequest.UserBase>
-//
-//        @GET("farmer/cpf/")
-//        fun queryUser(@Query("cpf") cpf : String) : Call<UserResponse.Farmer>
+        @POST("Cadastro")
+        fun register(@Body request : UserRequest.Register) : Call<BaseResponse<UserResponse.Login>>
     }
 
     interface EducationInstitution {

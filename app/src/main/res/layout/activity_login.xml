@@ -97,7 +97,7 @@
                 android:layout_height="wrap_content"
                 android:drawableStart="@drawable/ic_login_password"
                 android:drawablePadding="8dp"
-                android:hint="@string/prompt_senha"
+                android:hint="@string/prompt_password"
                 android:imeActionLabel="@string/prompt_ok"
                 android:imeOptions="actionDone"
                 android:inputType="text"

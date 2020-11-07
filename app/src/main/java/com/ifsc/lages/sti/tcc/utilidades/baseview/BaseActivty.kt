@@ -58,11 +58,7 @@ abstract class BaseActivty : AppCompatActivity(), MapElement {
     }
 
     fun setTitleToolbar(aTitle: String) {
-        if (txtTitleToolbar == null) {
-            mToolbar?.title = aTitle
-        } else {
-            txtTitleToolbar?.text = aTitle
-        }
+        mToolbar?.let { setTitle(aTitle!!) }
     }
 
     override fun mapActionComponents() {}

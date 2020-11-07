@@ -3,8 +3,9 @@ package com.ifsc.lages.sti.tcc.model.user
 import com.ifsc.lages.sti.tcc.resources.education.InstitutionResponse
 import io.realm.Realm
 import io.realm.RealmObject
+import java.io.Serializable
 
-open class EducationalInstitution : RealmObject()  {
+open class EducationalInstitution : RealmObject(), Serializable {
 
     var _id: Long? = null
     var name: String? = null

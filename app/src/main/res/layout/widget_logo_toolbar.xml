@@ -20,7 +20,7 @@
                         android:background="@color/colorPrimary"
                         style="@style/ToolbarStyle">
 
-                        <include layout="@layout/layout_logo_toolbar"/>
+<!--                        <include layout="@layout/layout_logo_toolbar"/>-->
 
                 </androidx.appcompat.widget.Toolbar>
 

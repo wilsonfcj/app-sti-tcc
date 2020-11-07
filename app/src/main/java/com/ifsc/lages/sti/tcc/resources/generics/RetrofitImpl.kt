@@ -26,7 +26,7 @@ class RetrofitImpl(private val url: String = BuildConfig.WS_URL) {
             val lFormat =
                 SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", Locale.US)
             return try {
-                lFormat.parse(lDate)
+                lFormat.parse(lDate)!!
             } catch (exp: ParseException) {
                 val datereip = lDate.replace("/Date(", "").replace(")/", "")
                 val timeInMillis = java.lang.Long.valueOf(datereip)

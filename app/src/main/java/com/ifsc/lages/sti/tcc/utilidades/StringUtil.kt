@@ -1,11 +1,12 @@
 package com.ifsc.lages.sti.tcc.utilidades
 
+import android.annotation.SuppressLint
 import java.text.SimpleDateFormat
 import java.util.*
 
 object StringUtil {
 
-    fun checkEmail(aEmail: String?): Boolean {
+    fun checkEmail(aEmail: CharSequence): Boolean {
         val ePattern =
             "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$"
         val p = java.util.regex.Pattern.compile(ePattern)
@@ -139,11 +140,13 @@ object StringUtil {
         return data("dd/MM/yyyy HH:mm", aData)
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun data(aFormato: String, aDate: String?): String {
-        val parse = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(aDate)
+        val parse = SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(aDate!!)
         return data(aFormato, parse)
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun dataPayment(aFormato: String, aDate: String?): String {
         if(aDate!!.contains("/")) {
             return dataPaymentII(aFormato, aDate)
@@ -152,32 +155,38 @@ object StringUtil {
         return data(aFormato, parse)
     }
 
-    fun dataPaymentToDate(aFormato: String, aDate: String?): Date{
+    @SuppressLint("SimpleDateFormat")
+    fun dataPaymentToDate(aDate: String?): Date{
         if(aDate!!.contains("/")) {
-            return SimpleDateFormat("dd/MM/yyyy").parse(aDate)
+            return SimpleDateFormat("dd/MM/yyyy").parse(aDate)!!
         }
         val parse = SimpleDateFormat("yyyy-MM-dd").parse(aDate)
-        return parse
+        return parse!!
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun dataPaymentII(aFormato: String, aDate: String?): String {
-        val parse = SimpleDateFormat("dd/MM/yyyy").parse(aDate)
+        val parse = SimpleDateFormat("dd/MM/yyyy").parse(aDate!!)
         return data(aFormato, parse)
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun dataToDate(formato : String, aData: String): Date {
-        return SimpleDateFormat(formato).parse(aData)
+        return SimpleDateFormat(formato).parse(aData)!!
     }
 
-    fun data(aFormato: String, aDate: String?, aFormatoString : String?): String {
+    @SuppressLint("SimpleDateFormat")
+    fun data(aFormato: String, aDate: String, aFormatoString : String): String {
         val parse = SimpleDateFormat(aFormatoString).parse(aDate)
         return data(aFormato, parse)
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun data(aData: String): Date {
-        return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(aData)
+        return SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss").parse(aData)!!
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun data(aFormato: String, aData: Date?): String {
         return if (aData != null) SimpleDateFormat(aFormato).format(aData) else ""
     }
@@ -186,12 +195,14 @@ object StringUtil {
         return data(aFormato, aData)
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun dataAtual(aFormato: String): String {
         return SimpleDateFormat(aFormato).format(Date())
     }
 
+    @SuppressLint("SimpleDateFormat")
     fun addDaysAtualDate(aFormato: String, daysAdd : Int): String {
-        var calendar : Calendar = Calendar.getInstance()
+        val calendar : Calendar = Calendar.getInstance()
         calendar.add(Calendar.DAY_OF_MONTH, daysAdd)
         return SimpleDateFormat(aFormato).format(calendar.time)
     }
