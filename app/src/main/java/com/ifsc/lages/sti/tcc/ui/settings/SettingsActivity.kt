@@ -3,6 +3,7 @@ package com.ifsc.lages.sti.tcc.ui.settings
 import android.content.Intent
 import android.os.Bundle
 import android.view.View
+import android.view.animation.OvershootInterpolator
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -13,8 +14,10 @@ import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.user.User
 import com.ifsc.lages.sti.tcc.props.EUserType
 import com.ifsc.lages.sti.tcc.ui.login.LoginActivity
+import com.ifsc.lages.sti.tcc.ui.register.RegisterUserActivity
 import com.ifsc.lages.sti.tcc.utilidades.*
 import com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
+import net.cachapa.expandablelayout.ExpandableLayout
 import java.util.*
 
 class SettingsActivity : BaseActivty() {
@@ -32,6 +35,12 @@ class SettingsActivity : BaseActivty() {
     var customYearsJoin : CustomItemUser? = null
     var customVersionCode : CustomItemUser? = null
     var containerStudent : LinearLayout? = null
+
+
+    var arrowCollapse : ImageView? = null //aView.findViewById(R.id.img_view_collapse)
+    var containerTeacher : LinearLayout? = null
+    var mContainerExpandable : ExpandableLayout? = null //aView.findViewById<ExpandableLayout>(R.id.container_expadable)
+    var mRotationArrow = 180
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,8 +67,14 @@ class SettingsActivity : BaseActivty() {
 
         containerStudent = findViewById(R.id.container_student)
 
+        arrowCollapse = findViewById(R.id.img_view_collapse)
+        containerTeacher = findViewById(R.id.container_teacher)
+        mContainerExpandable = findViewById(R.id.container_expadable)
+
         var name = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_NAME, "")
-        textView?.text = "Bem vindo(a),\n$name"
+        var userType = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_TYPE, 1)
+        var lUsetType = EUserType.getUserType(userType)
+        textView?.text = "${lUsetType.description},\n$name"
 
         var image = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_PHOTO, "")
         if(image.isNotEmpty()) {
@@ -69,8 +84,14 @@ class SettingsActivity : BaseActivty() {
         showDisplayInfos()
     }
 
-    fun showDisplayInfos() {
+    fun animationArrowImage() {
+        mRotationArrow = if (mRotationArrow == 0)  180 else 0
+        arrowCollapse?.animate()?.rotation(mRotationArrow.toFloat())?.setDuration(500)?.setInterpolator(
+            OvershootInterpolator()
+        )?.start()
+    }
 
+    fun showDisplayInfos() {
         var birthday = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_BIRTH_DAY, Date())
         var type = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_TYPE, 1)
         var registration = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_REGISTRATION, 0L)
@@ -88,11 +109,11 @@ class SettingsActivity : BaseActivty() {
             customRegisterNumber?.setTitle(registration.toString())
             customYearsJoin?.setTitle(yearJoin.toString())
             containerStudent?.visibility = View.VISIBLE
+            containerTeacher?.visibility = View.GONE
         } else {
+            containerTeacher?.visibility = View.VISIBLE
             containerStudent?.visibility = View.GONE
         }
-
-
         customVersionCode?.setTitle(BuildConfig.VERSION_NAME)
     }
 
@@ -109,7 +130,7 @@ class SettingsActivity : BaseActivty() {
         }
 
         buttonChangeInfos?.setOnClickListener {
-
+            ActivityUtil.Builder(applicationContext, RegisterUserActivity::class.java).build()
         }
     }
 }

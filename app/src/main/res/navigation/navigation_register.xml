@@ -22,6 +22,7 @@
     <fragment
         android:id="@+id/registerStudentFragment"
         android:name="com.ifsc.lages.sti.tcc.ui.register.RegisterPasswordFragment"
-        tools:layout="@layout/fragment_register_password" />
+        tools:layout="@layout/fragment_register_password"
+        app:defaultNavHost="true"/>
 
 </navigation>

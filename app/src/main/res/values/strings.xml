@@ -11,6 +11,8 @@
     <string name="prompt_cell_fone">Telefone</string>
     <string name="prompt_email">E-mail</string>
     <string name="prompt_password">Senha</string>
+    <string name="prompt_old_password">Senha Antiga</string>
+    <string name="prompt_new_password">Nova Senha</string>
     <string name="prompt_confirm_password">Confirmar Senha</string>
     <string name="prompt_birthday">Data de nascimento</string>
     <string name="prompt_education_institution">Instituição</string>
@@ -22,6 +24,9 @@
 
 
     <string name="prompt_register">Cadastre-se agora</string>
+    <string name="prompt_update">Alterar agora</string>
+    <string name="prompt_loading_register">Registrando usuário</string>
+    <string name="prompt_loading_update">Alterando usuário</string>
 
     <string name="prompt_teacher">Professor</string>
     <string name="prompt_student">Aluno</string>
@@ -41,6 +46,8 @@
     <string name="error_invalid_min_data">Ano deve ser maior que 2000</string>
     <string name="error_invalid_max_data">Ano deve ser menor ou igual o ano atual</string>
     <string name="error_invalid_join_yers">Informe o ano de ingresso</string>
+
+    <string name="error_invalid_old_password">Senha inválida</string>
 
     <string name="error_invalid_password">Senha deve conter no mínimo 6 caracteres</string>
     <string name="error_invalid_confirm_password">Senhas não correspondem</string>

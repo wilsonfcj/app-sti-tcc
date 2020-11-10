@@ -23,6 +23,11 @@
         <item name="android:textColor">@android:color/white</item>
     </style>
 
+    <style name="buttonStyle.AppTransparent" parent="android:Widget.Material.Button" tools:ignore="NewApi">
+        <item name="android:background">@drawable/ripple_effect_transparent</item>
+        <item name="android:textColor">@android:color/white</item>
+    </style>
+
     <style name="LoginActivityStyle" parent="Theme.AppCompat.Light.DarkActionBar">
         <item name="colorControlNormal">@color/colorPrimary</item>
         <item name="colorControlActivated">@color/colorAccent</item>

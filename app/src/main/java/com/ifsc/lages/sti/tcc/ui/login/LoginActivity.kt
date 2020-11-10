@@ -86,6 +86,7 @@ class LoginActivity : BaseActivty() {
            hideLoading()
            if(it.error!!.not()) {
                setRememberCPF(it.success!!)
+               SharedPreferencesUtil.put(applicationContext, KeyPrefs.USER_PASSWORD,  password?.text.toString())
                ActivityUtil.Builder(applicationContext, MainActivity::class.java).build()
                finish()
            } else {
@@ -158,7 +159,7 @@ class LoginActivity : BaseActivty() {
 
     fun eventLogin() {
         showLoading("Autenticando usuário")
-        viewModel?.registerMonitoring(loginUser?.text.toString().removeMask(), password?.text.toString())
+        viewModel?.login(loginUser?.text.toString().removeMask(), password?.text.toString())
     }
 
     fun eventRegister() {

@@ -172,6 +172,13 @@ class MattersListDialogFragment(var matters :  ArrayList<MatterInfo>) : DialogFr
             }
         }
 
+        override fun onViewRecycled(holder: ViewHolder) {
+            if (holder.radioButton != null) {
+                holder.radioButton.setOnCheckedChangeListener(null)
+            }
+            super.onViewRecycled(holder)
+        }
+
         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
             return ViewHolder(LayoutInflater.from(parent.context), parent)
         }

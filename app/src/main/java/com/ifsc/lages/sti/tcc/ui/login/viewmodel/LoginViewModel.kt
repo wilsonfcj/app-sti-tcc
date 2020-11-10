@@ -17,7 +17,7 @@ class LoginViewModel (var activity: Context, var repository : UserRepository) : 
     val _loginViewMonitoring = MutableLiveData<BaseView<User>>()
     var loginViewMonitoring : LiveData<BaseView<User>> = _loginViewMonitoring
 
-    fun registerMonitoring(cpf: String, senha : String) {
+    fun login(cpf: String, senha : String) {
         repository.login(cpf, senha, object : DisposableObserver<User>() {
 
             override fun onComplete() {

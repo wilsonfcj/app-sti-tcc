@@ -6,18 +6,18 @@ import android.app.AlertDialog
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
-import android.media.ExifInterface
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
 import android.provider.MediaStore
-import android.util.TypedValue
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.widget.*
+import android.widget.EditText
+import android.widget.ImageView
+import android.widget.LinearLayout
+import android.widget.ProgressBar
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
@@ -37,17 +37,13 @@ import com.ifsc.lages.sti.tcc.ui.register.bottomsheet.BottonSheetEducationInstit
 import com.ifsc.lages.sti.tcc.ui.register.bottomsheet.BottonSheetUsetTypeFragment
 import com.ifsc.lages.sti.tcc.ui.register.viewmodel.RegisterViewModel
 import com.ifsc.lages.sti.tcc.ui.register.viewmodel.RegisterViewModelFactory
-import com.ifsc.lages.sti.tcc.utilidades.ActivityRequestCode
-import com.ifsc.lages.sti.tcc.utilidades.EditTextMask
-import com.ifsc.lages.sti.tcc.utilidades.ImageUtil
-import com.ifsc.lages.sti.tcc.utilidades.StringUtil
+import com.ifsc.lages.sti.tcc.utilidades.*
 import com.ifsc.lages.sti.tcc.utilidades.baseview.BaseFragment
 import com.tsongkha.spinnerdatepicker.SpinnerDatePickerDialogBuilder
 import java.io.*
 import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
-import kotlin.math.max
 
 class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.CallbackOptions, BottonSheetEducationInstitutionFragment.CallbackOptions, MattersListDialogFragment.Listener {
 
@@ -92,6 +88,7 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
     var matters : ArrayList<MatterInfo>? = null
     var buttonMatters : MaterialButton? = null
     var mattersSelecteds : ArrayList<MatterInfo>? = null
+    var isRegister : Boolean = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -108,7 +105,7 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         if (resultCode == Activity.RESULT_OK) {
             when (requestCode) {
                 ActivityRequestCode.GALLERY ->
-                    if (data != null) {
+                    data?.let {
                         bitmap = ImageUtil.gallery(activity!!, data.data)
                         bitmap?.let { mImageViewPhotoProfile?.setImageBitmap(bitmap) }
                     }
@@ -120,25 +117,40 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         }
     }
 
-    fun writeFile(input: InputStream, file: File) {
-        var out: OutputStream? = null
-        try {
-            out = FileOutputStream(file)
-            val buffer = ByteArray(DEFAULT_BUFFER_SIZE)
-            var len: Int
-            do {
-                len = input.read(buffer)
-                out.write(buffer, 0, len)
-            } while (len > 0)
-        } catch (e: Exception) {
-            e.printStackTrace()
-        } finally {
-            try {
-                out?.close()
-                input.close()
-            } catch (e: IOException) {
-                e.printStackTrace()
+    fun showDisplayEditUser() {
+        user = User.UserShared.load(activity!!)
+        user?.let {
+            isRegister = false
+            editTextCpf?.isEnabled = false
+            editTextCpf?.setText(user!!.cpf)
+            editTextName?.setText(user!!.name)
+            editTextPhone?.setText(user!!.phone)
+            editTextEmail?.setText(user!!.email)
+            editTextBirthDay?.setText(StringUtil.data(user!!.birthDay!!, "dd/MM/yyyy"))
+            editTextEducationInstitution?.setText(user!!.educationalInstitution!!.name)
+            educationalInstitution = user!!.educationalInstitution!!
+            editTextEducationInstitution?.setText(educationalInstitution!!.name)
+
+            if(user!!.imageUser!!.isNotEmpty()) {
+                mImageViewPhotoProfile?.setImageBitmap(ImageUtil.convertBase64ToBitmap(user!!.imageUser!!))
             }
+
+            editTextUserType?.isEnabled = false
+            if (EUserType.STUDENT.code == user!!.userType) {
+                typeUser = EUserType.STUDENT
+                editTextRegisterNumber?.setText(user!!.registration.toString())
+                editTextYearsJoin?.setText(user!!.anoIngresso.toString())
+                editTextUserType?.setText(EUserType.STUDENT.description)
+                containerLayout?.visibility = View.VISIBLE
+                containerPicker?.visibility = View.GONE
+            } else {
+                typeUser = EUserType.TEACHER
+                editTextUserType?.setText(EUserType.TEACHER.description)
+                containerLayout?.visibility = View.GONE
+                containerPicker?.visibility = View.VISIBLE
+            }
+            createList()
+            enableButtonNext()
         }
     }
 
@@ -151,7 +163,6 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         editTextBirthDay = view?.findViewById(R.id.edit_text_birthday)
         editTextEducationInstitution = view?.findViewById(R.id.edit_text_education_institution)
         editTextUserType = view?.findViewById(R.id.edit_text_user_type)
-
         editTextRegisterNumber = view?.findViewById(R.id.edit_text_registration)
         editTextYearsJoin = view?.findViewById(R.id.edit_text_year_tick)
 
@@ -183,11 +194,12 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
             checkPremission()
         }
 
+        showDisplayEditUser()
+
         val items: MutableList<String> = ArrayList()
         for (disciplina in EDisciplina.values())  {
             items.add( disciplina.nameSample)
         }
-
     }
 
     fun checkPremission() {
@@ -262,6 +274,7 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         button?.setOnClickListener {
             var bundle = Bundle()
             bundle.putSerializable("user", user)
+            bundle.putBoolean("register", isRegister)
             bitmap?.let {
                 val stream = ByteArrayOutputStream()
                 bitmap?.compress(Bitmap.CompressFormat.PNG, 100, stream)
@@ -316,7 +329,7 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         }
 
         if(typeUser != null)
-            showDisplayTypeUser()
+            showDisplayTypeUser(false)
     }
 
     fun showDialogBirthDay() {
@@ -497,18 +510,20 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
 
     override fun onClick(typeUser: EUserType?) {
         this.typeUser = typeUser
-        showDisplayTypeUser()
+        showDisplayTypeUser(true)
         editTextUserType?.setText(typeUser!!.description)
         bottonSheetUsetTypeFragment?.dismiss()
     }
 
-    fun showDisplayTypeUser() {
+    fun showDisplayTypeUser(openDisplayMatters : Boolean) {
         if(typeUser!!.code == EUserType.STUDENT.code) {
             containerLayout?.visibility = View.VISIBLE
             containerPicker?.visibility = View.GONE
             editTextRegisterNumber?.requestFocus()
         } else {
-            MattersListDialogFragment.newInstance(createList()).show(childFragmentManager, "TESTE")
+            if (openDisplayMatters) {
+                MattersListDialogFragment.newInstance(createList()).show(childFragmentManager, "TESTE")
+            }
             containerPicker?.visibility = View.VISIBLE
             containerLayout?.visibility = View.GONE
         }
@@ -524,9 +539,17 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
         if(matters == null) {
             matters = ArrayList(EDisciplina.values().size)
             for (matter in EDisciplina.values()) {
-               var matterInfo = MatterInfo()
+                var matterInfo = MatterInfo()
                 matterInfo.edisciplina = matter
                 matterInfo.selected = false
+                if(isRegister.not()) {
+                    for(matterSave in user?.matter!!) {
+                        if(matterSave.code == matter.code) {
+                            matterInfo.selected = true
+                            addMatterInfo(matterInfo)
+                        }
+                    }
+                }
                 matters!!.add(matterInfo)
             }
         }
@@ -534,16 +557,14 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
     }
 
     override fun onItemClicked(matterInfo: MatterInfo) {
-        if(mattersSelecteds == null) {
-            mattersSelecteds = ArrayList()
-            addMatterInfo(matterInfo)
-        } else {
-            addMatterInfo(matterInfo)
-        }
+        addMatterInfo(matterInfo)
         enableButtonNext()
     }
 
     fun addMatterInfo(matterInfo: MatterInfo) {
+        if(mattersSelecteds == null) {
+            mattersSelecteds = ArrayList()
+        }
         if(mattersSelecteds!!.contains(matterInfo) && matterInfo.selected!!.not()) {
             mattersSelecteds!!.remove(matterInfo)
         } else {

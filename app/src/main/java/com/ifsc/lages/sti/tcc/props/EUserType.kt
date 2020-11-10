@@ -4,22 +4,23 @@ enum class EUserType(var code: Int, var description: String) {
     STUDENT(1, "Aluno"),
     TEACHER(2, "Professor");
 
-    fun getUserType(aCod: Int): EUserType {
-        for (lValue in values()) {
-            if (lValue.code == aCod) {
-                return lValue
+    companion object {
+        open fun getUserType(aCod: Int): EUserType {
+            for (lValue in values()) {
+                if (lValue.code == aCod) {
+                    return lValue
+                }
             }
+            return STUDENT
         }
-        return STUDENT
-    }
 
-    fun getUserType(description: String?): EUserType {
-        for (lValue in values()) {
-            if (lValue.description.equals(description, ignoreCase = true)) {
-                return lValue
+        open fun getUserType(description: String?): EUserType {
+            for (lValue in values()) {
+                if (lValue.description.equals(description, ignoreCase = true)) {
+                    return lValue
+                }
             }
+            return STUDENT
         }
-        return STUDENT
     }
-
 }

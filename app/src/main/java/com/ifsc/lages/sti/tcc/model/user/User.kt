@@ -1,7 +1,9 @@
 package com.ifsc.lages.sti.tcc.model.user
 
 import android.content.Context
+import android.view.View
 import com.ifsc.lages.sti.tcc.model.matter.Matter
+import com.ifsc.lages.sti.tcc.props.EUserType
 import com.ifsc.lages.sti.tcc.resources.user.UserResponse
 import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
 import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
@@ -102,6 +104,50 @@ class User : Serializable {
                 Matter.DB.deleteAll(t._id!!)
                 Matter.DB.insertOrUpdateAll(t.matter!!)
             }
+        }
+
+        fun load(context: Context) : User? {
+            val cpf = SharedPreferencesUtil.get(context, KeyPrefs.USER_CPF, "")
+            if(cpf.isEmpty()) {
+                return null
+            }
+
+            val _id = SharedPreferencesUtil.get(context, KeyPrefs.USER_ID, 0L)
+            val name = SharedPreferencesUtil.get(context, KeyPrefs.USER_NAME, "")
+            val birthday = SharedPreferencesUtil.get(context, KeyPrefs.USER_BIRTH_DAY, Date())
+            val type = SharedPreferencesUtil.get(context, KeyPrefs.USER_TYPE, 1)
+            val registration = SharedPreferencesUtil.get(context, KeyPrefs.USER_REGISTRATION, 0L)
+            val email =  SharedPreferencesUtil.get(context, KeyPrefs.USER_EMAIL, "")
+            val phone = SharedPreferencesUtil.get(context, KeyPrefs.USER_PHONE, "")
+            val yearJoin = SharedPreferencesUtil.get(context, KeyPrefs.USER_YEAR_JOIN, 2017L)
+            val educationName = SharedPreferencesUtil.get(context, KeyPrefs.EDUCATION_INSTITUITION_NOME, "")
+            val educationCode = SharedPreferencesUtil.get(context, KeyPrefs.EDUCATION_INSTITUITION_ID, 0L)
+            var image = SharedPreferencesUtil.get(context, KeyPrefs.USER_PHOTO, "")
+
+            val educationalInstitution = EducationalInstitution()
+            educationalInstitution?._id = educationCode
+            educationalInstitution?.name = educationName
+
+            val user = User()
+            user.cpf = cpf
+            user._id = _id
+            user.name = name
+            user.email = email
+            user.birthDay = birthday
+            user.userType = type
+            user.phone = phone
+            user.imageUser = image
+            user.educationalInstitution = educationalInstitution
+
+            if(EUserType.STUDENT.code == type) {
+                user.registration = registration
+                user.anoIngresso = yearJoin
+            } else {
+                var matters : MutableList<Matter> = Matter.DB.loadAll(_id) as MutableList<Matter>
+                user.matter = matters
+            }
+
+            return user
         }
     }
 }

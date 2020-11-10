@@ -15,6 +15,9 @@ interface Api {
 
         @POST("Cadastro")
         fun register(@Body request : UserRequest.Register) : Call<BaseResponse<UserResponse.Login>>
+
+        @PUT("Alterar")
+        fun update(@Body request : UserRequest.Register) : Call<BaseResponse<UserResponse.Login>>
     }
 
     interface EducationInstitution {

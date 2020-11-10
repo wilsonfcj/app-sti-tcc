@@ -70,6 +70,7 @@ dependencies {
     androidTestImplementation 'androidx.test.ext:junit:1.1.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.1.1'
     implementation 'com.google.android.material:material:1.0.0'
+    implementation 'net.cachapa.expandablelayout:expandablelayout:2.9.2'
 
     //    bibliotecas para realizara conexão com o WS
     implementation "com.squareup.retrofit2:retrofit:$retrofitVersion"

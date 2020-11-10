@@ -66,7 +66,7 @@
                         android:gravity="center_vertical"
                         android:textSize="@dimen/size_text_name_my_profile"
                         android:textColor="@color/white"
-                        android:text="Olá, \nLucas Ricardo lOrso teste teste teste teste" />
+                        android:text="Olá, \nLucas Ricardo Orso " />
 
                 </RelativeLayout>
 
@@ -107,8 +107,8 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
-                    android:background="@null"
                     android:text="Alterar Dados"
+                    android:background="@drawable/ripple_effect_transparent"
                     android:visibility="visible"/>
 
                 <Button
@@ -118,7 +118,7 @@
                     android:layout_alignParentStart="true"
                     android:layout_alignParentTop="true"
                     android:layout_weight="1"
-                    android:background="@null"
+                    android:background="@drawable/ripple_effect_transparent"
                     android:text="Sair" />
 
             </LinearLayout>
@@ -181,14 +181,15 @@
                 android:layout_marginTop="@dimen/margin_top_item_my_user"
                 android:layout_marginLeft="@dimen/margin_left_item_my_user"
                 android:layout_marginRight="@dimen/margin_right_item_my_user"
-                user:iconSrcItem="@drawable/ic_action_home" />
+                user:iconSrcItem="@drawable/ic_home" />
 
 
             <LinearLayout
                 android:id="@+id/container_student"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                tools:visibility="gone">
 
                 <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
                     android:id="@+id/custom_register_number"
@@ -214,7 +215,21 @@
 
             </LinearLayout>
 
-            <RelativeLayout
+
+        <LinearLayout
+            android:id="@+id/container_teacher"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/margin_top_item_my_user"
+            android:layout_marginLeft="@dimen/margin_left_item_my_user"
+            android:layout_marginRight="@dimen/margin_right_item_my_user"
+            android:orientation="vertical">
+
+            <include layout="@layout/layout_expandable_matters"></include>
+
+        </LinearLayout>
+
+        <RelativeLayout
                 android:id="@+id/divider"
                 android:layout_width="match_parent"
                 android:layout_height="1dp"

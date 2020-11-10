@@ -88,6 +88,7 @@ class KeyPrefs {
         const val USER_ID = "idUsuario"
         const val USER_CPF = "cpfUsuario"
         const val USER_REMEMBER_CPF = "lembrarCPFUsuario"
+        const val USER_PASSWORD = "senha"
         const val USER_BIRTH_DAY= "birthDay"
         const val USER_NAME = "nomeUsuario"
         const val USER_EMAIL = "emailUsuario"
