@@ -69,7 +69,7 @@ class UserRepository {
 
     private fun update(user: User, password: String) : Single<BaseResponse<UserResponse.Login>> {
         var request = UserRequest.Register().transform(user)
-        if(password != null)
+        if(password.isNotEmpty())
             request.password = password
         return Single.create {
             try {

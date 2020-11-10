@@ -223,7 +223,8 @@
             android:layout_marginTop="@dimen/margin_top_item_my_user"
             android:layout_marginLeft="@dimen/margin_left_item_my_user"
             android:layout_marginRight="@dimen/margin_right_item_my_user"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:visibility="gone">
 
             <include layout="@layout/layout_expandable_matters"></include>
 

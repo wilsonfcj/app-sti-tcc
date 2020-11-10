@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.navigation.Navigation
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
+import com.ifsc.lages.sti.tcc.model.user.User
 
 
 class RegisterUserActivity : BaseActivty() {
@@ -15,7 +16,12 @@ class RegisterUserActivity : BaseActivty() {
 
     override fun mapComponents() {
         super.mapComponents()
-        setTitleToolbar("Cadastro")
+        var user = User.UserShared.load(this@RegisterUserActivity)
+        if(user == null) {
+            setTitleToolbar(getString(R.string.title_toolbar_register))
+        } else {
+            setTitleToolbar(getString(R.string.title_toolbar_update))
+        }
     }
 
     override fun mapActionComponents() {

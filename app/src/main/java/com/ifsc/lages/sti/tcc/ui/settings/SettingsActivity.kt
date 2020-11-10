@@ -111,7 +111,7 @@ class SettingsActivity : BaseActivty() {
             containerStudent?.visibility = View.VISIBLE
             containerTeacher?.visibility = View.GONE
         } else {
-            containerTeacher?.visibility = View.VISIBLE
+            containerTeacher?.visibility = View.GONE
             containerStudent?.visibility = View.GONE
         }
         customVersionCode?.setTitle(BuildConfig.VERSION_NAME)

@@ -3,6 +3,7 @@ package com.ifsc.lages.sti.tcc.ui.register
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -14,6 +15,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
+import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -120,6 +122,7 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
     fun showDisplayEditUser() {
         user = User.UserShared.load(activity!!)
         user?.let {
+//            view!!.hideKeyboard()
             isRegister = false
             editTextCpf?.isEnabled = false
             editTextCpf?.setText(user!!.cpf)
@@ -148,8 +151,8 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
                 editTextUserType?.setText(EUserType.TEACHER.description)
                 containerLayout?.visibility = View.GONE
                 containerPicker?.visibility = View.VISIBLE
+                createList()
             }
-            createList()
             enableButtonNext()
         }
     }
@@ -543,10 +546,12 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
                 matterInfo.edisciplina = matter
                 matterInfo.selected = false
                 if(isRegister.not()) {
-                    for(matterSave in user?.matter!!) {
-                        if(matterSave.code == matter.code) {
-                            matterInfo.selected = true
-                            addMatterInfo(matterInfo)
+                    user?.let {
+                        for(matterSave in user?.matter!!) {
+                            if(matterSave.code == matter.code) {
+                                matterInfo.selected = true
+                                addMatterInfo(matterInfo)
+                            }
                         }
                     }
                 }
@@ -594,3 +599,8 @@ fun String.isPhoneValid(): Boolean {
 fun String.isEmailValid(): Boolean {
     return this.isNotBlank() && android.util.Patterns.EMAIL_ADDRESS.matcher(this).matches()
 }
+
+//fun View.hideKeyboard() {
+//    val inputMethodManager = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+//    inputMethodManager.hideSoftInputFromWindow(windowToken, 0)
+//}
