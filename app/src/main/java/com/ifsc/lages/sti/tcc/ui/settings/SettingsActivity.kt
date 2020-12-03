@@ -8,9 +8,15 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.TextView
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import br.edu.ifsc.cancontrol.ui.monitoring.adapter.InstitutionAdapter
+import br.edu.ifsc.cancontrol.ui.monitoring.adapter.MatterAdapter
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.BuildConfig
 import com.ifsc.lages.sti.tcc.R
+import com.ifsc.lages.sti.tcc.model.matter.Matter
+import com.ifsc.lages.sti.tcc.model.user.EducationalInstitution
 import com.ifsc.lages.sti.tcc.model.user.User
 import com.ifsc.lages.sti.tcc.props.EUserType
 import com.ifsc.lages.sti.tcc.ui.login.LoginActivity
@@ -36,11 +42,15 @@ class SettingsActivity : BaseActivty() {
     var customVersionCode : CustomItemUser? = null
     var containerStudent : LinearLayout? = null
 
+    var matterAdapter : MatterAdapter? = null
 
     var arrowCollapse : ImageView? = null //aView.findViewById(R.id.img_view_collapse)
     var containerTeacher : LinearLayout? = null
     var mContainerExpandable : ExpandableLayout? = null //aView.findViewById<ExpandableLayout>(R.id.container_expadable)
     var mRotationArrow = 180
+    var user : User? = null
+
+    var recyclerView : RecyclerView? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -56,6 +66,7 @@ class SettingsActivity : BaseActivty() {
         textView = findViewById(R.id.txt_view_user_name)
         buttonExit = findViewById(R.id.button_exit)
         buttonChangeInfos = findViewById(R.id.button_change_infos)
+        recyclerView = findViewById(R.id.recycler_view)
 
         customEmail = findViewById(R.id.custom_email)
         customPhone = findViewById(R.id.custom_phone)
@@ -92,27 +103,21 @@ class SettingsActivity : BaseActivty() {
     }
 
     fun showDisplayInfos() {
-        var birthday = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_BIRTH_DAY, Date())
-        var type = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_TYPE, 1)
-        var registration = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_REGISTRATION, 0L)
-        var email =  SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_EMAIL, "")
-        var phone = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_PHONE, "")
-        var yearJoin = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_YEAR_JOIN, 2017L)
-        var educationName = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.EDUCATION_INSTITUITION_NOME, "")
+        user = User.UserShared.load(this@SettingsActivity)
+        customEmail?.setTitle(user?.email!!)
+        customPhone?.setTitle(user?.phone!!)
+        customBirthday?.setTitle(StringUtil.data(user?.birthDay!!, "dd/MM/yyyy"))
+        customEducationIntitution?.setTitle(user?.educationalInstitution?.name!!)
 
-        customEmail?.setTitle(email)
-        customPhone?.setTitle(phone)
-        customBirthday?.setTitle(StringUtil.data(birthday, "dd/MM/yyyy"))
-        customEducationIntitution?.setTitle(educationName)
-
-        if(EUserType.STUDENT.code == type) {
-            customRegisterNumber?.setTitle(registration.toString())
-            customYearsJoin?.setTitle(yearJoin.toString())
+        if(EUserType.STUDENT.code == user?.userType) {
+            customRegisterNumber?.setTitle(user?.registration.toString())
+            customYearsJoin?.setTitle(user?.anoIngresso.toString())
             containerStudent?.visibility = View.VISIBLE
             containerTeacher?.visibility = View.GONE
         } else {
-            containerTeacher?.visibility = View.GONE
+            containerTeacher?.visibility = View.VISIBLE
             containerStudent?.visibility = View.GONE
+            initializeRecycler(user?.matter!!)
         }
         customVersionCode?.setTitle(BuildConfig.VERSION_NAME)
     }
@@ -132,5 +137,18 @@ class SettingsActivity : BaseActivty() {
         buttonChangeInfos?.setOnClickListener {
             ActivityUtil.Builder(applicationContext, RegisterUserActivity::class.java).build()
         }
+
+        containerTeacher?.setOnClickListener {
+            animationArrowImage()
+            mContainerExpandable?.toggle()
+        }
+    }
+
+    private fun initializeRecycler(_info : MutableList<Matter>) {
+        matterAdapter = MatterAdapter(_info, this@SettingsActivity)
+        val layoutManager = LinearLayoutManager(this@SettingsActivity, LinearLayoutManager.VERTICAL, false)
+        recyclerView?.layoutManager = layoutManager
+        recyclerView?.adapter = matterAdapter
+        matterAdapter?.notifyDataSetChanged()
     }
 }

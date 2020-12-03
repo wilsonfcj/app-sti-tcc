@@ -7,6 +7,7 @@ import android.widget.ViewSwitcher
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import br.edu.ifsc.cancontrol.ui.monitoring.adapter.InstitutionAdapter
+import br.edu.ifsc.cancontrol.ui.monitoring.adapter.MatterAdapter
 import br.edu.ifsc.cancontrol.utilidades.MapElement
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ifsc.lages.sti.tcc.R
@@ -40,7 +41,7 @@ class BottonSheetEducationInstitutionFragment : BottomSheetDialogFragment(), Map
 
     override fun onActivityCreated(savedInstanceState: Bundle?) {
         super.onActivityCreated(savedInstanceState)
-        dialog.window!!.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
+        dialog?.window!!.addFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS)
     }
 
     fun setListener(aListener: CallbackOptions) {

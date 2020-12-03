@@ -224,7 +224,8 @@
             android:layout_marginLeft="@dimen/margin_left_item_my_user"
             android:layout_marginRight="@dimen/margin_right_item_my_user"
             android:orientation="vertical"
-            android:visibility="gone">
+            android:visibility="gone"
+            tools:visibility="visible">
 
             <include layout="@layout/layout_expandable_matters"></include>
 
@@ -238,7 +239,6 @@
                 android:layout_marginLeft="@dimen/margin_left_item_my_user"
                 android:layout_marginRight="@dimen/margin_left_item_my_user"
                 android:background="@color/divider"/>
-
 
             <com.ifsc.lages.sti.tcc.utilidades.components.CustomItemUser
                 android:id="@+id/custom_version_code"

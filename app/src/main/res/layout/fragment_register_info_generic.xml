@@ -30,8 +30,8 @@
 
                 <de.hdodenhof.circleimageview.CircleImageView
                     android:id="@+id/profile_image"
-                    android:layout_width="@dimen/img_perfil_normal"
-                    android:layout_height="@dimen/img_perfil_normal"
+                    android:layout_width="@dimen/img_perfil_register"
+                    android:layout_height="@dimen/img_perfil_register"
                     android:src="@drawable/default_image_user"
                     android:layout_gravity="center"
                     android:transitionName="@string/transition_avatar"

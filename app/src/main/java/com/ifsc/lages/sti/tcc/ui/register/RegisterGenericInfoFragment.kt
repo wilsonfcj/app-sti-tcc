@@ -4,6 +4,7 @@ import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
 import android.content.Context
+import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -122,7 +123,6 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
     fun showDisplayEditUser() {
         user = User.UserShared.load(activity!!)
         user?.let {
-//            view!!.hideKeyboard()
             isRegister = false
             editTextCpf?.isEnabled = false
             editTextCpf?.setText(user!!.cpf)
@@ -208,68 +208,70 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
     fun checkPremission() {
         val permissionStorage = Manifest.permission.WRITE_EXTERNAL_STORAGE
         val permissionCamera = Manifest.permission.CAMERA
-
-        if (ContextCompat.checkSelfPermission(
-                activity!!,
-                permissionCamera
-            ) == PackageManager.PERMISSION_DENIED
-            ||
-            ContextCompat.checkSelfPermission(
-                activity!!,
-                permissionStorage
-            ) == PackageManager.PERMISSION_DENIED
-        ) {
-            ActivityCompat.requestPermissions(
-                activity!!,
-                arrayOf(permissionCamera, permissionStorage), 4
-            )
+        if (ContextCompat.checkSelfPermission(activity!!, permissionCamera) == PackageManager.PERMISSION_DENIED ||
+            ContextCompat.checkSelfPermission(activity!!, permissionStorage) == PackageManager.PERMISSION_DENIED) {
+            ActivityCompat.requestPermissions(activity!!, arrayOf(permissionCamera, permissionStorage), 4)
         } else {
             //DONE: Solicitar da camera ou galeria
-            val options = arrayOf("Galeria", "Câmera")
+            var options = arrayOf("Galeria", "Câmera")
+            if(bitmap != null) {
+                options = arrayOf("Remover Imagem", "Galeria", "Câmera")
+            }
             val builder = AlertDialog.Builder(activity!!)
             builder
                 .setTitle("Selecione uma Opção")
                 .setItems(options) { dialog, which ->
                     when {
+                        options[which] == "Remover Imagem" -> {
+                            bitmap = null
+                            mImageViewPhotoProfile?.setImageResource(R.drawable.default_image_user)
+                        }
                         options[which] == "Galeria" -> {
-                            val intent = Intent()
-                            intent.type = "image/*"
-                            intent.action = Intent.ACTION_GET_CONTENT
-
-                            startActivityForResult(intent, ActivityRequestCode.GALLERY)
+                            showGalery()
                         }
                         options[which] == "Câmera" -> {
-                            val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-                            var photoFile: File? = null
-                            try {
-                                val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-                                val imageFileName = "JPEG_" + timeStamp + "_"
-                                val storageDir = activity!!.getExternalFilesDir("external_files")
-                                val image = File.createTempFile(imageFileName, ".jpg", storageDir)
-                                mCurrentPhotoPath = image.absolutePath
-                                println(image.absolutePath)
-                                photoFile = image
-                            } catch (ex: IOException) {
-                                println(ex.message)
-                            }
-                            if (photoFile != null) {
-                                val photoURI: Uri? =
-                                    if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
-                                        Uri.fromFile(photoFile)
-                                    } else {
-                                        FileProvider.getUriForFile(
-                                            activity!!,
-                                            BuildConfig.APPLICATION_ID + ".fileprovider", photoFile
-                                        )
-                                    }
-                                intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                                startActivityForResult(intent, ActivityRequestCode.CAMERA)
-                            }
+                            showCamera()
                         }
                         else -> dialog?.dismiss()
                     }
                 }
             builder.show()
+        }
+    }
+
+    fun showGalery() {
+        val intent = Intent()
+        intent.type = "image/*"
+        intent.action = Intent.ACTION_GET_CONTENT
+        startActivityForResult(intent, ActivityRequestCode.GALLERY)
+    }
+
+    fun showCamera() {
+        val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
+        var photoFile: File? = null
+        try {
+            val timeStamp = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+            val imageFileName = "JPEG_" + timeStamp + "_"
+            val storageDir = activity!!.getExternalFilesDir("external_files")
+            val image = File.createTempFile(imageFileName, ".jpg", storageDir)
+            mCurrentPhotoPath = image.absolutePath
+            println(image.absolutePath)
+            photoFile = image
+        } catch (ex: IOException) {
+            println(ex.message)
+        }
+        if (photoFile != null) {
+            val photoURI: Uri? =
+                if (Build.VERSION.SDK_INT <= Build.VERSION_CODES.KITKAT) {
+                    Uri.fromFile(photoFile)
+                } else {
+                    FileProvider.getUriForFile(
+                        activity!!,
+                        BuildConfig.APPLICATION_ID + ".fileprovider", photoFile
+                    )
+                }
+            intent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+            startActivityForResult(intent, ActivityRequestCode.CAMERA)
         }
     }
 

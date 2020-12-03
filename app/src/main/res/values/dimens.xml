@@ -10,6 +10,7 @@
     <dimen name="margin_right_item_my_user">10dp</dimen>
     <dimen name="margin_top_item_my_user">20dp</dimen>
     <dimen name="img_perfil_normal">48dp</dimen>
+    <dimen name="img_perfil_register">56dp</dimen>
     <dimen name="img_perfil_final">32dp</dimen>
 
     <dimen name="list_item_spacing">16dp</dimen>
