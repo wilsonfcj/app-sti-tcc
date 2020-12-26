@@ -64,4 +64,16 @@
     <string name="prompt_version">Versão aplicativo</string>
     <string name="prompt_lagind_generic">Buscando informações</string>
 
+    <string name="prompt_dashboard">Home</string>
+    <string name="prompt_simulados">Meus Simulados</string>
+    <string name="prompt_salas">Salas de Simulados</string>
+    <string name="prompt_suporte">Suporte</string>
+    <string name="prompt_sair">Sair</string>
+
+    <string name="prompt_alunos">Alunos</string>
+    <string name="prompt_meus_simulados">Meus Simulados</string>
+    <string name="prompt_minhas_salas">Minhas salas</string>
+    <string name="prompt_questoes">Questões</string>
+    <string name="prompt_config">Configurações</string>
+
 </resources>

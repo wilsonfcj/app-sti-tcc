@@ -54,7 +54,7 @@ object EditTextMask {
     fun addTelefoneMask(editText: EditText) {
         val smf13 = SimpleMaskFormatter(TELEFONE13_MASK)
         val mtw13 = MaskTextWatcher(editText, smf13)
-        editText!!.addTextChangedListener(mtw13)
+        editText.addTextChangedListener(mtw13)
     }
 
     fun unmask(s: String): String {
@@ -117,19 +117,19 @@ object EditTextMask {
         val lCnpjWatcher = MaskTextWatcher(aEditText, lCnpjMask)
 
         aEditText!!.removeTextChangedListener(lCpfWatcher)
-        aEditText!!.removeTextChangedListener(lCnpjWatcher)
+        aEditText.removeTextChangedListener(lCnpjWatcher)
 
-        aEditText!!.addTextChangedListener(object : TextWatcher {
+        aEditText.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) { /* do nothing*/
             }
 
             override fun onTextChanged(charSequence: CharSequence, i: Int, i1: Int, i2: Int) {
-                aEditText!!.removeTextChangedListener(lCnpjWatcher)
-                aEditText!!.removeTextChangedListener(lCpfWatcher)
-                if (aEditText!!.text.length > 14) {
-                    aEditText!!.addTextChangedListener(lCnpjWatcher)
+                aEditText.removeTextChangedListener(lCnpjWatcher)
+                aEditText.removeTextChangedListener(lCpfWatcher)
+                if (aEditText.text.length > 14) {
+                    aEditText.addTextChangedListener(lCnpjWatcher)
                 } else {
-                    aEditText!!.addTextChangedListener(lCpfWatcher)
+                    aEditText.addTextChangedListener(lCpfWatcher)
                 }
             }
 

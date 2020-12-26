@@ -107,8 +107,8 @@ object ImageUtil {
 
             options.inSampleSize = calculateInSampleSize(options, actualWidth, actualHeight)
             options.inJustDecodeBounds = false
-            options.inPurgeable = true
-            options.inInputShareable = true
+//            options.inPurgeable = true
+//            options.inInputShareable = true
             options.inTempStorage = ByteArray(16 * 1024)
 
             try {
@@ -225,17 +225,11 @@ object ImageUtil {
 
         when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> {
-                val aux = lPhotoH
-                lPhotoH = lPhotoW
-                lPhotoW = aux
-                lPhoto = ImageUtil.rotateImage(lPhoto, 90f)
+                lPhoto = rotateImage(lPhoto, 90f)
             }
             ExifInterface.ORIENTATION_ROTATE_180 -> lPhoto = ImageUtil.rotateImage(lPhoto, 180f)
             ExifInterface.ORIENTATION_ROTATE_270 -> {
-                val aux1 = lPhotoH
-                lPhotoH = lPhotoW
-                lPhotoW = aux1
-                lPhoto = ImageUtil.rotateImage(lPhoto, 270f)
+                lPhoto = rotateImage(lPhoto, 270f)
             }
         }
         return lPhoto
@@ -323,14 +317,11 @@ object ImageUtil {
                 val aux = lPhotoH
                 lPhotoH = lPhotoW
                 lPhotoW = aux
-                lBitmap = ImageUtil.rotateImage(lBitmap, 90f)
+                lBitmap = rotateImage(lBitmap, 90f)
             }
             ExifInterface.ORIENTATION_ROTATE_180 -> lBitmap = ImageUtil.rotateImage(lBitmap, 180f)
             ExifInterface.ORIENTATION_ROTATE_270 -> {
-                val aux1 = lPhotoH
-                lPhotoH = lPhotoW
-                lPhotoW = aux1
-                lBitmap = ImageUtil.rotateImage(lBitmap, 270f)
+                lBitmap = rotateImage(lBitmap, 270f)
             }
         }
         lBitmap = getResizedBitmap(lBitmap!!, 1000, 1000)
