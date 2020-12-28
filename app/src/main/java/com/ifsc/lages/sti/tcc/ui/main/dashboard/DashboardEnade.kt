@@ -22,6 +22,7 @@ class DashboardEnade(private val mContext: AppCompatActivity, private val mViewR
     private var adapter: FragmentStatePagerAdapter? = null
     private var dotsCount = 0
     private  var dots : Array<ImageView?> = emptyArray()
+    private var resultOverall : ResultOverall? = null
 
     override fun mapComponents() {
         onboardPager = mViewRoot.findViewById(R.id.pager_introduction_enade) as ViewPager
@@ -37,67 +38,75 @@ class DashboardEnade(private val mContext: AppCompatActivity, private val mViewR
     }
 
     fun showDashboard(resultado : ResultadoResponse.GeralUsuario) {
-        var resultOverall = ResultOverall()
-        resultOverall.idUsuario = resultado.idUsuario
-        resultOverall.nome = resultado.nome
+        if(resultOverall == null)
+            resultOverall = ResultOverall()
 
-        resultOverall.resultadoGeral = ResultValue(
+        resultOverall?.idUsuario = resultado.idUsuario
+        resultOverall?.nome = resultado.nome
+
+        resultOverall?.resultadoGeral = ResultValue(
             resultado.resultadoGeral!!.erros,
             resultado.resultadoGeral!!.acertos ,
             resultado.resultadoGeral!!.naoRespondidas,
             resultado.resultadoGeral!!.total)
 
-        resultOverall.resultadoMatematica = ResultValue(
+        resultOverall?.resultadoMatematica = ResultValue(
             resultado.resultadoMatematica!!.erros,
             resultado.resultadoMatematica!!.acertos ,
             resultado.resultadoMatematica!!.naoRespondidas,
             resultado.resultadoMatematica!!.total)
 
-        resultOverall.resultadoFundamentoComputacao =ResultValue(
+        resultOverall?.resultadoFundamentoComputacao =ResultValue(
             resultado.resultadoFundamentoComputacao!!.erros,
             resultado.resultadoFundamentoComputacao!!.acertos ,
             resultado.resultadoFundamentoComputacao!!.naoRespondidas,
             resultado.resultadoFundamentoComputacao!!.total)
 
-        resultOverall.resultadoTecnologiaComputacao = ResultValue(
+        resultOverall?.resultadoTecnologiaComputacao = ResultValue(
             resultado.resultadoTecnologiaComputacao!!.erros,
             resultado.resultadoTecnologiaComputacao!!.acertos ,
             resultado.resultadoTecnologiaComputacao!!.naoRespondidas,
             resultado.resultadoTecnologiaComputacao!!.total)
 
-        adapter = ViewPagerAdapter(
-            mContext,
-            mContext.supportFragmentManager,
-            resultOverall
-        )
 
-        onboardPager!!.adapter = adapter
-        onboardPager!!.currentItem = 0
-        onboardPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
+        if(adapter == null) {
+            adapter = ViewPagerAdapter(
+                mContext,
+                mContext.supportFragmentManager,
+                resultOverall!!
+            )
 
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                // Change the current position intimation
-                for (i in 0 until dotsCount) {
-                    dots[i]!!.setImageDrawable( ContextCompat.getDrawable(mContext, R.drawable.non_selected_item_dot))
+            onboardPager!!.adapter = adapter
+            onboardPager!!.currentItem = 0
+            onboardPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+                override fun onPageScrollStateChanged(state: Int) {}
+
+                override fun onPageScrolled(
+                    position: Int,
+                    positionOffset: Float,
+                    positionOffsetPixels: Int
+                ) {
+                    // Change the current position intimation
+                    for (i in 0 until dotsCount) {
+                        dots[i]!!.setImageDrawable( ContextCompat.getDrawable(mContext, R.drawable.non_selected_item_dot))
+                    }
+
+                    dots[position]!!.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.selected_item_dot))
+
+                    val pos = position + 1
+                    previous_pos = pos
+
                 }
 
-                dots[position]!!.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.selected_item_dot))
+                override fun onPageSelected(position: Int) {
 
-                val pos = position + 1
-                previous_pos = pos
+                }
+            })
+            setUiPageViewController()
+        } else {
+            adapter!!.notifyDataSetChanged()
+        }
 
-            }
-
-            override fun onPageSelected(position: Int) {
-
-            }
-        })
-        setUiPageViewController()
     }
 
     private fun setUiPageViewController() {

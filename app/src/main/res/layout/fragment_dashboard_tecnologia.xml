@@ -188,24 +188,27 @@
         </net.cachapa.expandablelayout.ExpandableLayout>
 
         <LinearLayout
-            android:id="@+id/progress_layout"
+            android:id="@+id/layout_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
-            android:visibility="gone"
+            android:visibility="invisible"
             android:orientation="vertical">
 
-            <ProgressBar
+            <ImageView
                 android:id="@+id/progressBar"
-                style="?android:attr/progressBarStyle"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"/>
+                android:layout_width="60dp"
+                android:layout_height="60dp"
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/ic_smile_sad"
+                app:tint="@color/colorPrimary" />
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Buscando informações"
-                android:textAlignment="center"/>
+                android:text="Nenhuma informação encontrada"
+                android:textAlignment="center"
+                android:textSize="18dp"/>
 
         </LinearLayout>
 

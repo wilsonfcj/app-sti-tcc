@@ -70,9 +70,14 @@ class MainActivity : BaseActivty() {
         setHeaderInfo()
         setImageProfile()
 
-        dashboardGeral = DashboardGeral(this@MainActivity, findViewById(R.id.card_dashboard_geral))
-        dashboardPoscomp = DashboardPoscomp(this@MainActivity, findViewById(R.id.card_dashboard_poscomp))
-        dashboardEnade = DashboardEnade(this@MainActivity, findViewById(R.id.card_dashboard_enade))
+        if(dashboardGeral == null)
+            dashboardGeral = DashboardGeral(this@MainActivity, findViewById(R.id.card_dashboard_geral))
+
+        if(dashboardPoscomp == null)
+            dashboardPoscomp = DashboardPoscomp(this@MainActivity, findViewById(R.id.card_dashboard_poscomp))
+
+        if(dashboardEnade == null)
+            dashboardEnade = DashboardEnade(this@MainActivity, findViewById(R.id.card_dashboard_enade))
     }
 
     fun setImageProfile() {
@@ -98,10 +103,6 @@ class MainActivity : BaseActivty() {
             )
             startActivity(lPerfil, lProfile.toBundle())
         })
-
-//        swipeRefreshLayout?.setOnRefreshListener {
-//            callBackOperetion()
-//        }
     }
 
     fun setHeaderInfo() {
@@ -143,7 +144,6 @@ class MainActivity : BaseActivty() {
             MainViewModelFactory(this@MainActivity)
         ).get(MainViewModel::class.java)
         viewModel!!.loadOverallResultView.observe(this, androidx.lifecycle.Observer {
-
             if(it.error!!.not()) {
                 dashboardGeral!!.showDashboard(it.success!!)
             } else {
@@ -167,7 +167,6 @@ class MainActivity : BaseActivty() {
             MainViewModelFactory(this@MainActivity)
         ).get(MainViewModel::class.java)
         viewModel!!.loadOverallResultEnadeView.observe(this, androidx.lifecycle.Observer {
-
             if(it.error!!.not()) {
                 dashboardEnade!!.showDashboard(it.success!!)
             } else {

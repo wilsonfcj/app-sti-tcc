@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import br.edu.ifsc.cancontrol.utilidades.MapElement
@@ -29,6 +30,7 @@ class DashboardFundamentosFragment : Fragment(), MapElement {
     var resultValue : ResultValue? = null
     var textViewAcertos : TextView? = null
     var textViewErros: TextView? = null
+    var layoutError : LinearLayout? = null
 
     protected val parties = arrayOf(
         "Acertos", "Erros", "Não respondidas"
@@ -76,20 +78,31 @@ class DashboardFundamentosFragment : Fragment(), MapElement {
     }
 
     override fun mapComponents() {
-        createChart()
+        chart = view?.findViewById(R.id.chart1)
         textViewAcertos = view?.findViewById<TextView>(R.id.tv_geralI)
         textViewErros = view?.findViewById<TextView>(R.id.tv_geralII)
+        layoutError = view?.findViewById(R.id.layout_error)
         textViewAcertos?.text = resultValue?.acertos.toString()
         textViewErros?.text = resultValue?.erros.toString()
+        createChart()
     }
 
     override fun mapActionComponents() {
 
     }
 
+    fun showError() {
+        if(resultValue!!.acertos == 0 && resultValue!!.erros == 0 && resultValue!!.naoRespondidas == 0) {
+            layoutError?.visibility = View.VISIBLE
+            chart?.visibility = View.INVISIBLE
+        } else {
+            layoutError?.visibility = View.INVISIBLE
+            chart!!.visibility = View.VISIBLE
+        }
+    }
 
     fun createChart() {
-        chart = view?.findViewById(R.id.chart1)
+        showError()
         chart!!.setUsePercentValues(true)
         chart!!.getDescription().isEnabled = false
         chart!!.setDrawHoleEnabled(true)

@@ -27,6 +27,10 @@ class ViewPagerAdapter(
         return return DashboardTecnologiaFragment.getInstance(resultOverall.resultadoTecnologiaComputacao!!)
     }
 
+    override fun getItemPosition(`object`: Any): Int {
+        return super.getItemPosition(`object`)
+    }
+
     override fun getCount(): Int {
         return 4
     }

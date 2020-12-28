@@ -31,7 +31,7 @@ class DashboardGeralFragment : Fragment(), MapElement {
     var textViewAcertos : TextView? = null
     var textViewErros: TextView? = null
     var chart: PieChart? = null
-    var progressBar : LinearLayout? = null
+    var layoutError : LinearLayout? = null
 
     protected val parties = arrayOf(
         "Acertos", "Erros", "Não respondidas"
@@ -76,20 +76,31 @@ class DashboardGeralFragment : Fragment(), MapElement {
     }
 
     override fun mapComponents() {
-        createChart()
+        chart = view?.findViewById(R.id.chart1)
         textViewAcertos = view?.findViewById(R.id.tv_geralI)
         textViewErros = view?.findViewById(R.id.tv_geralII)
+        layoutError = view?.findViewById(R.id.layout_error)
         textViewAcertos?.text = resultValue?.acertos.toString()
         textViewErros?.text = resultValue?.erros.toString()
-        progressBar = view?.findViewById(R.id.progress_layout)
+        createChart()
     }
 
     override fun mapActionComponents() {
 
     }
 
+    fun showError() {
+        if(resultValue!!.acertos == 0 && resultValue!!.erros == 0 && resultValue!!.naoRespondidas == 0) {
+            layoutError?.visibility = View.VISIBLE
+            chart?.visibility = View.INVISIBLE
+        } else {
+            layoutError?.visibility = View.INVISIBLE
+            chart!!.visibility = View.VISIBLE
+        }
+    }
+
     fun createChart() {
-        chart = view?.findViewById(R.id.chart1)
+        showError()
         chart!!.setUsePercentValues(true)
         chart!!.getDescription().isEnabled = false
         chart!!.setDrawHoleEnabled(true)
