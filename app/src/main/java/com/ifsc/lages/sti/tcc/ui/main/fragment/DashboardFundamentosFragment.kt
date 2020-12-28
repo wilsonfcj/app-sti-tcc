@@ -92,26 +92,18 @@ class DashboardFundamentosFragment : Fragment(), MapElement {
         chart = view?.findViewById(R.id.chart1)
         chart!!.setUsePercentValues(true)
         chart!!.getDescription().isEnabled = false
-
         chart!!.setDrawHoleEnabled(true)
         chart!!.setHoleColor(Color.TRANSPARENT)
-
         chart!!.setTransparentCircleColor(Color.WHITE)
         chart!!.setTransparentCircleAlpha(110)
-
         chart!!.setHoleRadius(58f)
         chart!!.setTransparentCircleRadius(61f)
-
         chart!!.setDrawCenterText(true)
-
-        chart!!.setRotationEnabled(false)
+        chart!!.setRotationEnabled(true)
         chart!!.setHighlightPerTapEnabled(true)
         chart!!.setCenterTextOffset(0f, -20f)
-
-        setData(3, 100f)
-
+        setData()
         chart!!.animateY(1400, Easing.EaseInOutQuad)
-
         val l = chart!!.getLegend()
         l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
@@ -121,21 +113,17 @@ class DashboardFundamentosFragment : Fragment(), MapElement {
         l.yEntrySpace = 0f
         l.yOffset = 0f
 
-        // entry label styling
-
-        // entry label styling
         chart!!.setEntryLabelColor(Color.WHITE)
         chart!!.setEntryLabelTextSize(12f)
     }
 
-    private fun setData(count: Int, range: Float) {
+    private fun setData() {
         val values = ArrayList<PieEntry>()
 
-        values.add(PieEntry((resultValue!!.acertos!! * 100) / range, parties[0]))
-        values.add(PieEntry((resultValue!!.erros!! * 100) / range, parties[1]))
-
+        values.add(PieEntry((resultValue!!.acertos!! * 100) / resultValue!!.total!!.toFloat(), parties[0]))
+        values.add(PieEntry((resultValue!!.erros!! * 100) / resultValue!!.total!!.toFloat(), parties[1]))
         if(resultValue!!.naoRespondidas!! > 0)
-            values.add(PieEntry((resultValue!!.naoRespondidas!! * 100) / range, parties[2]))
+            values.add(PieEntry((resultValue!!.naoRespondidas!! * 100) / resultValue!!.total!!.toFloat(), parties[2]))
 
         val dataSet = PieDataSet(values, "")
         dataSet.sliceSpace = 3f

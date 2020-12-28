@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/tv_title_poscomp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Desempenho Poscomp"
+            android:textAlignment="center"/>
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager_introduction_poscomp"
+            android:layout_width="match_parent"
+            android:layout_height="290dp" />
+
+        <LinearLayout
+            android:id="@+id/view_pager_count_dots_poscomp"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pager_height"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

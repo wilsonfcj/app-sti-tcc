@@ -14,7 +14,7 @@ import com.ifsc.lages.sti.tcc.model.ResultValue
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
 import com.ifsc.lages.sti.tcc.ui.main.ViewPagerAdapter
 
-class DashboardGeral(private val mContext: AppCompatActivity, private val mViewRoot: View) : MapElement {
+class DashboardEnade(private val mContext: AppCompatActivity, private val mViewRoot: View) : MapElement {
 
     private var onboardPager: ViewPager? = null
     private var pagerIndicator: LinearLayout? = null
@@ -24,10 +24,10 @@ class DashboardGeral(private val mContext: AppCompatActivity, private val mViewR
     private  var dots : Array<ImageView?> = emptyArray()
 
     override fun mapComponents() {
-        onboardPager = mViewRoot.findViewById(R.id.pager_introduction) as ViewPager
-        pagerIndicator = mViewRoot.findViewById(R.id.view_pager_count_dots) as LinearLayout
-//        showDashboard()
+        onboardPager = mViewRoot.findViewById(R.id.pager_introduction_enade) as ViewPager
+        pagerIndicator = mViewRoot.findViewById(R.id.view_pager_count_dots_enade) as LinearLayout
     }
+
     override fun mapActionComponents() {
     }
 

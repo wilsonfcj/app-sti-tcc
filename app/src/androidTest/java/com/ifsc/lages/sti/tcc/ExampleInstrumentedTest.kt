@@ -2,6 +2,9 @@ package com.ifsc.lages.sti.tcc
 
 import androidx.test.platform.app.InstrumentationRegistry
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.ifsc.lages.sti.tcc.resources.generics.BaseResponse
+import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
+import com.ifsc.lages.sti.tcc.resources.result.ResultadoService
 
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -15,10 +18,12 @@ import org.junit.Assert.*
  */
 @RunWith(AndroidJUnit4::class)
 class ExampleInstrumentedTest {
+
     @Test
-    fun useAppContext() {
+    fun resultadoGeral() {
         // Context of the app under test.
-        val appContext = InstrumentationRegistry.getInstrumentation().targetContext
-        assertEquals("com.ifsc.lages.sti.tcc", appContext.packageName)
+        var resultadoService = ResultadoService()
+        var result : BaseResponse<ResultadoResponse.GeralUsuario> = resultadoService.loadOverallResult(4);
+        assert(result.success!!)
     }
 }

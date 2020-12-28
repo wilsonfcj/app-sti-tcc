@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
+import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import br.edu.ifsc.cancontrol.utilidades.MapElement
@@ -29,12 +30,12 @@ class DashboardGeralFragment : Fragment(), MapElement {
     var resultValue : ResultValue? = null
     var textViewAcertos : TextView? = null
     var textViewErros: TextView? = null
+    var chart: PieChart? = null
+    var progressBar : LinearLayout? = null
 
     protected val parties = arrayOf(
         "Acertos", "Erros", "Não respondidas"
     )
-
-    var chart: PieChart? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -66,8 +67,7 @@ class DashboardGeralFragment : Fragment(), MapElement {
     companion object {
         @JvmStatic
         fun getInstance(resultOverall : ResultValue): DashboardGeralFragment {
-            val f =
-                DashboardGeralFragment()
+            val f = DashboardGeralFragment()
             val args = Bundle()
             args.putSerializable("result_overall", resultOverall)
             f.arguments = args
@@ -77,41 +77,33 @@ class DashboardGeralFragment : Fragment(), MapElement {
 
     override fun mapComponents() {
         createChart()
-        textViewAcertos = view?.findViewById<TextView>(R.id.tv_geralI)
-        textViewErros = view?.findViewById<TextView>(R.id.tv_geralII)
+        textViewAcertos = view?.findViewById(R.id.tv_geralI)
+        textViewErros = view?.findViewById(R.id.tv_geralII)
         textViewAcertos?.text = resultValue?.acertos.toString()
         textViewErros?.text = resultValue?.erros.toString()
+        progressBar = view?.findViewById(R.id.progress_layout)
     }
 
     override fun mapActionComponents() {
 
     }
 
-
     fun createChart() {
         chart = view?.findViewById(R.id.chart1)
         chart!!.setUsePercentValues(true)
         chart!!.getDescription().isEnabled = false
-
         chart!!.setDrawHoleEnabled(true)
         chart!!.setHoleColor(Color.TRANSPARENT)
-
         chart!!.setTransparentCircleColor(Color.WHITE)
         chart!!.setTransparentCircleAlpha(110)
-
         chart!!.setHoleRadius(58f)
         chart!!.setTransparentCircleRadius(61f)
-
         chart!!.setDrawCenterText(true)
-
-        chart!!.setRotationEnabled(false)
+        chart!!.setRotationEnabled(true)
         chart!!.setHighlightPerTapEnabled(true)
         chart!!.setCenterTextOffset(0f, -20f)
-
-        setData(3, 100f)
-
+        setData()
         chart!!.animateY(1400, Easing.EaseInOutQuad)
-
         val l = chart!!.getLegend()
         l.verticalAlignment = Legend.LegendVerticalAlignment.BOTTOM
         l.horizontalAlignment = Legend.LegendHorizontalAlignment.LEFT
@@ -121,21 +113,16 @@ class DashboardGeralFragment : Fragment(), MapElement {
         l.yEntrySpace = 0f
         l.yOffset = 0f
 
-        // entry label styling
-
-        // entry label styling
         chart!!.setEntryLabelColor(Color.WHITE)
         chart!!.setEntryLabelTextSize(12f)
     }
 
-    private fun setData(count: Int, range: Float) {
+    private fun setData() {
         val values = ArrayList<PieEntry>()
-
-        values.add(PieEntry((resultValue!!.acertos!! * 100) / range, parties[0]))
-        values.add(PieEntry((resultValue!!.erros!! * 100) / range, parties[1]))
-
+        values.add(PieEntry((resultValue!!.acertos!! * 100) / resultValue!!.total!!.toFloat(), parties[0]))
+        values.add(PieEntry((resultValue!!.erros!! * 100) / resultValue!!.total!!.toFloat(), parties[1]))
         if(resultValue!!.naoRespondidas!! > 0)
-            values.add(PieEntry((resultValue!!.naoRespondidas!! * 100) / range, parties[2]))
+            values.add(PieEntry((resultValue!!.naoRespondidas!! * 100) / resultValue!!.total!!.toFloat(), parties[2]))
 
         val dataSet = PieDataSet(values, "")
         dataSet.sliceSpace = 3f

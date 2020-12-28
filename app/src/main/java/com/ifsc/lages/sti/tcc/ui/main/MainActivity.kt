@@ -6,10 +6,13 @@ import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
 import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
 import androidx.fragment.app.FragmentStatePagerAdapter
+import androidx.lifecycle.ViewModelProvider
+import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import androidx.viewpager.widget.ViewPager
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
@@ -18,12 +21,15 @@ import com.ifsc.lages.sti.tcc.model.ResultValue
 import com.ifsc.lages.sti.tcc.model.user.User
 import com.ifsc.lages.sti.tcc.props.EUserType
 import com.ifsc.lages.sti.tcc.ui.login.LoginActivity
+import com.ifsc.lages.sti.tcc.ui.login.viewmodel.LoginViewModel
+import com.ifsc.lages.sti.tcc.ui.login.viewmodel.LoginViewModelFactory
+import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardEnade
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeral
+import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardPoscomp
+import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModel
+import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModelFactory
 import com.ifsc.lages.sti.tcc.ui.settings.SettingsActivity
-import com.ifsc.lages.sti.tcc.utilidades.Constants
-import com.ifsc.lages.sti.tcc.utilidades.ImageUtil
-import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
-import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
+import com.ifsc.lages.sti.tcc.utilidades.*
 import com.judemanutd.katexview.KatexView
 import com.mikepenz.materialdrawer.AccountHeader
 import com.mikepenz.materialdrawer.AccountHeaderBuilder
@@ -37,145 +43,36 @@ import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
 
 class MainActivity : BaseActivty() {
 
-    private var onboardPager: ViewPager? = null
-    private var pagerIndicator: LinearLayout? = null
-    var previous_pos = 0
-    private var adapter: FragmentStatePagerAdapter? = null
-    private var dotsCount = 0
-    private  var dots : Array<ImageView?> = emptyArray()
+    private var imageProfile : ImageView? = null
+    private var katex_text : KatexView? = null
+    private lateinit var menuHeader: AccountHeader
+    private var menuDrawer: Drawer? = null
+    private var dashboardGeral : DashboardGeral? = null
+    private var dashboardPoscomp : DashboardPoscomp? = null
+    private var dashboardEnade : DashboardEnade? = null
+    private var viewModel :  MainViewModel? = null
 
-    var imageProfile : ImageView? = null
-    var katex_text : KatexView? = null
-    lateinit var menuHeader: AccountHeader
-    var menuDrawer: Drawer? = null
-    var dashboardGeral : DashboardGeral? = null
-//    var dashboardFundamentos : DashboardGeral? = null
-//    var dashboardMatematica : DashboardGeral? = null
-//    var dashboardTecnologia : DashboardGeral? = null
 
-    //"O determinante da matriz dada abaixo é $\left( \begin{array}{c}2 \\ 2 \\ -1 \\ 2 \\ 3\end{array} \begin{array}{c}7 \\ 8 \\ 0 \\ 0 \\ 0\end{array} \begin{array}{c}9 \\ 3 \\ 4 \\ 0 \\ 0\end{array} \begin{array}{c}−1 \\ 1 \\ 3 \\ -1 \\ 0\end{array} \begin{array}{c}1 \\ 0 \\ 0 \\ 0 \\ 0\end{array} \right)$"
-    //var tex = "Seja f : R → R definida por \$\newline f(x) = \\begin{cases}{x^3 - 2x^2 - 2}, & x > -1 \newline x -3, & x \\ se  \\leq -1\\end{cases} \newline \$  \$ L= \\lim_{a \\rightarrow +  \\infty} f(a_n) = -1 + \\frac{1}{n}\$, é correto afirmar que"
-    var tex = "\$\\textbf{var} \\, a,b:integer;\$ \$\\newline\$\n" +
-            "\$\\textbf{procedure} P (T1 x:integer; T2 y:integer);\$ \$\\newline\$\n" +
-            "\$\\, \\, \\, \\,\$ \$\\textbf{var} \\, z:integer;\$ \$\\newline\$\n" +
-            "\$\\, \\, \\, \\, \$ \$\\textbf{begin}\$ \$\\newline\$\n" +
-            "\$\\, \\, \\, \\, \\, \\, \$ \$z:=x+a\$; \$\\newline\$\n" +
-            "\$\\, \\, \\, \\, \\, \\, \$ \$x:=y+1\$; \$\\newline\$\n" +
-            "\$\\, \\, \\, \\, \\, \\, \$ \$y:=y+z\$; \$\\newline\$\n" +
-            "\$\\, \\, \\, \\,\$ \$\\textbf{end}\$; \$\\newline\$\n" +
-            "\$\\, \\, \\, \\,\$ \$\\textbf{begin}\$ \$\\newline\$\n" +
-            "\$\\, \\, \\, \\, \\, \\, \$ \$a:= 2\$; \$\\newline\$\n" +
-            "\$\\, \\, \\, \\, \\, \\, \$ \$b:= 3\$; \$\\newline\$\n" +
-            "\$\\, \\, \\, \\, \\, \\, \$ \$P (a,b)\$; \$\\newline\$\n" +
-            "\$\\, \\, \\, \\,\$ \$\\textbf{writeln}(a,b)\$; \$\\newline\$\n" +
-            "\$\\, \\, \\, \\,\$ \$\\textbf{end}\$;"
-    //var tex = "Considere a matriz abaixo: \$\\newline A = \\left(\\begin{array}{c}1 & 3 & 1 & 1 & 5 \\\\ -2 & -6 & 0 & 4 & -2 \\\\ 1 & 3 & 2 & 3 & 9\\end{array}\\right) \\newline\$ O posto de A, as dimensões dos dois subespaços: imagem de A e núcleo de A, e uma base para a imagem de A são, respectivamente:"
-
-    var tex2 = "This come from string. You can insert inline formula:" +
-            " \\(ax^2 + bx + c = 0\\) " +
-            "or displayed formula: $$\\sum_{i=0}^n i^2 = \\frac{(n^2+n)(2n+1)}{6}$$"
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
     }
 
-    fun createKatex() {
-        val text = "Pode-se afirmar que o gráfico da função  $$ c = \\pm\\sqrt{a^2 + b^2} $$"
-        katex_text = findViewById(R.id.katex_text)
-        var teste = tex.replace("$", "$$ ")
-        katex_text!!.setText(teste)
-    }
-
     override fun mapComponents() {
         super.mapComponents()
         setDisplayHomeAs(false)
-
         setTitleToolbar(getString(R.string.title_toolbar_dashboard))
         imageProfile = findViewById(R.id.profile_image)
-        onboardPager = findViewById(R.id.pager_introduction) as ViewPager
-        pagerIndicator = findViewById(R.id.viewPagerCountDots) as LinearLayout
 
-        createKatex()
-        setImageProfile()
+
         menu()
         setHeaderInfo()
+        setImageProfile()
 
         dashboardGeral = DashboardGeral(this@MainActivity, findViewById(R.id.card_dashboard_geral))
-//        dashboardMatematica = DashboardGeral(this@MainActivity, findViewById(R.id.card_dashboard_matematica))
-//        dashboardFundamentos = DashboardGeral(this@MainActivity, findViewById(R.id.card_dashboard_fundamentos))
-//        dashboardTecnologia = DashboardGeral(this@MainActivity, findViewById(R.id.card_dashboard_tecnologia))
-        showDashboard()
-    }
-
-    private fun showDashboard() {
-        var resultOverall = ResultOverall()
-        resultOverall.idUsuario = 4
-        resultOverall.nome = "Wilson Fernandes Cordova Junior"
-        resultOverall.resultadoGeral = ResultValue(10,80 ,0,60)
-        resultOverall.resultadoMatematica = ResultValue(10,20 ,0,30)
-        resultOverall.resultadoFundamentoComputacao = ResultValue(10,20 ,0,30)
-        resultOverall.resultadoTecnologiaComputacao = ResultValue(20,20 ,0,30)
-
-        adapter = ViewPagerAdapter(
-            applicationContext,
-            supportFragmentManager,
-            resultOverall
-        )
-
-        onboardPager!!.adapter = adapter
-        onboardPager!!.currentItem = 0
-        onboardPager!!.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
-            override fun onPageScrollStateChanged(state: Int) {}
-
-            override fun onPageScrolled(
-                position: Int,
-                positionOffset: Float,
-                positionOffsetPixels: Int
-            ) {
-                // Change the current position intimation
-                for (i in 0 until dotsCount) {
-                    dots[i]!!.setImageDrawable( ContextCompat.getDrawable(this@MainActivity, R.drawable.non_selected_item_dot))
-                }
-
-                dots[position]!!.setImageDrawable(ContextCompat.getDrawable(this@MainActivity, R.drawable.selected_item_dot))
-
-                val pos = position + 1
-                previous_pos = pos
-
-            }
-
-            override fun onPageSelected(position: Int) {
-
-            }
-        })
-        setUiPageViewController()
-    }
-
-    private fun setUiPageViewController() {
-        dotsCount = adapter!!.count
-        dots = arrayOfNulls<ImageView?>(size = 4)
-        for (i in 0 until dotsCount) {
-            dots[i] = ImageView(this)
-            dots[i]!!.setImageDrawable(
-                ContextCompat.getDrawable(
-                    this@MainActivity,
-                    R.drawable.non_selected_item_dot
-                )
-            )
-            val params = LinearLayout.LayoutParams(
-                LinearLayout.LayoutParams.WRAP_CONTENT,
-                LinearLayout.LayoutParams.WRAP_CONTENT
-            )
-            params.setMargins(6, 0, 6, 0)
-            pagerIndicator?.addView(dots[i], params)
-        }
-        dots[0]!!.setImageDrawable(
-            ContextCompat.getDrawable(
-                this@MainActivity,
-                R.drawable.selected_item_dot
-            )
-        )
+        dashboardPoscomp = DashboardPoscomp(this@MainActivity, findViewById(R.id.card_dashboard_poscomp))
+        dashboardEnade = DashboardEnade(this@MainActivity, findViewById(R.id.card_dashboard_enade))
     }
 
     fun setImageProfile() {
@@ -183,6 +80,11 @@ class MainActivity : BaseActivty() {
         if(image.isNotEmpty()) {
             imageProfile?.setImageBitmap(ImageUtil.convertBase64ToBitmap(image))
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        callBackOperetion()
     }
 
     override fun mapActionComponents() {
@@ -196,6 +98,10 @@ class MainActivity : BaseActivty() {
             )
             startActivity(lPerfil, lProfile.toBundle())
         })
+
+//        swipeRefreshLayout?.setOnRefreshListener {
+//            callBackOperetion()
+//        }
     }
 
     fun setHeaderInfo() {
@@ -221,6 +127,54 @@ class MainActivity : BaseActivty() {
             .build()
     }
 
+    fun callBackOperetion() {
+        var userId = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
+        if (ConnectionUtil.isNetworkAvailable(this@MainActivity)) {
+            viewModel!!.loadOverallResultView(userId)
+            viewModel!!.loadOverallResultPoscomp(userId)
+            viewModel!!.loadOverallResultEnade(userId)
+        } else {
+
+        }
+    }
+
+    override fun createRestListener() {
+        viewModel = ViewModelProvider(this,
+            MainViewModelFactory(this@MainActivity)
+        ).get(MainViewModel::class.java)
+        viewModel!!.loadOverallResultView.observe(this, androidx.lifecycle.Observer {
+
+            if(it.error!!.not()) {
+                dashboardGeral!!.showDashboard(it.success!!)
+            } else {
+                Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
+            }
+        })
+
+        viewModel = ViewModelProvider(this,
+            MainViewModelFactory(this@MainActivity)
+        ).get(MainViewModel::class.java)
+        viewModel!!.loadOverallResultPoscompView.observe(this, androidx.lifecycle.Observer {
+
+            if(it.error!!.not()) {
+                dashboardPoscomp!!.showDashboard(it.success!!)
+            } else {
+                Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
+            }
+        })
+
+        viewModel = ViewModelProvider(this,
+            MainViewModelFactory(this@MainActivity)
+        ).get(MainViewModel::class.java)
+        viewModel!!.loadOverallResultEnadeView.observe(this, androidx.lifecycle.Observer {
+
+            if(it.error!!.not()) {
+                dashboardEnade!!.showDashboard(it.success!!)
+            } else {
+                Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
+            }
+        })
+    }
 
     fun menu() {
         menuHeader = createHeader()

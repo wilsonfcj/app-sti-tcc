@@ -3,6 +3,7 @@ package com.ifsc.lages.sti.tcc.ui.main.dashboard
 import android.view.View
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -14,8 +15,9 @@ import com.ifsc.lages.sti.tcc.model.ResultValue
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
 import com.ifsc.lages.sti.tcc.ui.main.ViewPagerAdapter
 
-class DashboardGeral(private val mContext: AppCompatActivity, private val mViewRoot: View) : MapElement {
+class DashboardPoscomp(private val mContext: AppCompatActivity, private val mViewRoot: View) : MapElement {
 
+    private var tvTitle : TextView? = null
     private var onboardPager: ViewPager? = null
     private var pagerIndicator: LinearLayout? = null
     private var previous_pos = 0
@@ -24,10 +26,10 @@ class DashboardGeral(private val mContext: AppCompatActivity, private val mViewR
     private  var dots : Array<ImageView?> = emptyArray()
 
     override fun mapComponents() {
-        onboardPager = mViewRoot.findViewById(R.id.pager_introduction) as ViewPager
-        pagerIndicator = mViewRoot.findViewById(R.id.view_pager_count_dots) as LinearLayout
-//        showDashboard()
+        onboardPager = mViewRoot.findViewById(R.id.pager_introduction_poscomp) as ViewPager
+        pagerIndicator = mViewRoot.findViewById(R.id.view_pager_count_dots_poscomp) as LinearLayout
     }
+
     override fun mapActionComponents() {
     }
 
