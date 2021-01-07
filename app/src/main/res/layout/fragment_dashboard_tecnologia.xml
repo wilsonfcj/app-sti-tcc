@@ -8,9 +8,6 @@
     android:layout_height="wrap_content">
 
     <LinearLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:orientation="horizontal"
         android:layout_height="80dp">
@@ -86,11 +83,11 @@
 
                         <ImageView
                             android:id="@+id/img_pesquisa"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:gravity="center"
-                            app:tint="@color/accent"
-                            app:srcCompat="@drawable/ic_bar_chart"
+                            app:tint="@color/md_green_A700"
+                            app:srcCompat="@drawable/ic_check_circle"
                             android:textSize="14dp" />
 
                         <TextView
@@ -138,11 +135,11 @@
 
                         <ImageView
                             android:id="@+id/img_extencao"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:gravity="center"
-                            app:srcCompat="@drawable/ic_show_chart"
                             android:textSize="14dp"
+                            app:srcCompat="@drawable/ic_cancel"
                             app:tint="@color/accent" />
 
                         <TextView

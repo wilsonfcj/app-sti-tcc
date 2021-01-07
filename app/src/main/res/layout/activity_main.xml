@@ -7,14 +7,7 @@
     android:layout_height="match_parent"
     tools:context=".ui.main.MainActivity">
 
-<!--    <androidx.swiperefreshlayout.widget.SwipeRefreshLayout-->
-<!--        android:id="@+id/swipe_refresh_layout"-->
-<!--        android:layout_width="match_parent"-->
-<!--        android:layout_height="match_parent"-->
-<!--        android:visibility="visible"-->
-<!--        android:layout_below="@+id/container_toolbar">-->
-
-        <RelativeLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -82,33 +75,68 @@
                         android:layout_marginTop="8dp"
                         android:elevation="8dp">
 
-                        <include layout="@layout/layout_view_pager_chart"/>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:id="@+id/tv_title"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="Desempenho geral"
+                                android:textAlignment="center"/>
+
+                            <include layout="@layout/layout_view_pager_chart"/>
+
+                            <Button
+                                android:id="@+id/btn_plus_info"
+                                android:layout_width="match_parent"
+                                android:layout_height="35dp"
+                                android:layout_margin="5dp"
+                                android:text="@string/prompt_plus"/>
+
+                        </LinearLayout>
+
+
 
                     </androidx.cardview.widget.CardView>
 
                     <androidx.cardview.widget.CardView
-                        android:id="@+id/card_dashboard_poscomp"
+                        android:id="@+id/card_dashboard_last"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginBottom="4dp"
                         android:layout_marginTop="8dp"
                         android:elevation="8dp">
 
-                        <include layout="@layout/layout_view_pager_poscomp"/>
+                        <include layout="@layout/layout_recycler_view_latest_simulations"/>
 
                     </androidx.cardview.widget.CardView>
 
-                    <androidx.cardview.widget.CardView
-                        android:id="@+id/card_dashboard_enade"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginBottom="4dp"
-                        android:layout_marginTop="8dp"
-                        android:elevation="8dp">
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/card_dashboard_poscomp"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="4dp"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:elevation="8dp">-->
 
-                        <include layout="@layout/layout_view_pager_enade"/>
+<!--                        <include layout="@layout/layout_view_pager_poscomp"/>-->
 
-                    </androidx.cardview.widget.CardView>
+<!--                    </androidx.cardview.widget.CardView>-->
+
+<!--                    <androidx.cardview.widget.CardView-->
+<!--                        android:id="@+id/card_dashboard_enade"-->
+<!--                        android:layout_width="match_parent"-->
+<!--                        android:layout_height="wrap_content"-->
+<!--                        android:layout_marginBottom="4dp"-->
+<!--                        android:layout_marginTop="8dp"-->
+<!--                        android:elevation="8dp">-->
+
+<!--                        <include layout="@layout/layout_view_pager_enade"/>-->
+
+<!--                    </androidx.cardview.widget.CardView>-->
 
                 </LinearLayout>
 

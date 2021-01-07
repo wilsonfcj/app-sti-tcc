@@ -10,10 +10,10 @@ import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.viewpager.widget.ViewPager
 import br.edu.ifsc.cancontrol.utilidades.MapElement
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.model.ResultOverall
-import com.ifsc.lages.sti.tcc.model.ResultValue
+import com.ifsc.lages.sti.tcc.model.result.ResultOverall
+import com.ifsc.lages.sti.tcc.model.result.ResultValue
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
-import com.ifsc.lages.sti.tcc.ui.main.ViewPagerAdapter
+import com.ifsc.lages.sti.tcc.ui.main.dashboard.adapter.ViewPagerAdapter
 
 class DashboardPoscomp(private val mContext: AppCompatActivity, private val mViewRoot: View) : MapElement {
 
@@ -39,44 +39,15 @@ class DashboardPoscomp(private val mContext: AppCompatActivity, private val mVie
         mapActionComponents()
     }
 
-    fun showDashboard(resultado : ResultadoResponse.GeralUsuario) {
-        if(resultOverall == null)
-            resultOverall = ResultOverall()
-
-        resultOverall?.idUsuario = resultado.idUsuario
-        resultOverall?.nome = resultado.nome
-
-        resultOverall?.resultadoGeral = ResultValue(
-            resultado.resultadoGeral!!.erros,
-            resultado.resultadoGeral!!.acertos ,
-            resultado.resultadoGeral!!.naoRespondidas,
-            resultado.resultadoGeral!!.total)
-
-        resultOverall?.resultadoMatematica = ResultValue(
-            resultado.resultadoMatematica!!.erros,
-            resultado.resultadoMatematica!!.acertos ,
-            resultado.resultadoMatematica!!.naoRespondidas,
-            resultado.resultadoMatematica!!.total)
-
-        resultOverall?.resultadoFundamentoComputacao =ResultValue(
-            resultado.resultadoFundamentoComputacao!!.erros,
-            resultado.resultadoFundamentoComputacao!!.acertos ,
-            resultado.resultadoFundamentoComputacao!!.naoRespondidas,
-            resultado.resultadoFundamentoComputacao!!.total)
-
-        resultOverall?.resultadoTecnologiaComputacao = ResultValue(
-            resultado.resultadoTecnologiaComputacao!!.erros,
-            resultado.resultadoTecnologiaComputacao!!.acertos ,
-            resultado.resultadoTecnologiaComputacao!!.naoRespondidas,
-            resultado.resultadoTecnologiaComputacao!!.total)
-
-
+    fun showDashboard(resultado : ResultOverall) {
+        resultOverall = resultado
         if(adapter == null) {
-            adapter = ViewPagerAdapter(
-                mContext,
-                mContext.supportFragmentManager,
-                resultOverall!!
-            )
+            adapter =
+                ViewPagerAdapter(
+                    mContext,
+                    mContext.supportFragmentManager,
+                    resultOverall!!
+                )
 
             onboardPager!!.adapter = adapter
             onboardPager!!.currentItem = 0

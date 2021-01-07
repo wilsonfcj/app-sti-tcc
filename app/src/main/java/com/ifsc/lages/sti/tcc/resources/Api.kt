@@ -61,9 +61,12 @@ interface Api {
         fun loadOverallResult(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<ResultadoResponse.GeralUsuario>>
 
         @GET("BuscarUltimosResultados")
-        fun loadLatterResult(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<ResultadoResponse.Simulado>>
+        fun loadLatterResult(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<MutableList<ResultadoResponse.Simulado>>>
 
         @POST("BuscarGabaritoPorSimulado")
         fun loadFeedbackSimulated(@Body request: ResultadoRequest.PorUsuarioESimulado) : Call<BaseResponse<MutableList<QuestaoResponse.QustaoGabaritoResponse>>>
+
+        @POST("BuscarDesempenhoDisciplinasSimulado")
+        fun loadPerformanceMatters(@Body request: ResultadoRequest.PorUsuarioESimulado) : Call<BaseResponse<MutableList<ResultadoResponse.Disciplina>>>
     }
 }

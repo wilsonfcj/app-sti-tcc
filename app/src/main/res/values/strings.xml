@@ -21,6 +21,7 @@
     <string name="prompt_yers_join">Ano Ingresso</string>
     <string name="prompt_next">Próximo</string>
     <string name="prompt_matters">Disciplinas</string>
+    <string name="prompt_plus">Mais informações</string>
 
 
     <string name="prompt_register">Cadastre-se agora</string>
@@ -57,6 +58,8 @@
     <string name="bem_vindo" translatable="false">Bem vindo(a),</string>
 
     <string name="title_toolbar_dashboard">DASHBOARD</string>
+    <string name="title_specific_performance">DESEMPENHO ESPECÍFICO</string>
+    <string name="title_performance_simulado">DESEMPENHO SIMULADO</string>
     <string name="title_toolbar_my_profile">MEU PERFIL</string>
     <string name="title_toolbar_register">CADASTRO</string>
     <string name="title_toolbar_update">ALTERAR PERFIL</string>

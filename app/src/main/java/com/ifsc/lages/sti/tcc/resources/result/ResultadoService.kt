@@ -46,7 +46,7 @@ class ResultadoService {
         }
     }
 
-    fun loadLatterResult(idUsuario : Long) : BaseResponse<ResultadoResponse.Simulado> {
+    fun loadLatterResult(idUsuario : Long) : BaseResponse<MutableList<ResultadoResponse.Simulado>> {
         val lRetrofit = RetrofitImpl().buildRetrofit()
         val api = lRetrofit.create(Api.ResultSimulated::class.java)
         val objectCall = api.loadLatterResult(idUsuario)
@@ -63,6 +63,19 @@ class ResultadoService {
         val lRetrofit = RetrofitImpl().buildRetrofit()
         val api = lRetrofit.create(Api.ResultSimulated::class.java)
         val objectCall = api.loadFeedbackSimulated(request)
+        val execute = objectCall.execute()
+        val body = execute.body()
+        if(body != null) {
+            return body
+        } else {
+            throw Exception("Erro ao realizar a requisição")
+        }
+    }
+
+    fun loadPerformanceMatters(request: ResultadoRequest.PorUsuarioESimulado) : BaseResponse<MutableList<ResultadoResponse.Disciplina>> {
+        val lRetrofit = RetrofitImpl().buildRetrofit()
+        val api = lRetrofit.create(Api.ResultSimulated::class.java)
+        val objectCall = api.loadPerformanceMatters(request)
         val execute = objectCall.execute()
         val body = execute.body()
         if(body != null) {

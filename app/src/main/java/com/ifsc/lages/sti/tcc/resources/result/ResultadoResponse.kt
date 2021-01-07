@@ -5,7 +5,7 @@ import java.util.*
 
 sealed class ResultadoResponse {
 
-    class Quantitativo {
+    open class Quantitativo {
         @SerializedName(value = "Erros")
         var erros: Int? = null
 
@@ -17,6 +17,14 @@ sealed class ResultadoResponse {
 
         @SerializedName(value = "TotalQuestao")
         var total: Int? = null
+    }
+
+    class Disciplina : Quantitativo() {
+        @SerializedName(value = "Disciplina")
+        var disciplinaCod: Int? = null
+
+        @SerializedName(value = "DisciplinaNome")
+        var disciplinaDes: Int? = null
     }
 
     open class Base {

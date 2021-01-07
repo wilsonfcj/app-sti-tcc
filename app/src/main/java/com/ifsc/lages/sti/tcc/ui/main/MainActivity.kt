@@ -5,27 +5,17 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import android.widget.ImageView
-import android.widget.LinearLayout
 import android.widget.Toast
 import androidx.core.app.ActivityOptionsCompat
-import androidx.core.content.ContextCompat
 import androidx.core.view.GravityCompat
-import androidx.fragment.app.FragmentStatePagerAdapter
 import androidx.lifecycle.ViewModelProvider
-import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-import androidx.viewpager.widget.ViewPager
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.model.ResultOverall
-import com.ifsc.lages.sti.tcc.model.ResultValue
 import com.ifsc.lages.sti.tcc.model.user.User
 import com.ifsc.lages.sti.tcc.props.EUserType
 import com.ifsc.lages.sti.tcc.ui.login.LoginActivity
-import com.ifsc.lages.sti.tcc.ui.login.viewmodel.LoginViewModel
-import com.ifsc.lages.sti.tcc.ui.login.viewmodel.LoginViewModelFactory
-import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardEnade
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeral
-import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardPoscomp
+import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeralLastResults
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModel
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModelFactory
 import com.ifsc.lages.sti.tcc.ui.settings.SettingsActivity
@@ -48,8 +38,7 @@ class MainActivity : BaseActivty() {
     private lateinit var menuHeader: AccountHeader
     private var menuDrawer: Drawer? = null
     private var dashboardGeral : DashboardGeral? = null
-    private var dashboardPoscomp : DashboardPoscomp? = null
-    private var dashboardEnade : DashboardEnade? = null
+    private var dashboardGeralLastResults : DashboardGeralLastResults? = null
     private var viewModel :  MainViewModel? = null
 
 
@@ -73,11 +62,9 @@ class MainActivity : BaseActivty() {
         if(dashboardGeral == null)
             dashboardGeral = DashboardGeral(this@MainActivity, findViewById(R.id.card_dashboard_geral))
 
-        if(dashboardPoscomp == null)
-            dashboardPoscomp = DashboardPoscomp(this@MainActivity, findViewById(R.id.card_dashboard_poscomp))
-
-        if(dashboardEnade == null)
-            dashboardEnade = DashboardEnade(this@MainActivity, findViewById(R.id.card_dashboard_enade))
+        if(dashboardGeralLastResults == null) {
+            dashboardGeralLastResults = DashboardGeralLastResults(this@MainActivity, findViewById(R.id.card_dashboard_last))
+        }
     }
 
     fun setImageProfile() {
@@ -134,8 +121,8 @@ class MainActivity : BaseActivty() {
             viewModel!!.loadOverallResultView(userId)
             viewModel!!.loadOverallResultPoscomp(userId)
             viewModel!!.loadOverallResultEnade(userId)
-        } else {
-
+            viewModel!!.loadOverallResultCustom(userId)
+            viewModel!!.lastResult(userId)
         }
     }
 
@@ -154,21 +141,9 @@ class MainActivity : BaseActivty() {
         viewModel = ViewModelProvider(this,
             MainViewModelFactory(this@MainActivity)
         ).get(MainViewModel::class.java)
-        viewModel!!.loadOverallResultPoscompView.observe(this, androidx.lifecycle.Observer {
-
+        viewModel!!.loadLastResult.observe(this, androidx.lifecycle.Observer {
             if(it.error!!.not()) {
-                dashboardPoscomp!!.showDashboard(it.success!!)
-            } else {
-                Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
-            }
-        })
-
-        viewModel = ViewModelProvider(this,
-            MainViewModelFactory(this@MainActivity)
-        ).get(MainViewModel::class.java)
-        viewModel!!.loadOverallResultEnadeView.observe(this, androidx.lifecycle.Observer {
-            if(it.error!!.not()) {
-                dashboardEnade!!.showDashboard(it.success!!)
+                dashboardGeralLastResults!!.showDashboard(it.success!!)
             } else {
                 Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
             }

@@ -86,11 +86,11 @@
 
                         <ImageView
                             android:id="@+id/img_pesquisa"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:gravity="center"
-                            app:tint="@color/accent"
-                            app:srcCompat="@drawable/ic_bar_chart"
+                            app:tint="@color/md_green_A700"
+                            app:srcCompat="@drawable/ic_check_circle"
                             android:textSize="14dp" />
 
                         <TextView
@@ -138,10 +138,10 @@
 
                         <ImageView
                             android:id="@+id/img_extencao"
-                            android:layout_width="20dp"
-                            android:layout_height="20dp"
+                            android:layout_width="15dp"
+                            android:layout_height="15dp"
                             android:gravity="center"
-                            app:srcCompat="@drawable/ic_show_chart"
+                            app:srcCompat="@drawable/ic_cancel"
                             android:textSize="14dp"
                             app:tint="@color/accent" />
 

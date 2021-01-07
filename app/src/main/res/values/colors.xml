@@ -20,6 +20,8 @@
 
     <color name="selected_dot">#2DDBB8</color>
     <color name="idle_dot">#662DDBA4</color>
-
     <color name="divider">#BDBDBD</color>
+    <color name="colorType0">#EAA021</color>
+    <color name="colorType1">#008577</color>
+    <color name="colorType2">#B768EF</color>
 </resources>

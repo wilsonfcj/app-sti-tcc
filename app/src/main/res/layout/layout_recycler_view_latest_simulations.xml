@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager_introduction_lasted"
+            android:layout_width="match_parent"
+            android:layout_height="155dp" />
+
+        <LinearLayout
+            android:id="@+id/view_pager_count_dots_last"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pager_height"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:orientation="horizontal" />
+
+        <Button
+            android:id="@+id/btn_plus_info_last"
+            android:layout_width="match_parent"
+            android:layout_height="35dp"
+            android:layout_margin="5dp"
+            android:text="@string/prompt_plus"/>
+
+    </LinearLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

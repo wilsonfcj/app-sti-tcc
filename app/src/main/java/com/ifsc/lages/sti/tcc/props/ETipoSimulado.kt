@@ -1,6 +1,6 @@
 package com.ifsc.lages.sti.tcc.props
 
-enum class ETipoSimulado(var codigo: Int, var situacao: String) {
+enum class ETipoSimulado(var codigo: Int, var descricao: String) {
     DEFAULT(0, "Personalizado"), ENADE(1, "ENADE"), POSCOMP(2, "POSCOMP");
 
     companion object {
@@ -15,7 +15,7 @@ enum class ETipoSimulado(var codigo: Int, var situacao: String) {
 
         fun getEnun(descricao: String?): ETipoSimulado {
             for (lSituacao in values()) {
-                if (lSituacao.situacao.equals(descricao, ignoreCase = true)) {
+                if (lSituacao.descricao.equals(descricao, ignoreCase = true)) {
                     return lSituacao
                 }
             }
