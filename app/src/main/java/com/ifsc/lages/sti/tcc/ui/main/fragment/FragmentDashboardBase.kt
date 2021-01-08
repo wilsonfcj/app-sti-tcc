@@ -20,12 +20,12 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.model.result.ResultValue
+import com.ifsc.lages.sti.tcc.model.result.ResultoQualitativo
 import java.util.*
 
 open class FragmentDashboardBase : Fragment(), MapElement {
 
-    var resultValue : ResultValue? = null
+    var resultValue : ResultoQualitativo? = null
     var textViewAcertos : TextView? = null
     var textViewErros: TextView? = null
     var chart: PieChart? = null
@@ -42,7 +42,7 @@ open class FragmentDashboardBase : Fragment(), MapElement {
         super.onCreate(savedInstanceState)
         tfRegular = Typeface.createFromAsset(activity!!.assets, "OpenSans-Regular.ttf")
         tfLight = Typeface.createFromAsset(activity!!.assets, "OpenSans-Light.ttf")
-        resultValue = arguments!!.getSerializable("result_overall") as ResultValue?
+        resultValue = arguments!!.getSerializable("result_overall") as ResultoQualitativo?
     }
 
     override fun onCreateView(
@@ -69,7 +69,7 @@ open class FragmentDashboardBase : Fragment(), MapElement {
 
     companion object {
         @JvmStatic
-        fun getInstance(resultOverall : ResultValue): FragmentDashboardBase {
+        fun getInstance(resultOverall : ResultoQualitativo): FragmentDashboardBase {
             val f =
                 FragmentDashboardBase()
             val args = Bundle()

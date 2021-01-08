@@ -11,7 +11,10 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
+import com.ifsc.lages.sti.tcc.model.result.ResultOverall
+import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
 import com.ifsc.lages.sti.tcc.model.user.User
+import com.ifsc.lages.sti.tcc.props.EResultOverall
 import com.ifsc.lages.sti.tcc.props.EUserType
 import com.ifsc.lages.sti.tcc.ui.login.LoginActivity
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeral
@@ -123,6 +126,44 @@ class MainActivity : BaseActivty() {
             viewModel!!.loadOverallResultEnade(userId)
             viewModel!!.loadOverallResultCustom(userId)
             viewModel!!.lastResult(userId)
+        } else {
+            showGeralInfos()
+            showResultadoInfos()
+        }
+    }
+
+    fun showGeralInfos() {
+        var idUser = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
+        var result = ResultOverall.DataBase.loadByTypeAndIdUser(EResultOverall.GERAL.codigo.toLong(), idUser)
+        if(result != null) {
+            dashboardGeral!!.showDashboard(result)
+        }
+    }
+
+    fun saveResultOverrall(it : ResultOverall) : ResultOverall {
+        var idUser = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
+        it._id = EResultOverall.GERAL.codigo.toLong()
+        it.idUsuario = idUser
+        ResultOverall.DataBase.save(it)
+        return it
+    }
+
+    fun saveResultSimulados(it : MutableList<ResultadoSimulado>) : MutableList<ResultadoSimulado> {
+        var idUser = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
+        for (i in 1..it.size) {
+            var resultadoSimulado = it.get(i - 1)
+            resultadoSimulado._id = i.toLong()
+            resultadoSimulado.idUsuario = idUser
+            ResultadoSimulado.DataBase.save(resultadoSimulado)
+        }
+        return it
+    }
+
+    fun showResultadoInfos() {
+        var idUser = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
+        var result = ResultadoSimulado.DataBase.loadByIdUser(idUser)
+        if(result != null) {
+            dashboardGeralLastResults!!.showDashboard(result)
         }
     }
 
@@ -132,8 +173,10 @@ class MainActivity : BaseActivty() {
         ).get(MainViewModel::class.java)
         viewModel!!.loadOverallResultView.observe(this, androidx.lifecycle.Observer {
             if(it.error!!.not()) {
-                dashboardGeral!!.showDashboard(it.success!!)
+                var result = saveResultOverrall(it.success!!)
+                dashboardGeral!!.showDashboard(result)
             } else {
+                showGeralInfos()
                 Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
             }
         })
@@ -143,8 +186,10 @@ class MainActivity : BaseActivty() {
         ).get(MainViewModel::class.java)
         viewModel!!.loadLastResult.observe(this, androidx.lifecycle.Observer {
             if(it.error!!.not()) {
-                dashboardGeralLastResults!!.showDashboard(it.success!!)
+                saveResultSimulados(it.success!!)
+                dashboardGeralLastResults!!.showDashboard(it.success)
             } else {
+                showResultadoInfos()
                 Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
             }
         })

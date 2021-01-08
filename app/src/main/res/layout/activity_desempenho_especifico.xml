@@ -25,8 +25,9 @@
                 android:adjustViewBounds="true"
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
+                android:src="@drawable/ic_background"
                 android:tint="@color/set_background_transparent"
-                android:src="@drawable/ic_background" />
+                tools:ignore="UseAppTint" />
 
         </RelativeLayout>
 

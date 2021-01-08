@@ -24,7 +24,7 @@
             android:id="@+id/dashboard_btn_gestao_entregas"
             android:layout_width="40dp"
             android:layout_height="50dp"
-            android:tint="@color/colorPrimary"
+            app:tint="@color/colorPrimary"
             android:src="@drawable/ic_app" />
 
         <TextView
@@ -80,7 +80,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:gravity="center"
-                        android:tint="@color/colorAccent"
+                        app:tint="@color/colorAccent"
                         android:src="@drawable/ic_app"
                         android:textSize="14dp" />
 
@@ -132,7 +132,7 @@
                         android:layout_width="20dp"
                         android:layout_height="20dp"
                         android:gravity="center"
-                        android:tint="@color/icons"
+                        app:tint="@color/icons"
                         android:src="@drawable/ic_app"
                         android:textSize="14dp" />
 

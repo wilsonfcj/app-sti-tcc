@@ -1,6 +1,6 @@
 package com.ifsc.lages.sti.tcc.resources.result.mapper
 
-import com.ifsc.lages.sti.tcc.model.result.ResultValue
+import com.ifsc.lages.sti.tcc.model.result.ResultoQualitativo
 import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
 import com.ifsc.lages.sti.tcc.utilidades.mapper.MapperUtil
@@ -16,38 +16,20 @@ class MapperSimulado : MapperUtil<ResultadoResponse.Simulado, ResultadoSimulado>
         resultadoSimulado.dataEnvio = simulado.dataEnvio
         resultadoSimulado.dataCriacao = simulado.dataCriacao
 
-        resultadoSimulado.resultadoGeral =
-            ResultValue(
-                simulado.resultadoGeral!!.erros,
-                simulado.resultadoGeral!!.acertos,
-                simulado.resultadoGeral!!.naoRespondidas,
-                simulado.resultadoGeral!!.total
-            )
+        resultadoSimulado.resultadoGeral = transform(simulado.resultadoGeral!!)
+        resultadoSimulado.resultadoMatematica = transform(simulado.resultadoMatematica!!)
+        resultadoSimulado.resultadoFundamentoComputacao = transform(simulado.resultadoFundamentoComputacao!!)
+        resultadoSimulado.resultadoTecnologiaComputacao = transform(simulado.resultadoTecnologiaComputacao!!)
 
-        resultadoSimulado.resultadoMatematica =
-            ResultValue(
-                simulado.resultadoMatematica!!.erros,
-                simulado.resultadoMatematica!!.acertos,
-                simulado.resultadoMatematica!!.naoRespondidas,
-                simulado.resultadoMatematica!!.total
-            )
-
-        resultadoSimulado.resultadoFundamentoComputacao =
-            ResultValue(
-                simulado.resultadoFundamentoComputacao!!.erros,
-                simulado.resultadoFundamentoComputacao!!.acertos,
-                simulado.resultadoFundamentoComputacao!!.naoRespondidas,
-                simulado.resultadoFundamentoComputacao!!.total
-            )
-
-        resultadoSimulado.resultadoTecnologiaComputacao =
-            ResultValue(
-                simulado.resultadoTecnologiaComputacao!!.erros,
-                simulado.resultadoTecnologiaComputacao!!.acertos,
-                simulado.resultadoTecnologiaComputacao!!.naoRespondidas,
-                simulado.resultadoTecnologiaComputacao!!.total
-            )
         return resultadoSimulado
     }
 
+    private fun transform(resultado: ResultadoResponse.Quantitativo): ResultoQualitativo? {
+        var response = ResultoQualitativo()
+        response.erros = resultado.erros
+        response.acertos = resultado.acertos
+        response.naoRespondidas = resultado.naoRespondidas
+        response.total = resultado.total
+        return response
+    }
 }

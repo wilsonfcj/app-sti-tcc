@@ -48,7 +48,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
                         app:srcCompat="@drawable/ic_student"
-                        android:tint="@color/colorPrimary" />
+                        app:tint="@color/colorPrimary" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -73,7 +73,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight=".5"
                         app:srcCompat="@drawable/ic_teacher"
-                        android:tint="@color/colorPrimary" />
+                        app:tint="@color/colorPrimary" />
 
                     <TextView
                         android:layout_width="wrap_content"

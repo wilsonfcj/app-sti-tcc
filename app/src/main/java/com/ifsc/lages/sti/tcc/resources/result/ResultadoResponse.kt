@@ -74,4 +74,9 @@ sealed class ResultadoResponse {
 
     }
 
+    open class SimuladoCompleto : Simulado() {
+        @SerializedName(value = "ResultadoDisciplinas")
+        private val disciplinas: List<Disciplina>? = null
+    }
+
 }

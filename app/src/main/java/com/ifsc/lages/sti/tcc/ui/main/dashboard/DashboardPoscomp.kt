@@ -11,8 +11,6 @@ import androidx.viewpager.widget.ViewPager
 import br.edu.ifsc.cancontrol.utilidades.MapElement
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.result.ResultOverall
-import com.ifsc.lages.sti.tcc.model.result.ResultValue
-import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.adapter.ViewPagerAdapter
 
 class DashboardPoscomp(private val mContext: AppCompatActivity, private val mViewRoot: View) : MapElement {

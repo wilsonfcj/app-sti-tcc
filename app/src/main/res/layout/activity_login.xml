@@ -181,8 +181,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="5dp"
-                    android:src="@drawable/ic_fingerprint"
-                    android:tint="@color/colorPrimary" />
+                    app:srcCompat="@drawable/ic_fingerprint"
+                    app:tint="@color/colorPrimary" />
 
             </LinearLayout>
 
@@ -261,7 +261,7 @@
             android:background="?attr/selectableItemBackgroundBorderless"
             android:scaleType="centerCrop"
             android:tint="@color/white"
-            android:src="@drawable/ic_pan_tool"/>
+            app:srcCompat="@drawable/ic_pan_tool"/>
 
     </FrameLayout>
 

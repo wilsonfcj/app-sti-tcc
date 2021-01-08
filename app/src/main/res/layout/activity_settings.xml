@@ -24,7 +24,8 @@
             android:fitsSystemWindows="true"
             android:scaleType="centerCrop"
             android:tint="@color/set_background_transparent"
-            android:src="@drawable/ic_background" />
+            android:src="@drawable/ic_background"
+            tools:ignore="UseAppTint" />
 
         <include layout="@layout/widget_logo_toolbar_transparent"/>
 

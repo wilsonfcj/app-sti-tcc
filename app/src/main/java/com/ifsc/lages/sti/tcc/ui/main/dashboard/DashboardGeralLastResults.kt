@@ -9,9 +9,7 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import br.edu.ifsc.cancontrol.utilidades.MapElement
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.model.result.ResultValue
 import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
-import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
 import com.ifsc.lages.sti.tcc.ui.desepenhoesp.DesempenhoSimuladoActivity
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.adapter.LastSimulatedAdapter
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.adapter.ViewPagerLastSimulatedAdapter

@@ -1,14 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:layout_height="match_parent">
+    android:layout_height="wrap_content">
+
+    <com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
+        android:id="@+id/custom_msm"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:title="Sem conexão com a internet"
+        app:iconSrc="@drawable/ic_sinal"
+        android:layout_centerInParent="true"
+        android:visibility="gone" />
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:orientation="vertical">
+
 
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager_introduction"
@@ -25,4 +36,6 @@
 
     </LinearLayout>
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</RelativeLayout>

@@ -1,5 +1,7 @@
 package com.ifsc.lages.sti.tcc.resources
 
+import com.ifsc.lages.sti.tcc.resources.classroom.ClassroomRequest
+import com.ifsc.lages.sti.tcc.resources.classroom.ClassroomResponse
 import com.ifsc.lages.sti.tcc.resources.education.InstitutionResponse
 import com.ifsc.lages.sti.tcc.resources.generics.BaseResponse
 import com.ifsc.lages.sti.tcc.resources.question.QuestaoResponse
@@ -30,6 +32,21 @@ interface Api {
         fun institutions() : Call<BaseResponse<MutableList<InstitutionResponse.EducationalInstitution>>>
     }
 
+    interface Classroom {
+
+        @POST("CriarSalaSimulado")
+        fun createClassroom(@Body request : SimuladoRequest.Register) : Call<BaseResponse<ClassroomResponse.SalaResponse>>
+
+        @GET("BuscarSalasSimulado")
+        fun searchClassroom(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<MutableList<ClassroomResponse.SalaResponse>>>
+
+        @POST("ParticiparSalaSimulado")
+        fun enterClassroom(@Body request : ClassroomRequest.EnterClassroom) : Call<BaseResponse<MutableList<ClassroomResponse.SimuladoBaseResponse>>>
+
+        @POST("DeletarSala")
+        fun deleteClassroom(@Body request : ClassroomRequest.DeleteClassroom) : Call<BaseResponse<SimuladoResponse.SimuladoCompleto>>
+    }
+
     interface Mock {
         @GET("CadastrarQuestoes")
         fun registerQuestion() : Call<BaseResponse<MutableList<QuestaoResponse.Cadastrada>>>
@@ -48,6 +65,10 @@ interface Api {
 
         @POST("SalvarRespostaSimulado")
         fun saveSimulatedResponse(@Body request : SimuladoRequest.RespostaSimuladoRequest) : Call<BaseResponse<ResultadoResponse.Simulado>>
+
+        @GET("DeletarSimulado")
+        fun deleteSimulated(@Body request: ResultadoRequest.PorUsuarioESimulado) : Call<BaseResponse<SimuladoResponse.SimuladoCompleto>>
+
     }
 
     interface ResultSimulated {
