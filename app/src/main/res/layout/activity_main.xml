@@ -11,24 +11,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:id="@+id/iv_bkg"
-                android:layout_width="match_parent"
-                android:layout_height="@dimen/size_background_image"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                android:adjustViewBounds="true"
-                android:fitsSystemWindows="true"
-                android:scaleType="centerCrop"
-                android:tint="@color/set_background_transparent"
-                android:src="@drawable/ic_background"
-                tools:ignore="UseAppTint" />
-
-        </RelativeLayout>
+        <include android:id="@+id/container_toolbar" layout="@layout/layout_imagem_header"/>
 
         <RelativeLayout
             android:id="@+id/container_toolbar"
@@ -53,8 +36,7 @@
 
         </RelativeLayout>
 
-
-            <ScrollView
+        <ScrollView
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/container_toolbar">
@@ -76,30 +58,40 @@
                         android:layout_marginTop="8dp"
                         android:elevation="8dp">
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:orientation="vertical">
+                            android:layout_height="match_parent">
 
-                            <TextView
-                                android:id="@+id/tv_title"
+                            <ProgressBar
+                                android:id="@+id/progress_geral"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"/>
+
+                            <LinearLayout
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:text="Desempenho geral"
-                                android:textAlignment="center"/>
+                                android:orientation="vertical">
 
-                            <include layout="@layout/layout_view_pager_chart"/>
+                                <TextView
+                                    android:id="@+id/tv_title"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Desempenho geral"
+                                    android:textAlignment="center"/>
 
-                            <Button
-                                android:id="@+id/btn_plus_info"
-                                android:layout_width="match_parent"
-                                android:layout_height="35dp"
-                                android:layout_margin="5dp"
-                                android:text="@string/prompt_plus"/>
+                                <include  layout="@layout/layout_view_pager_chart"/>
 
-                        </LinearLayout>
+                                <Button
+                                    android:id="@+id/btn_plus_info"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="35dp"
+                                    android:layout_margin="5dp"
+                                    android:text="@string/prompt_plus"/>
 
+                            </LinearLayout>
 
+                        </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
 
@@ -111,7 +103,19 @@
                         android:layout_marginTop="8dp"
                         android:elevation="8dp">
 
-                        <include layout="@layout/layout_recycler_view_latest_simulations"/>
+                        <RelativeLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent">
+
+                            <ProgressBar
+                                android:id="@+id/progress_last"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_centerInParent="true"/>
+
+                            <include layout="@layout/layout_recycler_view_latest_simulations"/>
+
+                        </RelativeLayout>
 
                     </androidx.cardview.widget.CardView>
 

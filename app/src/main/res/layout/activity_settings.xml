@@ -14,18 +14,7 @@
         android:layout_height="wrap_content"
         android:animateLayoutChanges="true">
 
-        <ImageView
-            android:id="@+id/iv_bkg"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/size_background_image"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:adjustViewBounds="true"
-            android:fitsSystemWindows="true"
-            android:scaleType="centerCrop"
-            android:tint="@color/set_background_transparent"
-            android:src="@drawable/ic_background"
-            tools:ignore="UseAppTint" />
+        <include android:id="@+id/iv_bkg" layout="@layout/layout_imagem_header"/>
 
         <include layout="@layout/widget_logo_toolbar_transparent"/>
 

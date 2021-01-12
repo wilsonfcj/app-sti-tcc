@@ -1,4 +1,4 @@
-package com.ifsc.lages.sti.tcc.ui.register.bottomsheet
+package com.ifsc.lages.sti.tcc.ui.meussimulados.bottomsheet
 
 import android.content.Context
 import android.os.Bundle
@@ -6,14 +6,16 @@ import android.view.*
 import android.widget.ViewSwitcher
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ifsc.lages.sti.tcc.R
+import com.ifsc.lages.sti.tcc.props.ETipoSimulado
 import com.ifsc.lages.sti.tcc.props.EUserType
 
-class BottonSheetUsetTypeFragment : BottomSheetDialogFragment() {
+class BottonSheetSimulatedTypeFragment : BottomSheetDialogFragment() {
 
     private var mView: View? = null
     private var mCallbackOptions: CallbackOptions? = null
-    private var mTxtVwViewInfos: View? = null
-    private var mTxtVwDelete: View? = null
+    private var mTxtVwViewEnade: View? = null
+    private var mTxtVwPoscomp: View? = null
+    private var mTxtVwPersonalizado: View? = null
     private val mViewSwitcher: ViewSwitcher? = null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -28,7 +30,7 @@ class BottonSheetUsetTypeFragment : BottomSheetDialogFragment() {
         val lContextThemeWrapper: Context =
             ContextThemeWrapper(activity, R.style.AppTheme)
         return inflater.cloneInContext(lContextThemeWrapper)
-            .inflate(R.layout.bottom_sheet_user_type, container, false)
+            .inflate(R.layout.bottom_sheet_simulated_type, container, false)
     }
 
     override fun onViewCreated(
@@ -42,19 +44,26 @@ class BottonSheetUsetTypeFragment : BottomSheetDialogFragment() {
     }
 
     private fun mapViews() {
-        mTxtVwViewInfos = mView!!.findViewById(R.id.tv_student)
-        mTxtVwDelete = mView!!.findViewById(R.id.tv_teacher)
+        mTxtVwViewEnade = mView!!.findViewById(R.id.tv_enade)
+        mTxtVwPoscomp = mView!!.findViewById(R.id.tv_poscomp)
+        mTxtVwPersonalizado = mView!!.findViewById(R.id.tv_custom)
     }
 
     private fun actionsViews() {
-        mTxtVwViewInfos!!.setOnClickListener { _: View? ->
+        mTxtVwViewEnade!!.setOnClickListener { _: View? ->
             mCallbackOptions!!.onClick(
-                EUserType.STUDENT
+                ETipoSimulado.ENADE
             )
         }
-        mTxtVwDelete!!.setOnClickListener { _: View? ->
+        mTxtVwPoscomp!!.setOnClickListener { _: View? ->
             mCallbackOptions!!.onClick(
-                EUserType.TEACHER
+                ETipoSimulado.POSCOMP
+            )
+        }
+
+        mTxtVwPersonalizado!!.setOnClickListener { _: View? ->
+            mCallbackOptions!!.onClick(
+                ETipoSimulado.DEFAULT
             )
         }
     }
@@ -69,13 +78,13 @@ class BottonSheetUsetTypeFragment : BottomSheetDialogFragment() {
     }
 
     interface CallbackOptions {
-        fun onClick(typeUser: EUserType?)
+        fun onClick(typeUser: ETipoSimulado?)
     }
 
     companion object {
         private const val TAG = "BottonSheetOptionsFragment"
-        fun newInstance(): BottonSheetUsetTypeFragment {
-            return BottonSheetUsetTypeFragment()
+        fun newInstance(): BottonSheetSimulatedTypeFragment {
+            return BottonSheetSimulatedTypeFragment()
         }
     }
 }

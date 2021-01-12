@@ -12,7 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.result.ResultOverall
-import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
+import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.model.user.User
 import com.ifsc.lages.sti.tcc.props.EResultOverall
 import com.ifsc.lages.sti.tcc.props.EUserType
@@ -21,6 +21,7 @@ import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeral
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeralLastResults
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModel
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModelFactory
+import com.ifsc.lages.sti.tcc.ui.meussimulados.MySimulatedActivity
 import com.ifsc.lages.sti.tcc.ui.settings.SettingsActivity
 import com.ifsc.lages.sti.tcc.utilidades.*
 import com.judemanutd.katexview.KatexView
@@ -148,20 +149,20 @@ class MainActivity : BaseActivty() {
         return it
     }
 
-    fun saveResultSimulados(it : MutableList<ResultadoSimulado>) : MutableList<ResultadoSimulado> {
+    fun saveResultSimulados(it : MutableList<ResultSimulated>) : MutableList<ResultSimulated> {
         var idUser = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
         for (i in 1..it.size) {
             var resultadoSimulado = it.get(i - 1)
             resultadoSimulado._id = i.toLong()
             resultadoSimulado.idUsuario = idUser
-            ResultadoSimulado.DataBase.save(resultadoSimulado)
+            ResultSimulated.DataBase.save(resultadoSimulado)
         }
         return it
     }
 
     fun showResultadoInfos() {
         var idUser = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
-        var result = ResultadoSimulado.DataBase.loadByIdUser(idUser)
+        var result = ResultSimulated.DataBase.loadByIdUser(idUser)
         if(result != null) {
             dashboardGeralLastResults!!.showDashboard(result)
         }
@@ -171,6 +172,7 @@ class MainActivity : BaseActivty() {
         viewModel = ViewModelProvider(this,
             MainViewModelFactory(this@MainActivity)
         ).get(MainViewModel::class.java)
+
         viewModel!!.loadOverallResultView.observe(this, androidx.lifecycle.Observer {
             if(it.error!!.not()) {
                 var result = saveResultOverrall(it.success!!)
@@ -181,9 +183,7 @@ class MainActivity : BaseActivty() {
             }
         })
 
-        viewModel = ViewModelProvider(this,
-            MainViewModelFactory(this@MainActivity)
-        ).get(MainViewModel::class.java)
+
         viewModel!!.loadLastResult.observe(this, androidx.lifecycle.Observer {
             if(it.error!!.not()) {
                 saveResultSimulados(it.success!!)
@@ -351,7 +351,8 @@ class MainActivity : BaseActivty() {
 
             }
             Constants.DashboardEvent.CRIAR_SIMULADO -> {
-
+                val lIntent = Intent(this@MainActivity, MySimulatedActivity::class.java)
+                startActivity(lIntent)
             }
             Constants.DashboardEvent.ALUNOS -> {
 

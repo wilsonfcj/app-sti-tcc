@@ -4,17 +4,15 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentManager
 import androidx.fragment.app.FragmentStatePagerAdapter
-import com.ifsc.lages.sti.tcc.model.result.ResultOverall
-import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
+import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.ui.main.fragment.DashboardFundamentosFragment
-import com.ifsc.lages.sti.tcc.ui.main.fragment.DashboardGeralFragment
 import com.ifsc.lages.sti.tcc.ui.main.fragment.DashboardMatematicaFragment
 import com.ifsc.lages.sti.tcc.ui.main.fragment.DashboardTecnologiaFragment
 
 class ViewPagerSimuladoAdapter(
     val context: Context,
     fm: FragmentManager?,
-    private val resultOverall: ResultadoSimulado
+    private val resultOverall: ResultSimulated
 ) : FragmentStatePagerAdapter(fm!!, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
     override fun getItem(position: Int): Fragment {

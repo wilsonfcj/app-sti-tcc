@@ -9,27 +9,28 @@ import androidx.core.content.ContextCompat
 import androidx.viewpager.widget.ViewPager
 import br.edu.ifsc.cancontrol.utilidades.MapElement
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
+import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.ui.desepenhoesp.DesempenhoSimuladoActivity
-import com.ifsc.lages.sti.tcc.ui.main.dashboard.adapter.LastSimulatedAdapter
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.adapter.ViewPagerLastSimulatedAdapter
 
 
-class DashboardGeralLastResults(private val mContext: AppCompatActivity, private val mViewRoot: View) : MapElement, LastSimulatedAdapter.Listener {
+class DashboardGeralLastResults(private val mContext: AppCompatActivity, private val mViewRoot: View) : MapElement{
 
     private var pagerIndicator: LinearLayout? = null
     private var previous_pos = 0
     private var dotsCount = 0
     private  var dots : Array<ImageView?> = emptyArray()
-    private var resultOverall : MutableList<ResultadoSimulado>? = null
+    private var resultOverall : MutableList<ResultSimulated>? = null
     private var recyclerView : ViewPager? = null
     private var adapter : ViewPagerLastSimulatedAdapter? = null
     private var btnPlusInfo : Button? = null
+    private var progressLast : ProgressBar? = null
 
     override fun mapComponents() {
         btnPlusInfo = mViewRoot.findViewById(R.id.btn_plus_info_last) as Button
         recyclerView = mViewRoot.findViewById(R.id.pager_introduction_lasted) as ViewPager
         pagerIndicator = mViewRoot.findViewById(R.id.view_pager_count_dots_last) as LinearLayout
+        progressLast = mViewRoot.findViewById(R.id.progress_last) as ProgressBar
     }
 
     override fun mapActionComponents() {
@@ -48,7 +49,8 @@ class DashboardGeralLastResults(private val mContext: AppCompatActivity, private
         mapActionComponents()
     }
 
-    fun showDashboard(resultado : MutableList<ResultadoSimulado>) {
+    fun showDashboard(resultado : MutableList<ResultSimulated>) {
+        progressLast?.visibility = View.GONE
         resultOverall = resultado
         if(adapter == null) {
             adapter =
@@ -114,9 +116,5 @@ class DashboardGeralLastResults(private val mContext: AppCompatActivity, private
                 R.drawable.selected_item_dot
             )
         )
-    }
-
-    override fun onItemClick(response: ResultadoSimulado) {
-
     }
 }

@@ -1,25 +1,19 @@
 package com.ifsc.lages.sti.tcc.ui.desepenhoesp
 
 import android.annotation.SuppressLint
-import android.content.Intent
 import android.os.Bundle
-import android.view.View
-import android.widget.ImageView
 import android.widget.TextView
 import android.widget.Toast
-import androidx.core.app.ActivityOptionsCompat
 import androidx.lifecycle.ViewModelProvider
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
+import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.props.ETipoSimulado
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardEnade
-import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeral
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardPoscomp
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardSpecificPerformance
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModel
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModelFactory
-import com.ifsc.lages.sti.tcc.ui.settings.SettingsActivity
 import com.ifsc.lages.sti.tcc.utilidades.*
 
 
@@ -36,7 +30,7 @@ class DesempenhoSimuladoActivity : BaseActivty() {
     private var tvError : TextView? = null
     private var tvNaoRespondidas : TextView? = null
 
-    var resultValue : ResultadoSimulado? = null
+    var resultValue : ResultSimulated? = null
 
     private var dashboardPoscomp : DashboardPoscomp? = null
     private var dashboardEnade : DashboardEnade? = null
@@ -62,7 +56,7 @@ class DesempenhoSimuladoActivity : BaseActivty() {
     }
 
     override fun mapActionComponents() {
-        resultValue = intent.extras?.get("result_overall") as ResultadoSimulado
+        resultValue = intent.extras?.get("result_overall") as ResultSimulated
         tvName = findViewById(R.id.tv_name) as TextView
         tvDate = findViewById(R.id.tv_date) as TextView
         tvClock = findViewById(R.id.tv_clock) as TextView
@@ -110,9 +104,7 @@ class DesempenhoSimuladoActivity : BaseActivty() {
     fun callBackOperetion() {
         var userId = SharedPreferencesUtil.get(this@DesempenhoSimuladoActivity, KeyPrefs.USER_ID, 0L)
         if (ConnectionUtil.isNetworkAvailable(this@DesempenhoSimuladoActivity)) {
-//            viewModel!!.loadOverallResultPoscomp(userId)
-//            viewModel!!.loadOverallResultEnade(userId)
-//            viewModel!!.loadOverallResultCustom(userId)
+
         }
     }
 

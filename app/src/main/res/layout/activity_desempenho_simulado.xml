@@ -26,7 +26,8 @@
                 android:fitsSystemWindows="true"
                 android:scaleType="centerCrop"
                 android:tint="@color/set_background_transparent"
-                android:src="@drawable/ic_background" />
+                android:src="@drawable/ic_background"
+                tools:ignore="UseAppTint" />
 
         </RelativeLayout>
 
@@ -77,10 +78,20 @@
 
                 </androidx.cardview.widget.CardView>
 
+                <Button
+                    android:id="@+id/btn_plus_info"
+                    android:layout_width="match_parent"
+                    android:layout_height="35dp"
+                    android:layout_marginTop="5dp"
+                    android:layout_marginBottom="25dp"
+                    android:text="@string/prompt_result_matters"/>
+
+
             </LinearLayout>
 
-
         </ScrollView>
+
+
 
     </RelativeLayout>
 

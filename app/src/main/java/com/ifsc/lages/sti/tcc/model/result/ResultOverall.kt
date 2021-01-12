@@ -12,10 +12,10 @@ open class ResultOverall : RealmObject(), Serializable {
     var idUsuario: Long? = null
     var nome: String? = null
     var simuladosRespondidos: Int? = null
-    var resultadoGeral: ResultoQualitativo? = null
-    var resultadoMatematica: ResultoQualitativo? = null
-    var resultadoFundamentoComputacao: ResultoQualitativo? = null
-    var resultadoTecnologiaComputacao: ResultoQualitativo? = null
+    var resultadoGeral: ResultQuantitative? = null
+    var resultadoMatematica: ResultQuantitative? = null
+    var resultadoFundamentoComputacao: ResultQuantitative? = null
+    var resultadoTecnologiaComputacao: ResultQuantitative? = null
 
     object DataBase {
         fun save(resultOverall: ResultOverall): Long {

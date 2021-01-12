@@ -12,7 +12,7 @@ import androidx.viewpager.widget.ViewPager
 import br.edu.ifsc.cancontrol.utilidades.MapElement
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.result.ResultOverall
-import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
+import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.ui.desepenhoesp.adapter.ViewPagerSimuladoAdapter
 
 class DashboardSimulado(private val mContext: AppCompatActivity, private val mViewRoot: View) : MapElement {
@@ -43,7 +43,7 @@ class DashboardSimulado(private val mContext: AppCompatActivity, private val mVi
         mapActionComponents()
     }
 
-    fun showDashboard(resultado : ResultadoSimulado) {
+    fun showDashboard(resultado : ResultSimulated) {
         if(adapter == null) {
             adapter =
                 ViewPagerSimuladoAdapter(

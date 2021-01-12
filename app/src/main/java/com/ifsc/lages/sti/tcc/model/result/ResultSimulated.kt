@@ -6,7 +6,7 @@ import io.realm.annotations.PrimaryKey
 import java.io.Serializable
 import java.util.*
 
-open class ResultadoSimulado : RealmObject(), Serializable {
+open class ResultSimulated : RealmObject(), Serializable {
 
     @PrimaryKey
     var _id: Long? = null
@@ -18,18 +18,18 @@ open class ResultadoSimulado : RealmObject(), Serializable {
     var dataEnvio: Date? = null
     var tipoSimulado: Int? = null
 
-    var resultadoGeral: ResultoQualitativo? = null
-    var resultadoMatematica: ResultoQualitativo? = null
-    var resultadoFundamentoComputacao: ResultoQualitativo? = null
-    var resultadoTecnologiaComputacao: ResultoQualitativo? = null
+    var resultadoGeral: ResultQuantitative? = null
+    var resultadoMatematica: ResultQuantitative? = null
+    var resultadoFundamentoComputacao: ResultQuantitative? = null
+    var resultadoTecnologiaComputacao: ResultQuantitative? = null
 
     object DataBase {
-        fun save(resultOverall: ResultadoSimulado): Long {
+        fun save(resultOverall: ResultSimulated): Long {
             var _id = 1L
             var realm = Realm.getDefaultInstance()
             try {
                 if(resultOverall._id == null) {
-                    val maxId = realm.where(ResultadoSimulado::class.java).max("_id")
+                    val maxId = realm.where(ResultSimulated::class.java).max("_id")
                     val nextId = if (maxId == null) 1 else maxId.toLong() + 1
                     resultOverall._id = nextId
                 }
@@ -45,7 +45,7 @@ open class ResultadoSimulado : RealmObject(), Serializable {
             }
         }
 
-        fun update(resultOverall: ResultadoSimulado) : Long {
+        fun update(resultOverall: ResultSimulated) : Long {
             var _id = 1L
             var realm = Realm.getDefaultInstance()
             try {
@@ -61,11 +61,11 @@ open class ResultadoSimulado : RealmObject(), Serializable {
             }
         }
 
-        fun loadById(id : Long) : ResultadoSimulado? {
-            var obgect : ResultadoSimulado? = null
+        fun loadById(id : Long) : ResultSimulated? {
+            var obgect : ResultSimulated? = null
             var realm = Realm.getDefaultInstance()
             try {
-                var realInfos = realm.where(ResultadoSimulado::class.java).equalTo("_id", id).findFirst()
+                var realInfos = realm.where(ResultSimulated::class.java).equalTo("_id", id).findFirst()
                 if(realInfos!= null) {
                     obgect = realm.copyFromRealm(realInfos)
                 }
@@ -77,11 +77,11 @@ open class ResultadoSimulado : RealmObject(), Serializable {
             }
         }
 
-        fun loadByIdUser(userId : Long) : MutableList<ResultadoSimulado>? {
-            var obgect : MutableList<ResultadoSimulado>? = null
+        fun loadByIdUser(userId : Long) : MutableList<ResultSimulated>? {
+            var obgect : MutableList<ResultSimulated>? = null
             var realm = Realm.getDefaultInstance()
             try {
-                var realInfos = realm.where(ResultadoSimulado::class.java).equalTo("idUsuario", userId).findAll()
+                var realInfos = realm.where(ResultSimulated::class.java).equalTo("idUsuario", userId).findAll()
                 if(realInfos!= null) {
                     obgect = realm.copyFromRealm(realInfos)
                 }
@@ -93,11 +93,11 @@ open class ResultadoSimulado : RealmObject(), Serializable {
             }
         }
 
-        fun loadByTypeAndIdUser(id : Long, userId : Long) : ResultadoSimulado? {
-            var obgect : ResultadoSimulado? = null
+        fun loadByTypeAndIdUser(id : Long, userId : Long) : ResultSimulated? {
+            var obgect : ResultSimulated? = null
             var realm = Realm.getDefaultInstance()
             try {
-                var realInfos = realm.where(ResultadoSimulado::class.java).equalTo("_id", id)
+                var realInfos = realm.where(ResultSimulated::class.java).equalTo("_id", id)
                     .equalTo("idUsuario", userId).findFirst()
                 if(realInfos!= null) {
                     obgect = realm.copyFromRealm(realInfos)

@@ -7,7 +7,6 @@ import android.text.SpannableString
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.fragment.app.Fragment
 import br.edu.ifsc.cancontrol.utilidades.MapElement
@@ -20,16 +19,17 @@ import com.github.mikephil.charting.data.PieEntry
 import com.github.mikephil.charting.formatter.PercentFormatter
 import com.github.mikephil.charting.utils.ColorTemplate
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.model.result.ResultoQualitativo
+import com.ifsc.lages.sti.tcc.model.result.ResultQuantitative
+import com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
 import java.util.*
 
 open class FragmentDashboardBase : Fragment(), MapElement {
 
-    var resultValue : ResultoQualitativo? = null
+    var resultValue : ResultQuantitative? = null
     var textViewAcertos : TextView? = null
     var textViewErros: TextView? = null
     var chart: PieChart? = null
-    var layoutError : LinearLayout? = null
+    var layoutError : CustomLayoutMsm? = null
 
     protected var tfRegular: Typeface? = null
     protected var tfLight: Typeface? = null
@@ -42,7 +42,7 @@ open class FragmentDashboardBase : Fragment(), MapElement {
         super.onCreate(savedInstanceState)
         tfRegular = Typeface.createFromAsset(activity!!.assets, "OpenSans-Regular.ttf")
         tfLight = Typeface.createFromAsset(activity!!.assets, "OpenSans-Light.ttf")
-        resultValue = arguments!!.getSerializable("result_overall") as ResultoQualitativo?
+        resultValue = arguments!!.getSerializable("result_overall") as ResultQuantitative?
     }
 
     override fun onCreateView(
@@ -69,7 +69,7 @@ open class FragmentDashboardBase : Fragment(), MapElement {
 
     companion object {
         @JvmStatic
-        fun getInstance(resultOverall : ResultoQualitativo): FragmentDashboardBase {
+        fun getInstance(resultOverall : ResultQuantitative): FragmentDashboardBase {
             val f =
                 FragmentDashboardBase()
             val args = Bundle()

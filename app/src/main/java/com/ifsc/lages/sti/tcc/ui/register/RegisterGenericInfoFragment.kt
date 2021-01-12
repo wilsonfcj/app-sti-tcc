@@ -3,8 +3,6 @@ package com.ifsc.lages.sti.tcc.ui.register
 import android.Manifest
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.Context
-import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
@@ -16,7 +14,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
-import android.view.inputmethod.InputMethodManager
 import android.widget.EditText
 import android.widget.ImageView
 import android.widget.LinearLayout
@@ -37,7 +34,7 @@ import com.ifsc.lages.sti.tcc.props.EUserType
 import com.ifsc.lages.sti.tcc.ui.login.afterTextChanged
 import com.ifsc.lages.sti.tcc.ui.register.adapter.MatterInfo
 import com.ifsc.lages.sti.tcc.ui.register.bottomsheet.BottonSheetEducationInstitutionFragment
-import com.ifsc.lages.sti.tcc.ui.register.bottomsheet.BottonSheetUsetTypeFragment
+import com.ifsc.lages.sti.tcc.ui.register.bottomsheet.BottonSheetUserTypeFragment
 import com.ifsc.lages.sti.tcc.ui.register.viewmodel.RegisterViewModel
 import com.ifsc.lages.sti.tcc.ui.register.viewmodel.RegisterViewModelFactory
 import com.ifsc.lages.sti.tcc.utilidades.*
@@ -48,7 +45,7 @@ import java.text.SimpleDateFormat
 import java.util.*
 import kotlin.collections.ArrayList
 
-class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.CallbackOptions, BottonSheetEducationInstitutionFragment.CallbackOptions, MattersListDialogFragment.Listener {
+class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUserTypeFragment.CallbackOptions, BottonSheetEducationInstitutionFragment.CallbackOptions, MattersListDialogFragment.Listener {
 
     var button : MaterialButton? = null
     var editTextName : EditText? = null
@@ -79,7 +76,7 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
 
     private val calendarBirthday : Calendar = Calendar.getInstance()
     private val calendarDateOfIssue : Calendar = Calendar.getInstance()
-    private var bottonSheetUsetTypeFragment : BottonSheetUsetTypeFragment? = null
+    private var bottonSheetUsetTypeFragment : BottonSheetUserTypeFragment? = null
     private var bottonSheetEducationInstitutionFragment : BottonSheetEducationInstitutionFragment? = null
     private var progressBar :  ProgressBar? = null
 
@@ -315,7 +312,7 @@ class RegisterGenericInfoFragment : BaseFragment(), BottonSheetUsetTypeFragment.
             bottonSheetEducationInstitutionFragment!!.setListener(this)
         }
         editTextUserType?.setOnClickListener {
-            bottonSheetUsetTypeFragment = BottonSheetUsetTypeFragment.newInstance()
+            bottonSheetUsetTypeFragment = BottonSheetUserTypeFragment.newInstance()
             bottonSheetUsetTypeFragment!!.show(activity!!.supportFragmentManager, null)
             bottonSheetUsetTypeFragment!!.setListener(this)
         }

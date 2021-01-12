@@ -3,7 +3,7 @@ package com.ifsc.lages.sti.tcc.model.result
 import io.realm.RealmObject
 import java.io.Serializable
 
-open class ResultoQualitativo : RealmObject(), Serializable{
+open class ResultQuantitative : RealmObject(), Serializable{
 
     var erros: Int? = null
     var acertos: Int? = null

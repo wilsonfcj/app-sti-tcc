@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.model.result.ResultoQualitativo
+import com.ifsc.lages.sti.tcc.model.result.ResultQuantitative
 
 class DashboardFundamentosFragment : FragmentDashboardBase() {
 
@@ -19,7 +19,7 @@ class DashboardFundamentosFragment : FragmentDashboardBase() {
 
     companion object {
         @JvmStatic
-        fun getInstance(resultOverall : ResultoQualitativo): DashboardFundamentosFragment {
+        fun getInstance(resultOverall : ResultQuantitative): DashboardFundamentosFragment {
             val f =
                 DashboardFundamentosFragment()
             val args = Bundle()

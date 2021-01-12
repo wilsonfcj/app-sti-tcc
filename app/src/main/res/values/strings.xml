@@ -7,6 +7,7 @@
     <string name="prompt_ok">Ok</string>
     <string name="prompt_acessar">Acessar</string>
     <string name="prompt_cpf">CPF</string>
+    <string name="prompt_description">Descrição</string>
     <string name="prompt_name">Nome</string>
     <string name="prompt_cell_fone">Telefone</string>
     <string name="prompt_email">E-mail</string>
@@ -15,14 +16,16 @@
     <string name="prompt_new_password">Nova Senha</string>
     <string name="prompt_confirm_password">Confirmar Senha</string>
     <string name="prompt_birthday">Data de nascimento</string>
+    <string name="prompt_type_simulated">Tipo Simulado</string>
     <string name="prompt_education_institution">Instituição</string>
     <string name="prompt_user_type">Tipo Usuário</string>
     <string name="prompt_registration">Matricula</string>
     <string name="prompt_yers_join">Ano Ingresso</string>
     <string name="prompt_next">Próximo</string>
+    <string name="prompt_register_simulated">Cadastrar Agora</string>
     <string name="prompt_matters">Disciplinas</string>
     <string name="prompt_plus">Mais informações</string>
-
+    <string name="prompt_result_matters">Desempenho disciplinas</string>
 
     <string name="prompt_register">Cadastre-se agora</string>
     <string name="prompt_update">Alterar agora</string>
@@ -41,6 +44,9 @@
     <string name="error_invalid_birthday">Informe a data de nascimento</string>
     <string name="error_invalid_education">Informe a instituição</string>
     <string name="error_invalid_user_type">Informe o tipo de usuário</string>
+    <string name="error_invalid_simulated_type">Informe o tipo do simulado</string>
+    <string name="error_invalid_name_simulated">Insira um nome</string>
+    <string name="error_invalid_name_description">Insira uma descrição</string>
 
     <string name="error_invalid_register_numer">Informe sua matrícula</string>
 
@@ -57,12 +63,15 @@
     <string name="transition_avatar" translatable="false">transition_avatar</string>
     <string name="bem_vindo" translatable="false">Bem vindo(a),</string>
 
+    <string name="title_new_simulated">NOVO SIMULADO</string>
+    <string name="title_my_simuladed">MEUS SIMULADOS</string>
     <string name="title_toolbar_dashboard">DASHBOARD</string>
     <string name="title_specific_performance">DESEMPENHO ESPECÍFICO</string>
     <string name="title_performance_simulado">DESEMPENHO SIMULADO</string>
     <string name="title_toolbar_my_profile">MEU PERFIL</string>
     <string name="title_toolbar_register">CADASTRO</string>
     <string name="title_toolbar_update">ALTERAR PERFIL</string>
+    <string name="title_toolbar_register_simulated">CRIAR SIMULADO</string>
 
     <string name="prompt_version">Versão aplicativo</string>
     <string name="prompt_lagind_generic">Buscando informações</string>
@@ -80,4 +89,5 @@
     <string name="prompt_config">Configurações</string>
 
     <string name="prompt_waint">Em breve a funcionalidade estará disponível</string>
+    <string name="prompt_search">Buscando informações...</string>
 </resources>

@@ -20,7 +20,6 @@ class RegisterViewModel (var activity: Context) : ViewModel() {
     var repository1 : UserRepository = UserRepository()
     var repository2 : InstitutionRepository = InstitutionRepository()
 
-
     val _registerUserView = MutableLiveData<BaseView<User>>()
     var registerUserView : LiveData<BaseView<User>> = _registerUserView
 

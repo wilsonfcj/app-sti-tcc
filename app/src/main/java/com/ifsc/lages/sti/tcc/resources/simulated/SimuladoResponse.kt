@@ -11,6 +11,9 @@ sealed class SimuladoResponse {
         @SerializedName(value = "Id")
         var id: Long? = null
 
+        @SerializedName(value = "idSala")
+        var idSala: Long? = null
+
         @SerializedName(value = "Nome")
         var nome: String? = null
 
@@ -43,8 +46,10 @@ sealed class SimuladoResponse {
 
         @SerializedName(value = "ResultadoSimulado")
         var simuladoResultado: ResultadoResponse.Simulado? = null
-    }
 
+        @SerializedName(value = "QuantidadeResposta")
+        var quantidadeResposta : Int? = null
+    }
 
     class SimuladoCompleto: SimuladoBase() {
         @SerializedName(value = "Questoes")
@@ -55,4 +60,6 @@ sealed class SimuladoResponse {
         @SerializedName(value = "Questoes")
         var questoes: List<QuestaoResponse>? = null
     }
+
+
 }

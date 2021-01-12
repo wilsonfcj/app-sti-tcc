@@ -192,30 +192,15 @@
 
             </net.cachapa.expandablelayout.ExpandableLayout>
 
-            <LinearLayout
+            <com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
                 android:id="@+id/layout_error"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                app:title="Nenhuma informação encontrada"
+                app:iconSrc="@drawable/ic_smile_sad"
                 android:layout_centerInParent="true"
-                android:visibility="visible"
-                android:orientation="vertical">
+                android:visibility="invisible" />
 
-                <ImageView
-                    android:id="@+id/progressBar"
-                    android:layout_width="60dp"
-                    android:layout_height="60dp"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/ic_smile_sad"
-                    app:tint="@color/colorPrimary" />
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:text="Nenhuma informação encontrada"
-                    android:textAlignment="center"
-                    android:textSize="18dp"/>
-
-            </LinearLayout>
         </RelativeLayout>
 
     </LinearLayout>

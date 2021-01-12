@@ -6,12 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.result.ResultOverall
-import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
-import com.ifsc.lages.sti.tcc.model.user.User
+import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.props.ETipoSimulado
 import com.ifsc.lages.sti.tcc.resources.BaseView
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoRequest
-import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoRespository
 import com.ifsc.lages.sti.tcc.utilidades.ConnectionUtil
 import io.reactivex.observers.DisposableObserver
@@ -31,8 +29,8 @@ class MainViewModel (var activity: Context, var repository : ResultadoRespositor
     var loadOverallResultCustomView : LiveData<BaseView<ResultOverall>> = _loadOverallResultCustomView
 
 
-    private val _loadLastResult = MutableLiveData<BaseView<MutableList<ResultadoSimulado>>>()
-    var loadLastResult : LiveData<BaseView<MutableList<ResultadoSimulado>>> = _loadLastResult
+    private val _loadLastResult = MutableLiveData<BaseView<MutableList<ResultSimulated>>>()
+    var loadLastResult : LiveData<BaseView<MutableList<ResultSimulated>>> = _loadLastResult
 
 
     fun loadOverallResultView(idUsuario : Long) {
@@ -125,12 +123,12 @@ class MainViewModel (var activity: Context, var repository : ResultadoRespositor
     }
 
     fun lastResult(idUsuario : Long) {
-        repository.loadLatterResult(idUsuario, object : DisposableObserver<MutableList<ResultadoSimulado>>() {
+        repository.loadLatterResult(idUsuario, object : DisposableObserver<MutableList<ResultSimulated>>() {
 
             override fun onComplete() {
             }
 
-            override fun onNext(t: MutableList<ResultadoSimulado>) {
+            override fun onNext(t: MutableList<ResultSimulated>) {
                 _loadLastResult.value = BaseView(success = t, error = false, message = "Resultado carregado com sucesso")
             }
 

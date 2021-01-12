@@ -61,15 +61,10 @@ class DashboardEnade(private val mContext: AppCompatActivity, private val mViewR
                     }
 
                     dots[position]!!.setImageDrawable(ContextCompat.getDrawable(mContext, R.drawable.selected_item_dot))
-
                     val pos = position + 1
                     previous_pos = pos
-
                 }
-
-                override fun onPageSelected(position: Int) {
-
-                }
+                override fun onPageSelected(position: Int) {}
             })
             setUiPageViewController()
         } else {

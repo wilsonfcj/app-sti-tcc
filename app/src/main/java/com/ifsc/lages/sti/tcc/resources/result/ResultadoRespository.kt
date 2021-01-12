@@ -1,11 +1,11 @@
 package com.ifsc.lages.sti.tcc.resources.result
 
 import com.ifsc.lages.sti.tcc.model.result.ResultOverall
-import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
+import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.resources.generics.BaseResponse
 import com.ifsc.lages.sti.tcc.resources.question.QuestaoResponse
-import com.ifsc.lages.sti.tcc.resources.result.mapper.MapperGeralUsuario
-import com.ifsc.lages.sti.tcc.resources.result.mapper.MapperSimulado
+import com.ifsc.lages.sti.tcc.resources.result.mapper.MapperGeralUser
+import com.ifsc.lages.sti.tcc.resources.result.mapper.MapperResultSimulated
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -63,7 +63,7 @@ class ResultadoRespository {
     fun loadOverallResultBySimulated(request: ResultadoRequest.PorIdUsuarioETipoProva, observer: DisposableObserver<ResultOverall>){
         loadOverallResultBySimulated(request)
             .toObservable()
-            .map { MapperGeralUsuario().transform(it.data)  }
+            .map { MapperGeralUser().transform(it.data)  }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
@@ -88,7 +88,7 @@ class ResultadoRespository {
     fun loadOverallResult(idUsuario : Long, observer: DisposableObserver<ResultOverall>){
         loadOverallResult(idUsuario)
             .toObservable()
-            .map { MapperGeralUsuario().transform(it.data) }
+            .map { MapperGeralUser().transform(it.data) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
@@ -110,10 +110,10 @@ class ResultadoRespository {
         }
     }
 
-    fun loadLatterResult(idUsuario : Long, observer: DisposableObserver<MutableList<ResultadoSimulado>>){
+    fun loadLatterResult(idUsuario : Long, observer: DisposableObserver<MutableList<ResultSimulated>>){
         loadLatterResult(idUsuario)
             .toObservable()
-            .map { MapperSimulado().transform(it.data)  }
+            .map { MapperResultSimulated().transform(it.data)  }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:animateLayoutChanges="true">
+
+    <include android:id="@+id/container_toolbar" layout="@layout/widget_logo_toolbar"/>
+
+    <fragment
+        android:id="@+id/fragmentNavHost"
+        android:name="androidx.navigation.fragment.NavHostFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:navGraph="@navigation/navigation_register_simulated"
+        app:defaultNavHost="true"
+        android:layout_below="@id/container_toolbar"
+        tools:layout="@layout/fragment_register_simulated_generic"/>
+
+<!--    <ScrollView-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_above="@id/button_cadastre"-->
+<!--        android:layout_below="@+id/container_toolbar">-->
+
+<!--        <LinearLayout-->
+<!--            android:layout_width="match_parent"-->
+<!--            android:layout_height="match_parent"-->
+<!--            android:layout_marginTop="@dimen/size_eight"-->
+<!--            android:layout_marginStart="@dimen/margin_register_form"-->
+<!--            android:layout_marginEnd="@dimen/margin_register_form"-->
+<!--            android:orientation="vertical">-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/text_input_name"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:hint="@string/prompt_name"-->
+<!--                android:textColorHint="@color/colorPrimary"-->
+<!--                app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/edit_text_name"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:autofillHints=""-->
+<!--                    android:maxLength="30"-->
+<!--                    android:backgroundTint="@color/colorPrimary"-->
+<!--                    android:inputType="text|textCapWords"-->
+<!--                    android:textColor="@color/colorPrimary"-->
+<!--                    android:textStyle="italic" />-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/text_input_cpf"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:hint="@string/prompt_description"-->
+<!--                android:textColorHint="@color/colorPrimary"-->
+<!--                app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/edit_text_description"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:maxLength="160"-->
+<!--                    android:backgroundTint="@color/colorPrimary"-->
+<!--                    android:inputType="text|textCapWords"-->
+<!--                    android:textColor="@color/colorPrimary"-->
+<!--                    android:textStyle="italic" />-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+<!--            <com.google.android.material.textfield.TextInputLayout-->
+<!--                android:id="@+id/text_input_type"-->
+<!--                android:layout_width="match_parent"-->
+<!--                android:layout_height="wrap_content"-->
+<!--                android:layout_marginTop="8dp"-->
+<!--                android:hint="@string/prompt_type_simulated"-->
+<!--                android:textColorHint="@color/colorPrimary"-->
+<!--                app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">-->
+
+<!--                <EditText-->
+<!--                    android:id="@+id/edit_text_type"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="wrap_content"-->
+<!--                    android:backgroundTint="@color/colorPrimary"-->
+<!--                    android:inputType="text"-->
+<!--                    android:textColor="@color/colorPrimary"-->
+<!--                    android:focusable="false"-->
+<!--                    android:focusableInTouchMode="false"-->
+<!--                    android:textStyle="italic" />-->
+
+<!--            </com.google.android.material.textfield.TextInputLayout>-->
+
+
+<!--        </LinearLayout>-->
+
+<!--    </ScrollView>-->
+
+<!--    <com.google.android.material.button.MaterialButton-->
+<!--        android:id="@+id/button_cadastre"-->
+<!--        android:layout_gravity="bottom|center"-->
+<!--        android:gravity="bottom|center"-->
+<!--        android:padding="8dp"-->
+<!--        android:enabled="false"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="wrap_content"-->
+<!--        android:layout_alignParentBottom="true"-->
+<!--        android:text="@string/prompt_register_simulated"-->
+<!--        android:layout_marginStart="@dimen/margin_register_form"-->
+<!--        android:layout_marginEnd="@dimen/margin_register_form"-->
+<!--        android:layout_marginBottom="16dp"-->
+<!--        app:backgroundTint="@color/colorAccent"-->
+<!--        android:textAppearance="@style/TextAppearance.AppCompat.Inverse"/>-->
+
+</RelativeLayout>

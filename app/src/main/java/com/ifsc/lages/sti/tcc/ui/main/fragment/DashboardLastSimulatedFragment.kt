@@ -8,7 +8,7 @@ import android.widget.TextView
 import androidx.fragment.app.Fragment
 import br.edu.ifsc.cancontrol.utilidades.MapElement
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
+import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.props.ETipoSimulado
 import com.ifsc.lages.sti.tcc.utilidades.StringUtil
 
@@ -22,11 +22,11 @@ class DashboardLastSimulatedFragment : Fragment(), MapElement {
     private var tvError : TextView? = null
     private var tvNaoRespondidas : TextView? = null
 
-    var resultValue : ResultadoSimulado? = null
+    var resultValue : ResultSimulated? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        resultValue = arguments!!.getSerializable("result_overall") as ResultadoSimulado?
+        resultValue = arguments!!.getSerializable("result_overall") as ResultSimulated?
     }
 
     override fun onCreateView(
@@ -74,7 +74,7 @@ class DashboardLastSimulatedFragment : Fragment(), MapElement {
 
     companion object {
         @JvmStatic
-        fun getInstance(resultOverall : ResultadoSimulado): DashboardLastSimulatedFragment {
+        fun getInstance(resultOverall : ResultSimulated): DashboardLastSimulatedFragment {
             val f = DashboardLastSimulatedFragment()
             val args = Bundle()
             args.putSerializable("result_overall", resultOverall)

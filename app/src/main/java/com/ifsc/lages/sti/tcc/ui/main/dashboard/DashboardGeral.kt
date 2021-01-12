@@ -1,11 +1,13 @@
 package com.ifsc.lages.sti.tcc.ui.main.dashboard
 
 import android.content.Intent
+import android.opengl.Visibility
 import android.os.Bundle
 import android.view.View
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.ProgressBar
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentStatePagerAdapter
@@ -26,11 +28,13 @@ class DashboardGeral(private val mContext: AppCompatActivity, private val mViewR
     private  var dots : Array<ImageView?> = emptyArray()
     private var resultOverall : ResultOverall? = null
     private var btnPlusInfo : Button? = null
+    private var progress : ProgressBar? = null
 
     override fun mapComponents() {
         btnPlusInfo = mViewRoot.findViewById(R.id.btn_plus_info)
         onboardPager = mViewRoot.findViewById(R.id.pager_introduction) as ViewPager
         pagerIndicator = mViewRoot.findViewById(R.id.view_pager_count_dots) as LinearLayout
+        progress = mViewRoot.findViewById(R.id.progress_geral);
     }
     override fun mapActionComponents() {
         btnPlusInfo?.setOnClickListener {
@@ -48,6 +52,7 @@ class DashboardGeral(private val mContext: AppCompatActivity, private val mViewR
     }
 
     fun showDashboard(resultado : ResultOverall) {
+        progress!!.visibility = View.GONE
         resultOverall = resultado
         if(adapter == null) {
             adapter =

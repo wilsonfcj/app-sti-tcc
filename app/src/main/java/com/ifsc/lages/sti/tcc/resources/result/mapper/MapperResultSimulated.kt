@@ -1,14 +1,14 @@
 package com.ifsc.lages.sti.tcc.resources.result.mapper
 
-import com.ifsc.lages.sti.tcc.model.result.ResultoQualitativo
-import com.ifsc.lages.sti.tcc.model.result.ResultadoSimulado
+import com.ifsc.lages.sti.tcc.model.result.ResultQuantitative
+import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
 import com.ifsc.lages.sti.tcc.utilidades.mapper.MapperUtil
 
-class MapperSimulado : MapperUtil<ResultadoResponse.Simulado, ResultadoSimulado>() {
+class MapperResultSimulated : MapperUtil<ResultadoResponse.Simulado, ResultSimulated>() {
 
-    public override fun transform(simulado: ResultadoResponse.Simulado?): ResultadoSimulado {
-        var resultadoSimulado = ResultadoSimulado()
+    public override fun transform(simulado: ResultadoResponse.Simulado?): ResultSimulated {
+        var resultadoSimulado = ResultSimulated()
         resultadoSimulado.idSimulado = simulado!!.idSimulado
         resultadoSimulado.nome = simulado.nome
         resultadoSimulado.descricao = simulado.descricao
@@ -24,8 +24,8 @@ class MapperSimulado : MapperUtil<ResultadoResponse.Simulado, ResultadoSimulado>
         return resultadoSimulado
     }
 
-    private fun transform(resultado: ResultadoResponse.Quantitativo): ResultoQualitativo? {
-        var response = ResultoQualitativo()
+    private fun transform(resultado: ResultadoResponse.Quantitativo): ResultQuantitative? {
+        var response = ResultQuantitative()
         response.erros = resultado.erros
         response.acertos = resultado.acertos
         response.naoRespondidas = resultado.naoRespondidas
