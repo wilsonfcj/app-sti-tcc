@@ -113,7 +113,7 @@ class ResultadoRespository {
     fun loadLatterResult(idUsuario : Long, observer: DisposableObserver<MutableList<ResultSimulated>>){
         loadLatterResult(idUsuario)
             .toObservable()
-            .map { MapperResultSimulated().transform(it.data)  }
+            .map { MapperResultSimulated().transform(it.data!!)  }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)

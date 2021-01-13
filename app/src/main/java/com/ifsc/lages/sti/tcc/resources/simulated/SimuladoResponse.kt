@@ -4,6 +4,7 @@ import com.google.gson.annotations.SerializedName
 import com.ifsc.lages.sti.tcc.resources.question.QuestaoResponse
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
 import java.util.*
+import kotlin.collections.ArrayList
 
 sealed class SimuladoResponse {
 
@@ -53,7 +54,7 @@ sealed class SimuladoResponse {
 
     class SimuladoCompleto: SimuladoBase() {
         @SerializedName(value = "Questoes")
-        var questoes: List<QuestaoResponse>? = null
+        var questoes: MutableList<QuestaoResponse.Cadastrada>? = null
     }
 
     class SimuladoQuestoes {

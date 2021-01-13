@@ -9,6 +9,7 @@ import com.ifsc.lages.sti.tcc.model.simulated.Simulated
 import com.ifsc.lages.sti.tcc.resources.BaseView
 import com.ifsc.lages.sti.tcc.resources.question.QuestaoResponse
 import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoRepository
+import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoRequest
 import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoResponse
 import com.ifsc.lages.sti.tcc.utilidades.ConnectionUtil
 import io.reactivex.observers.DisposableObserver
@@ -23,6 +24,27 @@ class MeusSimuladosViewModel (var activity: Context, var repository: SimuladoRep
 
     private val _simuladoCompleto = MutableLiveData<BaseView<SimuladoResponse.SimuladoBase>>()
     var simuladoCompleto : LiveData<BaseView<SimuladoResponse.SimuladoBase>> = _simuladoCompleto
+
+    private val _simuladoCompletoRegister = MutableLiveData<BaseView<Simulated>>()
+    var simuladoCompletoRegister : LiveData<BaseView<Simulated>> = _simuladoCompletoRegister
+
+    fun createSimulated (request : SimuladoRequest.Register) {
+        repository.createSimulated(request, object : DisposableObserver<Simulated>() {
+            override fun onComplete() {}
+
+            override fun onNext(t: Simulated) {
+                _simuladoCompletoRegister.value = BaseView(success = t, error = false, message = "Simulados cadastrado com sucesso")
+            }
+
+            override fun onError(e: Throwable) {
+                var msm = e.message
+                if (ConnectionUtil.isNetworkAvailable(activity).not()) {
+                    msm = activity.getString(R.string.error_conection)
+                }
+                _simuladoCompletoRegister.value = BaseView(success = null, error = true, message = msm)
+            }
+        })
+    }
 
     fun loadSimulatedByUser(idUser: Long) {
         repository.loadSimulatedByUser(idUser, object : DisposableObserver<MutableList<Simulated>>() {

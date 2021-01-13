@@ -77,6 +77,63 @@
 
         </com.google.android.material.textfield.TextInputLayout>
 
+
+        <LinearLayout
+            android:id="@+id/linear_layout_date"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible">
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_start_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Data Início"
+                android:textColorHint="@color/colorPrimary"
+                app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">
+
+                <EditText
+                    android:id="@+id/edit_text_start_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorPrimary"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:textStyle="italic" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/text_input_finish_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="8dp"
+                android:hint="Data Encerramento"
+                android:textColorHint="@color/colorPrimary"
+                app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">
+
+                <EditText
+                    android:id="@+id/edit_text_finish_date"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="@color/colorPrimary"
+                    android:inputType="textEmailAddress"
+                    android:textColor="@color/colorPrimary"
+                    android:focusable="false"
+                    android:focusableInTouchMode="false"
+                    android:textStyle="italic" />
+
+            </com.google.android.material.textfield.TextInputLayout>
+
+
+        </LinearLayout>
+
+
     </LinearLayout>
 
     <com.google.android.material.button.MaterialButton

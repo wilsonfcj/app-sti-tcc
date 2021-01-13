@@ -5,6 +5,8 @@ import com.ifsc.lages.sti.tcc.resources.generics.BaseResponse
 import com.ifsc.lages.sti.tcc.resources.question.QuestaoResponse
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoRequest
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
+import com.ifsc.lages.sti.tcc.resources.simulated.mapper.MapperQuestion
+import com.ifsc.lages.sti.tcc.resources.simulated.mapper.MapperRegisterSimulated
 import com.ifsc.lages.sti.tcc.resources.simulated.mapper.MapperSimulated
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -56,15 +58,15 @@ class SimuladoRepository {
                     else -> it.onError(Exception(response.message))
                 }
             } catch (ex : java.lang.Exception) {
-                it.onError(Exception("Erro criar o simulado"))
+                it.onError(Exception("Erro ao criar o simulado"))
             }
         }
     }
 
-    fun createSimulated(request : SimuladoRequest.Register, observer: DisposableObserver<SimuladoResponse.SimuladoCompleto>){
+    fun createSimulated(request : SimuladoRequest.Register, observer: DisposableObserver<Simulated>){
         createSimulated(request)
             .toObservable()
-            .map { it.data }
+            .map { MapperRegisterSimulated().transform(it.data!!) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
@@ -140,7 +142,7 @@ class SimuladoRepository {
     fun loadSimulatedByUser(idUsuario : Long, observer: DisposableObserver<MutableList<Simulated>>){
         loadSimulatedByUser(idUsuario)
             .toObservable()
-            .map { MapperSimulated().transform(it.data) }
+            .map { MapperSimulated().transform(it.data!!) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)

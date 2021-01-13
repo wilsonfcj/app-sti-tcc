@@ -17,7 +17,6 @@ sealed class UserRequest {
         var password: String? = null
     )
 
-
     open class Register {
         @SerializedName(value = "CPF")
         var cpf: String? = null

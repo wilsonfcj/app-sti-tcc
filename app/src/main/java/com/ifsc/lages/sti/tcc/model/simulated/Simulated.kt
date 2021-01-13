@@ -2,10 +2,13 @@ package com.ifsc.lages.sti.tcc.model.simulated
 
 import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.Sort
 import io.realm.annotations.PrimaryKey
 import java.io.Serializable
 import java.util.*
+import kotlin.collections.ArrayList
 
 open class Simulated : RealmObject(), Serializable {
 
@@ -24,6 +27,7 @@ open class Simulated : RealmObject(), Serializable {
     var respondido = false
     var simuladoResultado : ResultSimulated? = null
     var quantidadeResposta : Int? = null
+    var questoes : RealmList<Question>? = null
 
     object DataBase {
         fun save(resultOverall: Simulated): Long {
@@ -83,7 +87,8 @@ open class Simulated : RealmObject(), Serializable {
             var obgect : MutableList<Simulated>? = null
             var realm = Realm.getDefaultInstance()
             try {
-                var realInfos = realm.where(Simulated::class.java).equalTo("idUsuario", userId).findAll()
+                var realInfos = realm.where(Simulated::class.java).equalTo("idUsuario", userId)
+                    .sort("dataCriacao", Sort.DESCENDING).findAll()
                 if(realInfos!= null) {
                     obgect = realm.copyFromRealm(realInfos)
                 }

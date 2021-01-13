@@ -7,10 +7,12 @@ import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
 import com.ifsc.lages.sti.tcc.resources.result.mapper.MapperResultSimulated
 import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoResponse
 import com.ifsc.lages.sti.tcc.utilidades.mapper.MapperUtil
+import io.realm.RealmList
+import io.realm.RealmObject
 
-class MapperSimulated : MapperUtil<SimuladoResponse.SimuladoBase, Simulated>() {
+class MapperRegisterSimulated : MapperUtil<SimuladoResponse.SimuladoCompleto, Simulated>() {
 
-     override fun transform(simulado: SimuladoResponse.SimuladoBase?): Simulated {
+    public override fun transform(simulado: SimuladoResponse.SimuladoCompleto?): Simulated {
         var resultadoSimulado = Simulated()
         resultadoSimulado._id = simulado!!.id
         resultadoSimulado.idSala = simulado.idSala
@@ -30,7 +32,11 @@ class MapperSimulated : MapperUtil<SimuladoResponse.SimuladoBase, Simulated>() {
             resultadoSimulado.simuladoResultado!!._id = simulado.id
         }
         resultadoSimulado.quantidadeResposta = simulado.quantidadeResposta
+
+        if(simulado.questoes.isNullOrEmpty().not()) {
+            resultadoSimulado.questoes = RealmList()
+            resultadoSimulado.questoes!!.addAll(MapperQuestion().transform(simulado.questoes!!)!!)
+        }
         return resultadoSimulado
     }
-
 }

@@ -20,4 +20,6 @@ abstract class BaseFragment : Fragment(), MapElement {
     fun hideLoading() {
         progressDialog?.dismiss()
     }
+
+    open fun createRestListener() {}
 }

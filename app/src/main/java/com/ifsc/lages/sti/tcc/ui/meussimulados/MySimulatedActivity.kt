@@ -42,16 +42,19 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
 
     }
 
-    override fun mapActionComponents() {
-        super.mapActionComponents()
-        userId = SharedPreferencesUtil.get(this@MySimulatedActivity, KeyPrefs.USER_ID, 0L)
-        showDisplayList()
+    fun loadSimulated() {
         if(ConnectionUtil.isNetworkAvailable(this@MySimulatedActivity)) {
             swipeRefreshLayout!!.isRefreshing = true
             loadSimulateds(userId!!)
         } else {
             showInfosSimulated(userId!!)
         }
+    }
+
+    override fun mapActionComponents() {
+        super.mapActionComponents()
+        userId = SharedPreferencesUtil.get(this@MySimulatedActivity, KeyPrefs.USER_ID, 0L)
+        showDisplayList()
         swipeRefreshLayout!!.setOnRefreshListener { loadSimulateds(userId!!) }
     }
 
@@ -104,8 +107,12 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_add -> {
-                val intent = Intent(this@MySimulatedActivity, RegisterSimulatedActivity::class.java)
-                startActivity(intent)
+                if (ConnectionUtil.isNetworkAvailable(this@MySimulatedActivity).not()) {
+                    Toast.makeText(this@MySimulatedActivity, getString(R.string.error_conection), Toast.LENGTH_LONG).show()
+                } else {
+                    val intent = Intent(this@MySimulatedActivity, RegisterSimulatedActivity::class.java)
+                    startActivity(intent)
+                }
                 true
             }
             else -> super.onOptionsItemSelected(item)
@@ -118,5 +125,10 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
         val intent = Intent(this@MySimulatedActivity, DesempenhoSimuladoActivity::class.java)
         intent.putExtras(bundle)
         startActivity(intent)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        loadSimulated()
     }
 }

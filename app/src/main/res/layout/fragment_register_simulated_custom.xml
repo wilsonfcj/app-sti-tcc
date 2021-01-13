@@ -14,6 +14,27 @@
         android:layout_marginEnd="@dimen/margin_register_form"
         android:orientation="vertical">
 
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_time"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Tempo Simulado (Minutos)"
+            android:textColorHint="@color/colorPrimary"
+            app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">
+
+            <EditText
+                android:id="@+id/edit_text_time"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/colorPrimary"
+                android:inputType="number"
+                android:maxLength="3"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="italic" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -41,7 +62,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-
+                android:id="@+id/text_input_fundamentos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -63,7 +84,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-
+                android:id="@+id/text_input_matematica"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -85,7 +106,7 @@
 
 
             <com.google.android.material.textfield.TextInputLayout
-
+                android:id="@+id/text_input_tecnologia"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -133,7 +154,7 @@
             </LinearLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-
+                android:id="@+id/text_input_form_especifica"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -154,7 +175,7 @@
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
-
+                android:id="@+id/text_input_form_geral"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="8dp"
@@ -176,26 +197,7 @@
 
         </LinearLayout>
 
-        <com.google.android.material.textfield.TextInputLayout
 
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:hint="Tempo Simulado"
-            android:textColorHint="@color/colorPrimary"
-            app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">
-
-            <EditText
-                android:id="@+id/edit_text_time"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:backgroundTint="@color/colorPrimary"
-                android:inputType="number"
-                android:maxLength="3"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="italic" />
-
-        </com.google.android.material.textfield.TextInputLayout>
 
     </LinearLayout>
 

@@ -16,7 +16,7 @@ class RegisterUserActivity : BaseActivty() {
 
     override fun mapComponents() {
         super.mapComponents()
-        var user = User.UserShared.load(this@RegisterUserActivity)
+        val user = User.UserShared.load(this@RegisterUserActivity)
         if(user == null) {
             setTitleToolbar(getString(R.string.title_toolbar_register))
         } else {

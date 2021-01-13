@@ -1,11 +1,11 @@
 package com.ifsc.lages.sti.tcc.resources.simulated
 
 import com.google.gson.annotations.SerializedName
-import java.util.*
+import java.io.Serializable
 
 sealed class SimuladoRequest {
 
-    class Register {
+    class Register : Serializable {
         @SerializedName(value = "Nome")
         var nome: String? = null
 
@@ -13,10 +13,10 @@ sealed class SimuladoRequest {
         var descricao: String? = null
 
         @SerializedName(value = "DataInicio")
-        var dataInicio: Date? = null
+        var dataInicio: String? = null
 
         @SerializedName(value = "DataFimSimulado")
-        var dataFimSimulado: Date? = null
+        var dataFimSimulado: String? = null
 
         @SerializedName(value = "TempoMaximo")
         var tempoMaximo: Long? = null
@@ -32,6 +32,31 @@ sealed class SimuladoRequest {
 
         @SerializedName(value = "AnoProva")
         var anoProva: Int? = null
+
+        @SerializedName(value = "ConfiguracaoPoscomp")
+        var sumuladoConfigPoscomp: PoscompInfosRegister? = null
+
+        @SerializedName(value = "ConfiguracaoEnade")
+        var sumuladoConfigEnade: EnadeInfosRegister? = null
+    }
+
+    class PoscompInfosRegister {
+        @SerializedName(value = "QtdFundamentos")
+        var qtdFundamentos = 0
+
+        @SerializedName(value = "QtdMatematica")
+        var qtdMatematica = 0
+
+        @SerializedName(value = "QtdTecnologia")
+        var qtdTecnologia = 0
+    }
+
+    class EnadeInfosRegister {
+        @SerializedName(value = "QtdFormacaoGeral")
+        var qtdFormacaoGeral = 0
+
+        @SerializedName(value = "QtdFormacaoEspecifica")
+        var qtdFormacaoEspecifica = 0
     }
 
     class RespostaSimuladoRequest {
