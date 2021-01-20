@@ -78,13 +78,30 @@
 
                 </androidx.cardview.widget.CardView>
 
-                <Button
-                    android:id="@+id/btn_plus_info"
+
+                <androidx.cardview.widget.CardView
+                    android:id="@+id/card_dashboard_matters"
                     android:layout_width="match_parent"
-                    android:layout_height="35dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="25dp"
-                    android:text="@string/prompt_result_matters"/>
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="4dp"
+                    android:layout_marginTop="8dp"
+                    android:elevation="8dp">
+
+                    <RelativeLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <ProgressBar
+                            android:id="@+id/progress_matters"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"/>
+
+                        <include layout="@layout/layout_recycler_view_matters"/>
+
+                    </RelativeLayout>
+
+                </androidx.cardview.widget.CardView>
 
 
             </LinearLayout>

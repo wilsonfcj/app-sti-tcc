@@ -88,6 +88,49 @@
             android:screenOrientation="portrait">
         </activity>
 
+<!--        <activity-->
+<!--            android:name=".ui.simulated.SimuladoActivity"-->
+<!--            android:label="@string/app_name"-->
+<!--            android:theme="@style/AppTheme.NoActionBar"-->
+<!--            android:screenOrientation="portrait">-->
+<!--        </activity>-->
+
+        <activity
+            android:name=".ui.registersala.classroom.MyClassRoomActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".ui.registersala.simulated.MySimulatedClassroomActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+
+
+        <activity
+            android:name=".ui.registersala.classroom.RegisterClassroomActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".ui.registersala.simulated.ResponseStudentsActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+
+        <activity
+            android:name=".ui.feedback.FeedbackActivity"
+            android:label="@string/app_name"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:screenOrientation="portrait">
+        </activity>
+
         <activity
             android:name=".SplashScreenActivity"
             android:label="@string/app_name"

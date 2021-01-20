@@ -14,7 +14,7 @@ open class Matter : RealmObject(), Serializable {
     var code : Int? = null
     var name : String? = null
 
-    object DB {
+    object DataBase {
         fun insertOrUpdateAll(matters : List<Matter>) {
             try {
                 var realm = Realm.getDefaultInstance()

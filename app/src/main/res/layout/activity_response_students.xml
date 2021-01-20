@@ -10,9 +10,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <include android:id="@+id/container_toolbar" layout="@layout/layout_imagem_header"/>
+<!--        <include android:id="@+id/container_toolbar" layout="@layout/layout_imagem_header"/>-->
 
-        <include android:id="@+id/container_toolbar" layout="@layout/widget_logo_toolbar_transparent"/>
+        <include android:id="@+id/container_toolbar" layout="@layout/widget_logo_toolbar"/>
 
         <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
             android:id="@+id/swipe_refresh_layout"
@@ -30,9 +30,16 @@
 
         </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
 
-<!--        <include -->
-<!--            android:id="@+id/container_progress" -->
-<!--            layout="@layout/layout_progress"/>-->
+        <com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
+            android:id="@+id/layout_error"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/prompt_response_students"
+            app:iconSrc="@drawable/ic_descritption"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            tools:visibility="visible"/>
+
 
     </RelativeLayout>
 

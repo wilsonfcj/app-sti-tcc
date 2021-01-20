@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <RelativeLayout
+        android:id="@+id/container_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager_introduction_matters"
+            android:layout_width="match_parent"
+            android:layout_height="155dp" />
+
+        <LinearLayout
+            android:id="@+id/view_pager_count_dots_matters"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/pager_height"
+            android:layout_alignParentLeft="true"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:layout_below="@+id/pager_introduction_matters"/>
+
+        <com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
+            android:id="@+id/layout_error_matters"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/prompt_not_result_matters"
+            app:iconSrc="@drawable/ic_smile_sad"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            tools:visibility="visible"/>
+
+    </RelativeLayout>
+
+<!--    <Button-->
+<!--        android:id="@+id/btn_plus_info_matters"-->
+<!--        android:layout_width="match_parent"-->
+<!--        android:layout_height="35dp"-->
+<!--        android:layout_margin="5dp"-->
+<!--        android:text="@string/prompt_plus"-->
+<!--        android:layout_below="@+id/container_info"/>-->
+
+</RelativeLayout>

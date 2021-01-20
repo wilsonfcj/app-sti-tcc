@@ -1,19 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
-        android:id="@+id/custom_msm"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:title="Sem conexão com a internet"
-        app:iconSrc="@drawable/ic_sinal"
-        android:layout_centerInParent="true"
-        android:visibility="gone" />
 
-    <LinearLayout
+
+    <RelativeLayout
+        android:id="@+id/container_info"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
@@ -29,15 +25,27 @@
             android:layout_height="@dimen/pager_height"
             android:layout_alignParentLeft="true"
             android:gravity="center"
-            android:orientation="horizontal" />
+            android:orientation="horizontal"
+            android:layout_below="@+id/pager_introduction_lasted"/>
 
-        <Button
-            android:id="@+id/btn_plus_info_last"
+        <com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
+            android:id="@+id/layout_error"
             android:layout_width="match_parent"
-            android:layout_height="35dp"
-            android:layout_margin="5dp"
-            android:text="@string/prompt_plus"/>
+            android:layout_height="wrap_content"
+            app:title="@string/prompt_not_result_simulated"
+            app:iconSrc="@drawable/ic_smile_sad"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            tools:visibility="visible"/>
 
-    </LinearLayout>
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/btn_plus_info_last"
+        android:layout_width="match_parent"
+        android:layout_height="35dp"
+        android:layout_margin="5dp"
+        android:text="@string/prompt_plus"
+        android:layout_below="@+id/container_info"/>
 
 </RelativeLayout>

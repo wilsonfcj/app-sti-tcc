@@ -46,7 +46,7 @@ sealed class SimuladoResponse {
         var respondido = false
 
         @SerializedName(value = "ResultadoSimulado")
-        var simuladoResultado: ResultadoResponse.Simulado? = null
+        var simuladoResultado: ResultadoResponse.SimuladoCompleto? = null
 
         @SerializedName(value = "QuantidadeResposta")
         var quantidadeResposta : Int? = null

@@ -9,7 +9,7 @@ import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoResponse
 
 class ClassroomService {
 
-    fun createClassroom(request : SimuladoRequest.Register) : BaseResponse<ClassroomResponse.SalaResponse> {
+    fun createClassroom(request : ClassroomRequest.Register) : BaseResponse<ClassroomResponse.SalaResponse> {
         val lRetrofit = RetrofitImpl().buildRetrofit()
         val api = lRetrofit.create(Api.Classroom::class.java)
         val objectCall = api.createClassroom(request)
@@ -48,7 +48,7 @@ class ClassroomService {
         }
     }
 
-    fun deleteClassroom(request : ClassroomRequest.DeleteClassroom) : BaseResponse<SimuladoResponse.SimuladoCompleto> {
+    fun deleteClassroom(request : ClassroomRequest.DeleteClassroom) : BaseResponse<ClassroomResponse.SalaResponse> {
         val lRetrofit = RetrofitImpl().buildRetrofit()
         val api = lRetrofit.create(Api.Classroom::class.java)
         val objectCall = api.deleteClassroom(request)

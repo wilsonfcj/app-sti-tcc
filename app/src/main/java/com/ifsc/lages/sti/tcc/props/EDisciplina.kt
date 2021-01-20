@@ -15,7 +15,7 @@ enum class EDisciplina(var code: Int, var description: String, var nameSample: S
 
     //	FASE 3
     ESTRUTURAS_DE_DADOS(8, "ESTRUTURAS DE DADOS", "Estrutura de dados"),
-    SISTEMAS_OPERACIONAIS(9, "SISTEMAS OPERACIONAIS", "S.O"),
+    SISTEMAS_OPERACIONAIS(9, "SISTEMAS OPERACIONAIS", "Sistemas Operacionais"),
     //	    DESENVOLVIMENTO_DE_APLICAÇÕES_ORIENTADAS_A_OBJETOS(10, "DESENVOLVIMENTO DE APLICAÇÕES ORIENTADAS A OBJETOS"),
     REDES_DE_COMPUTADORES(11, "REDES DE COMPUTADORES", "Redes de computadores"),
     CALCULO(12, "CÁLCULO", "Cálculo"),
@@ -40,7 +40,8 @@ enum class EDisciplina(var code: Int, var description: String, var nameSample: S
 
     TEORIA_DA_COMPUTACAO(24, "TEORIA DA COMPUTAÇÃO", "Teoria da computação"),
     INFORMATICA_E_SOCIEDADE(25, "INFORMÁTICA E SOCIEDADE", "Informática e sociedade"),
-    GRAFOS(26, "GRAFOS", "Grafos");
+    GRAFOS(26, "GRAFOS", "Grafos"),
+    CALCULO_NUMERICO(27, "CÁLCULO NUMÉRICO", "Cálculo Numérico");
 
     companion object {
         fun getEnum(aCod: Int): EDisciplina {

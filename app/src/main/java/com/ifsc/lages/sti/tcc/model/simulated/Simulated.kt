@@ -1,5 +1,6 @@
 package com.ifsc.lages.sti.tcc.model.simulated
 
+import com.ifsc.lages.sti.tcc.model.result.ResultMatters
 import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import io.realm.Realm
 import io.realm.RealmList
@@ -100,14 +101,92 @@ open class Simulated : RealmObject(), Serializable {
             }
         }
 
+        fun loadByIdClassroom(classroomId : Long) : MutableList<Simulated>? {
+            var obgect : MutableList<Simulated>? = null
+            var realm = Realm.getDefaultInstance()
+            try {
+                var realInfos = realm.where(Simulated::class.java).equalTo("idSala", classroomId)
+                    .sort("dataCriacao", Sort.DESCENDING).findAll()
+                if(realInfos!= null) {
+                    obgect = realm.copyFromRealm(realInfos)
+                }
+            } catch (ex : Exception) {
+                ex.printStackTrace()
+            } finally {
+                realm.close()
+                return obgect
+            }
+        }
+
         fun loadByTypeAndIdUser(id : Long, userId : Long) : Simulated? {
             var obgect : Simulated? = null
             var realm = Realm.getDefaultInstance()
             try {
                 var realInfos = realm.where(Simulated::class.java).equalTo("_id", id)
                     .equalTo("idUsuario", userId).findFirst()
+
                 if(realInfos!= null) {
                     obgect = realm.copyFromRealm(realInfos)
+                }
+                realm.commitTransaction()
+            } catch (ex : Exception) {
+                ex.printStackTrace()
+            } finally {
+                realm.close()
+                return obgect
+            }
+        }
+
+        fun deleteByIdUserStatusAsk(userId : Long) :  MutableList<Simulated>? {
+            var obgect : MutableList<Simulated>? = null
+            var realm = Realm.getDefaultInstance()
+            try {
+                var realInfos = realm.where(Simulated::class.java).equalTo("respondido", false)
+                    .equalTo("idUsuario", userId).findAll()
+                if(realInfos != null) {
+                    realm.beginTransaction()
+                    obgect = realm.copyFromRealm(realInfos)
+                    realInfos.deleteAllFromRealm()
+                    realm.commitTransaction()
+                }
+            } catch (ex : Exception) {
+                ex.printStackTrace()
+            } finally {
+                realm.close()
+                return obgect
+            }
+        }
+
+        fun deleteByIdClassroomStatusAsk(classrromId : Long) :  MutableList<Simulated>? {
+            var obgect : MutableList<Simulated>? = null
+            var realm = Realm.getDefaultInstance()
+            try {
+                var realInfos = realm.where(Simulated::class.java).equalTo("respondido", false)
+                    .equalTo("idSala", classrromId).findAll()
+                if(realInfos != null) {
+                    realm.beginTransaction()
+                    obgect = realm.copyFromRealm(realInfos)
+                    realInfos.deleteAllFromRealm()
+                    realm.commitTransaction()
+                }
+            } catch (ex : Exception) {
+                ex.printStackTrace()
+            } finally {
+                realm.close()
+                return obgect
+            }
+        }
+
+        fun deleteById(simulatedId : Long) :  Simulated? {
+            var obgect : Simulated? = null
+            var realm = Realm.getDefaultInstance()
+            try {
+                var realInfos = realm.where(Simulated::class.java).equalTo("_id", simulatedId).findFirst()
+                if(realInfos != null) {
+                    realm.beginTransaction()
+                    obgect = realm.copyFromRealm(realInfos)
+                    realInfos.deleteFromRealm()
+                    realm.commitTransaction()
                 }
             } catch (ex : Exception) {
                 ex.printStackTrace()

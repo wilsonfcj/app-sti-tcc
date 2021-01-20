@@ -48,12 +48,14 @@ class RetrofitImpl(private val url: String = BuildConfig.WS_URL) {
         val lInterceptor = HttpLoggingInterceptor()
         lInterceptor.level =
             if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+
         val lBuild = OkHttpClient.Builder()
             .connectTimeout(60, TimeUnit.SECONDS)
             .readTimeout(60, TimeUnit.SECONDS)
             .writeTimeout(60, TimeUnit.SECONDS)
             .addInterceptor(lInterceptor)
             .build()
+
         return Retrofit.Builder()
             .baseUrl(url)
             .addConverterFactory(GsonConverterFactory.create(lGson))

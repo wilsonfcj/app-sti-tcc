@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -12,15 +13,19 @@ import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.simulated.Simulated
+import com.ifsc.lages.sti.tcc.props.EOptions
 import com.ifsc.lages.sti.tcc.ui.desepenhoesp.DesempenhoSimuladoActivity
 import com.ifsc.lages.sti.tcc.ui.meussimulados.adapter.SimulatedAdapter
+import com.ifsc.lages.sti.tcc.ui.meussimulados.bottomsheet.BottonSheetSimulatedOptionFragment
+import com.ifsc.lages.sti.tcc.ui.meussimulados.bottomsheet.BottonSheetSimulatedTypeFragment
 import com.ifsc.lages.sti.tcc.ui.meussimulados.viewmodel.MeusSimuladosViewModel
 import com.ifsc.lages.sti.tcc.ui.meussimulados.viewmodel.MeusSimuladosViewModelFactory
 import com.ifsc.lages.sti.tcc.utilidades.ConnectionUtil
 import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
 import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
+import com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
 
-class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
+class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener, BottonSheetSimulatedOptionFragment.CallbackOptions {
 
     private var recyclerView: RecyclerView? = null
     private var lastSimulatedAdapter : SimulatedAdapter? = null
@@ -28,10 +33,13 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
     private var simulatedList :  MutableList<Simulated>? = null
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     var userId : Long? = null
+    private var bottonSheetSimulatedOptionFragment : BottonSheetSimulatedOptionFragment? = null
+    var checkSimulated: Simulated? = null
+    var customLayoutMsm : CustomLayoutMsm? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_simulado)
+        setContentView(R.layout.activity_simulated)
         setTitleToolbar(getString(R.string.title_my_simuladed))
     }
 
@@ -39,7 +47,14 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
         super.mapComponents()
         recyclerView = findViewById(R.id.recycler_view)
         swipeRefreshLayout = findViewById(R.id.swipe_refresh_layout)
+        customLayoutMsm = findViewById(R.id.layout_error)
+    }
 
+    fun showDialogSelected(response: Simulated) {
+        checkSimulated = response
+        bottonSheetSimulatedOptionFragment = BottonSheetSimulatedOptionFragment.newInstance()
+        bottonSheetSimulatedOptionFragment!!.show(supportFragmentManager, null)
+        bottonSheetSimulatedOptionFragment!!.setListener(this)
     }
 
     fun loadSimulated() {
@@ -71,10 +86,25 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
         viewModel!!.muesSimulados.observe(this, androidx.lifecycle.Observer {
             swipeRefreshLayout!!.isRefreshing = false
             if(it.error!!.not()) {
+                Simulated.DataBase.deleteByIdUserStatusAsk(userId!!)
                 for (simulated in it.success!!) {
                     Simulated.DataBase.save(simulated)
                 }
+                if(it.success.isEmpty()) {
+                    customLayoutMsm?.visibility = View.VISIBLE
+                }
                 lastSimulatedAdapter?.updateList(it.success)
+            } else {
+                Toast.makeText(this@MySimulatedActivity, it.message, Toast.LENGTH_LONG).show()
+            }
+        })
+
+        viewModel!!.deleteCompleto.observe(this, androidx.lifecycle.Observer {
+            swipeRefreshLayout!!.isRefreshing = false
+            if(it.error!!.not()) {
+                Simulated.DataBase.deleteByIdUserStatusAsk(it.success!!.id!!)
+                loadSimulated()
+                Toast.makeText(this@MySimulatedActivity, "Simulado removido com sucesso", Toast.LENGTH_LONG).show()
             } else {
                 Toast.makeText(this@MySimulatedActivity, it.message, Toast.LENGTH_LONG).show()
             }
@@ -83,6 +113,9 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
 
     fun showInfosSimulated(userId: Long) {
         var infos = Simulated.DataBase.loadByIdUser(userId)
+        if(infos!!.isEmpty()) {
+            customLayoutMsm?.visibility = View.VISIBLE
+        }
         lastSimulatedAdapter?.updateList(infos!!)
     }
 
@@ -94,7 +127,7 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
         if(response.respondido) {
             openResultSimulated(response)
         } else {
-
+            showDialogSelected(response)
         }
     }
 
@@ -121,7 +154,7 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
 
     fun openResultSimulated(response: Simulated) {
         var bundle = Bundle()
-        bundle.putSerializable("result_overall", response.simuladoResultado)
+        bundle.putSerializable("result_overall", response.simuladoResultado!!._id)
         val intent = Intent(this@MySimulatedActivity, DesempenhoSimuladoActivity::class.java)
         intent.putExtras(bundle)
         startActivity(intent)
@@ -130,5 +163,27 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener {
     override fun onResume() {
         super.onResume()
         loadSimulated()
+    }
+
+    override fun onClick(options: EOptions?) {
+        bottonSheetSimulatedOptionFragment?.dismiss()
+        if(options?.codigo == EOptions.INICIAR.codigo) {
+//            var bundle = Bundle()
+//            bundle.putSerializable("result_overall", checkSimulated)
+//            val intent = Intent(this@MySimulatedActivity, SimuladoActivity::class.java)
+//            intent.putExtras(bundle)
+//            startActivity(intent)
+        } else {
+            if (ConnectionUtil.isNetworkAvailable(this@MySimulatedActivity).not()) {
+                Toast.makeText(
+                    this@MySimulatedActivity,
+                    getString(R.string.error_conection),
+                    Toast.LENGTH_LONG
+                ).show()
+            } else {
+                swipeRefreshLayout!!.isRefreshing = true
+                viewModel!!.deleteSimulated(userId!!, checkSimulated!!._id!!)
+            }
+        }
     }
 }

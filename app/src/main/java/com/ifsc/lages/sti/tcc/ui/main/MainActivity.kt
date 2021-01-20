@@ -11,6 +11,7 @@ import androidx.core.view.GravityCompat
 import androidx.lifecycle.ViewModelProvider
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
+import com.ifsc.lages.sti.tcc.model.result.ResultMatters
 import com.ifsc.lages.sti.tcc.model.result.ResultOverall
 import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.model.user.User
@@ -19,9 +20,11 @@ import com.ifsc.lages.sti.tcc.props.EUserType
 import com.ifsc.lages.sti.tcc.ui.login.LoginActivity
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeral
 import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeralLastResults
+import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeralMattersResults
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModel
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModelFactory
 import com.ifsc.lages.sti.tcc.ui.meussimulados.MySimulatedActivity
+import com.ifsc.lages.sti.tcc.ui.registersala.classroom.MyClassRoomActivity
 import com.ifsc.lages.sti.tcc.ui.settings.SettingsActivity
 import com.ifsc.lages.sti.tcc.utilidades.*
 import com.judemanutd.katexview.KatexView
@@ -33,9 +36,10 @@ import com.mikepenz.materialdrawer.model.DividerDrawerItem
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem
+import java.io.Serializable
 
 
-class MainActivity : BaseActivty() {
+class MainActivity() : BaseActivty(), Serializable {
 
     private var imageProfile : ImageView? = null
     private var katex_text : KatexView? = null
@@ -43,8 +47,8 @@ class MainActivity : BaseActivty() {
     private var menuDrawer: Drawer? = null
     private var dashboardGeral : DashboardGeral? = null
     private var dashboardGeralLastResults : DashboardGeralLastResults? = null
+    private var dashboardGeralMattersResults : DashboardGeralMattersResults? = null
     private var viewModel :  MainViewModel? = null
-
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -58,7 +62,6 @@ class MainActivity : BaseActivty() {
         setTitleToolbar(getString(R.string.title_toolbar_dashboard))
         imageProfile = findViewById(R.id.profile_image)
 
-
         menu()
         setHeaderInfo()
         setImageProfile()
@@ -68,6 +71,10 @@ class MainActivity : BaseActivty() {
 
         if(dashboardGeralLastResults == null) {
             dashboardGeralLastResults = DashboardGeralLastResults(this@MainActivity, findViewById(R.id.card_dashboard_last))
+        }
+
+        if(dashboardGeralMattersResults == null) {
+            dashboardGeralMattersResults = DashboardGeralMattersResults(this@MainActivity, findViewById(R.id.card_dashboard_matters))
         }
     }
 
@@ -123,13 +130,12 @@ class MainActivity : BaseActivty() {
         var userId = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
         if (ConnectionUtil.isNetworkAvailable(this@MainActivity)) {
             viewModel!!.loadOverallResultView(userId)
-            viewModel!!.loadOverallResultPoscomp(userId)
-            viewModel!!.loadOverallResultEnade(userId)
-            viewModel!!.loadOverallResultCustom(userId)
+            viewModel!!.loadResultMatters(userId)
             viewModel!!.lastResult(userId)
         } else {
             showGeralInfos()
             showResultadoInfos()
+            showResultadoMatters()
         }
     }
 
@@ -160,11 +166,28 @@ class MainActivity : BaseActivty() {
         return it
     }
 
+    fun saveResultMatters(resultMatters : MutableList<ResultMatters>) {
+        var userId = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
+        for(matter in resultMatters) {
+            matter._id = "${userId}${matter.disciplinaCod}"
+            matter.idusuario = userId
+            ResultMatters.DataBase.save(matter)
+        }
+    }
+
     fun showResultadoInfos() {
         var idUser = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
         var result = ResultSimulated.DataBase.loadByIdUser(idUser)
         if(result != null) {
             dashboardGeralLastResults!!.showDashboard(result)
+        }
+    }
+
+    fun showResultadoMatters() {
+        var idUser = SharedPreferencesUtil.get(this@MainActivity, KeyPrefs.USER_ID, 0L)
+        var result = ResultMatters.DataBase.loadByIdUser(idUser)
+        if(result != null) {
+            dashboardGeralMattersResults!!.showDashboard(result)
         }
     }
 
@@ -190,6 +213,16 @@ class MainActivity : BaseActivty() {
                 dashboardGeralLastResults!!.showDashboard(it.success)
             } else {
                 showResultadoInfos()
+                Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
+            }
+        })
+
+        viewModel!!.resultMatters.observe(this, androidx.lifecycle.Observer {
+            if(it.error!!.not()) {
+                saveResultMatters(it.success!!)
+                dashboardGeralMattersResults!!.showDashboard(it.success)
+            } else {
+                showResultadoMatters()
                 Toast.makeText(this@MainActivity, it.message, Toast.LENGTH_LONG).show()
             }
         })
@@ -222,11 +255,11 @@ class MainActivity : BaseActivty() {
                     .withIdentifier(Constants.DashboardEvent.DASHBOARD)
                     .withIcon(R.drawable.ic_dashboard),
 
-                PrimaryDrawerItem()
-                    .withIconTintingEnabled(true)
-                    .withName(R.string.prompt_alunos)
-                    .withIcon(R.drawable.ic_student)
-                    .withIdentifier(Constants.DashboardEvent.ALUNOS),
+//                PrimaryDrawerItem()
+//                    .withIconTintingEnabled(true)
+//                    .withName(R.string.prompt_alunos)
+//                    .withIcon(R.drawable.ic_student)
+//                    .withIdentifier(Constants.DashboardEvent.ALUNOS),
 
                 PrimaryDrawerItem()
                     .withIconTintingEnabled(true)
@@ -234,11 +267,11 @@ class MainActivity : BaseActivty() {
                     .withIcon(R.drawable.ic_library_book)
                     .withIdentifier(Constants.DashboardEvent.CRIAR_SALA),
 
-                PrimaryDrawerItem()
-                    .withIconTintingEnabled(true)
-                    .withName(R.string.prompt_questoes)
-                    .withIcon(R.drawable.ic_article)
-                    .withIdentifier(Constants.DashboardEvent.BUSCAR_QUESTOES),
+//                PrimaryDrawerItem()
+//                    .withIconTintingEnabled(true)
+//                    .withName(R.string.prompt_questoes)
+//                    .withIcon(R.drawable.ic_article)
+//                    .withIdentifier(Constants.DashboardEvent.BUSCAR_QUESTOES),
 
                 PrimaryDrawerItem()
                     .withIconTintingEnabled(true)
@@ -329,12 +362,16 @@ class MainActivity : BaseActivty() {
             Constants.DashboardEvent.DASHBOARD -> {
 
             }
+
             Constants.DashboardEvent.CRIAR_SALA -> {
-
+                val lIntent = Intent(this@MainActivity, MyClassRoomActivity::class.java)
+                startActivity(lIntent)
             }
+
             Constants.DashboardEvent.BUSCAR_QUESTOES -> {
-
+                Toast.makeText(this@MainActivity, "Em desenvolvimento", Toast.LENGTH_LONG).show()
             }
+
             Constants.DashboardEvent.SAIR -> {
                 User.UserShared.clear(this@MainActivity)
                 val lIntent = Intent(this@MainActivity, LoginActivity::class.java)
@@ -344,19 +381,25 @@ class MainActivity : BaseActivty() {
                 startActivity(lIntent)
                 finish()
             }
+
             Constants.DashboardEvent.SUPORTE -> {
-
+                Toast.makeText(this@MainActivity, "Em desenvolvimento", Toast.LENGTH_LONG).show()
             }
+
             Constants.DashboardEvent.SALAS_SIMULADOS -> {
-
+                val lIntent = Intent(this@MainActivity, MyClassRoomActivity::class.java)
+                startActivity(lIntent)
             }
+
             Constants.DashboardEvent.CRIAR_SIMULADO -> {
                 val lIntent = Intent(this@MainActivity, MySimulatedActivity::class.java)
                 startActivity(lIntent)
             }
-            Constants.DashboardEvent.ALUNOS -> {
 
+            Constants.DashboardEvent.ALUNOS -> {
+                Toast.makeText(this@MainActivity, "Em desenvolvimento", Toast.LENGTH_LONG).show()
             }
+
             Constants.DashboardEvent.CONFIGURACOES -> {
                 val lPerfil = Intent(this, SettingsActivity::class.java)
                 startActivity(lPerfil)

@@ -82,6 +82,15 @@ class SettingsActivity : BaseActivty() {
         containerTeacher = findViewById(R.id.container_teacher)
         mContainerExpandable = findViewById(R.id.container_expadable)
 
+        var CPF = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_CPF, "")
+
+        var part1 = CPF.substring(0, 3)
+        var part2 = CPF.substring(3, 6)
+        var part3 = CPF.substring(6, 9)
+        var part4 = CPF.substring(9, 11)
+
+        var cpfFormt = "{$part1}.{$part2}.{$part3}-{$part3}"
+
         var name = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_NAME, "")
         var userType = SharedPreferencesUtil.get(this@SettingsActivity, KeyPrefs.USER_TYPE, 1)
         var lUsetType = EUserType.getUserType(userType)
@@ -94,6 +103,16 @@ class SettingsActivity : BaseActivty() {
 
         showDisplayInfos()
     }
+
+    fun formatCPF(cpf : String) : String {
+        var part1 = cpf.substring(0, 3)
+        var part2 = cpf.substring(3, 6)
+        var part3 = cpf.substring(6, 9)
+        var part4 = cpf.substring(9, 11)
+        var cpfFormt = "{$part1}.{$part2}.{$part3}-{$part4}"
+        return cpfFormt
+    }
+
 
     fun animationArrowImage() {
         mRotationArrow = if (mRotationArrow == 0)  180 else 0

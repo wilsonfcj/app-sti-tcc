@@ -101,8 +101,8 @@ class User : Serializable {
             }
 
             if(t.matter != null) {
-                Matter.DB.deleteAll(t._id!!)
-                Matter.DB.insertOrUpdateAll(t.matter!!)
+                Matter.DataBase.deleteAll(t._id!!)
+                Matter.DataBase.insertOrUpdateAll(t.matter!!)
             }
         }
 
@@ -113,12 +113,12 @@ class User : Serializable {
             }
 
             val _id = SharedPreferencesUtil.get(context, KeyPrefs.USER_ID, 0L)
-            val name = SharedPreferencesUtil.get(context, KeyPrefs.USER_NAME, "")
+            val name = SharedPreferencesUtil.get(context, KeyPrefs.USER_NAME, "Não informado")
             val birthday = SharedPreferencesUtil.get(context, KeyPrefs.USER_BIRTH_DAY, Date())
             val type = SharedPreferencesUtil.get(context, KeyPrefs.USER_TYPE, 1)
             val registration = SharedPreferencesUtil.get(context, KeyPrefs.USER_REGISTRATION, 0L)
-            val email =  SharedPreferencesUtil.get(context, KeyPrefs.USER_EMAIL, "")
-            val phone = SharedPreferencesUtil.get(context, KeyPrefs.USER_PHONE, "")
+            val email =  SharedPreferencesUtil.get(context, KeyPrefs.USER_EMAIL, "Não informado")
+            val phone = SharedPreferencesUtil.get(context, KeyPrefs.USER_PHONE, "Não informado")
             val yearJoin = SharedPreferencesUtil.get(context, KeyPrefs.USER_YEAR_JOIN, 2017L)
             val educationName = SharedPreferencesUtil.get(context, KeyPrefs.EDUCATION_INSTITUITION_NOME, "")
             val educationCode = SharedPreferencesUtil.get(context, KeyPrefs.EDUCATION_INSTITUITION_ID, 0L)
@@ -143,7 +143,7 @@ class User : Serializable {
                 user.registration = registration
                 user.anoIngresso = yearJoin
             } else {
-                var matters : MutableList<Matter> = Matter.DB.loadAll(_id) as MutableList<Matter>
+                var matters : MutableList<Matter> = Matter.DataBase.loadAll(_id) as MutableList<Matter>
                 user.matter = matters
             }
 

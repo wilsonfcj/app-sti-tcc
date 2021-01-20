@@ -6,20 +6,37 @@ class ClassroomRequest {
 
     class EnterClassroom {
         @SerializedName(value = "IdUsuario")
-        private val idUsuario: Long? = null
+        var idUsuario: Long? = null
 
         @SerializedName(value = "IdSala")
-        private val idSala: Long? = null
+        var idSala: Long? = null
 
         @SerializedName(value = "Senha")
-        private val senha: String? = null
+        var senha: String? = null
     }
 
     class DeleteClassroom {
         @SerializedName(value = "IdUsuario")
-        private val idUsuario: Long? = null
+        var idUsuario: Long? = null
 
         @SerializedName(value = "IdSala")
-        private val idSala: Long? = null
+        var idSala: Long? = null
+    }
+
+    class Register {
+        @SerializedName(value = "IdProfessor")
+        var idUsuario: Long? = null
+
+        @SerializedName(value = "Nome")
+        var nome: String? = null
+
+        @SerializedName(value = "Descricao")
+        var descricao: String? = null
+
+        @SerializedName(value = "MaxParticipantes")
+        var maxParticipantes: Int? = null
+
+        @SerializedName(value = "Senha")
+        var senha: String? = null
     }
 }

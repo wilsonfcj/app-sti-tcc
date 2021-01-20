@@ -35,7 +35,7 @@ interface Api {
     interface Classroom {
 
         @POST("CriarSalaSimulado")
-        fun createClassroom(@Body request : SimuladoRequest.Register) : Call<BaseResponse<ClassroomResponse.SalaResponse>>
+        fun createClassroom(@Body request : ClassroomRequest.Register) : Call<BaseResponse<ClassroomResponse.SalaResponse>>
 
         @GET("BuscarSalasSimulado")
         fun searchClassroom(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<MutableList<ClassroomResponse.SalaResponse>>>
@@ -43,8 +43,8 @@ interface Api {
         @POST("ParticiparSalaSimulado")
         fun enterClassroom(@Body request : ClassroomRequest.EnterClassroom) : Call<BaseResponse<MutableList<ClassroomResponse.SimuladoBaseResponse>>>
 
-        @POST("DeletarSala")
-        fun deleteClassroom(@Body request : ClassroomRequest.DeleteClassroom) : Call<BaseResponse<SimuladoResponse.SimuladoCompleto>>
+        @HTTP(method = "DELETE", path = "DeletarSala", hasBody = true)
+        fun deleteClassroom(@Body request : ClassroomRequest.DeleteClassroom) : Call<BaseResponse<ClassroomResponse.SalaResponse>>
     }
 
     interface Mock {
@@ -61,14 +61,16 @@ interface Api {
         fun loadSimulatedQuestionsById(@Query("idSimulado") idSimulado : Long) : Call<BaseResponse<MutableList<QuestaoResponse.Cadastrada>>>
 
         @GET("BuscarSimuladosUsuario")
-        fun loadSimulatedByUser(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<MutableList<SimuladoResponse.SimuladoBase>>>
+        fun loadSimulatedByUser(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<MutableList<SimuladoResponse.SimuladoCompleto>>>
+
+        @POST("BuscarSimuladosPorSala")
+        fun loadSimulatedByClassroom(@Body request : SimuladoRequest.ClassroomRequest) : Call<BaseResponse<MutableList<SimuladoResponse.SimuladoCompleto>>>
 
         @POST("SalvarRespostaSimulado")
         fun saveSimulatedResponse(@Body request : SimuladoRequest.RespostaSimuladoRequest) : Call<BaseResponse<ResultadoResponse.Simulado>>
 
-        @GET("DeletarSimulado")
+        @HTTP(method = "DELETE", path = "DeletarSimulado", hasBody = true)
         fun deleteSimulated(@Body request: ResultadoRequest.PorUsuarioESimulado) : Call<BaseResponse<SimuladoResponse.SimuladoCompleto>>
-
     }
 
     interface ResultSimulated {
@@ -82,12 +84,22 @@ interface Api {
         fun loadOverallResult(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<ResultadoResponse.GeralUsuario>>
 
         @GET("BuscarUltimosResultados")
-        fun loadLatterResult(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<MutableList<ResultadoResponse.Simulado>>>
+        fun loadLatterResult(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<MutableList<ResultadoResponse.SimuladoCompleto>>>
 
         @POST("BuscarGabaritoPorSimulado")
         fun loadFeedbackSimulated(@Body request: ResultadoRequest.PorUsuarioESimulado) : Call<BaseResponse<MutableList<QuestaoResponse.QustaoGabaritoResponse>>>
 
         @POST("BuscarDesempenhoDisciplinasSimulado")
         fun loadPerformanceMatters(@Body request: ResultadoRequest.PorUsuarioESimulado) : Call<BaseResponse<MutableList<ResultadoResponse.Disciplina>>>
+
+        @GET("BuscarDesempenhoDisciplinas")
+        fun loadPerformanceMatters(@Query("idUsuario") idUsuario : Long) : Call<BaseResponse<MutableList<ResultadoResponse.Disciplina>>>
+
+        @POST("BuscarResultadosSalaSimulado")
+        fun loadResultUserBySimulatedClassrrom(@Body request: ResultadoRequest.PorUsuarioESimulado) : Call<BaseResponse<MutableList<ResultadoResponse.SimuladoUsuario>>>
+
+        @POST("BuscarGabaritoSemResposta")
+        fun loadFeedbackNotResponseUser(@Body request: ResultadoRequest.PorUsuarioESimulado) : Call<BaseResponse<MutableList<QuestaoResponse.QustaoGabaritoResponse>>>
+
     }
 }

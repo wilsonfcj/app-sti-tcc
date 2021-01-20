@@ -6,6 +6,9 @@ import java.io.Serializable
 sealed class SimuladoRequest {
 
     class Register : Serializable {
+        @SerializedName(value = "IdSala")
+        var idSala: Long? = null
+
         @SerializedName(value = "Nome")
         var nome: String? = null
 
@@ -79,6 +82,14 @@ sealed class SimuladoRequest {
 
         @SerializedName(value = "TipoQuestao")
         var tipoQuestao: Int? = null
+    }
+
+    class ClassroomRequest {
+        @SerializedName(value = "IdSala")
+        var idSala: Long? = null
+
+        @SerializedName(value = "IdUsuario")
+        var idUsuario: Long? = null
     }
 
 }

@@ -9,9 +9,7 @@ import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.props.ETipoSimulado
-import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardEnade
-import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardPoscomp
-import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardSpecificPerformance
+import com.ifsc.lages.sti.tcc.ui.main.dashboard.DashboardGeralMattersResults
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModel
 import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModelFactory
 import com.ifsc.lages.sti.tcc.utilidades.*
@@ -31,12 +29,9 @@ class DesempenhoSimuladoActivity : BaseActivty() {
     private var tvNaoRespondidas : TextView? = null
 
     var resultValue : ResultSimulated? = null
-
-    private var dashboardPoscomp : DashboardPoscomp? = null
-    private var dashboardEnade : DashboardEnade? = null
-    private var dashboardSpecificPerformance : DashboardSpecificPerformance? = null
     private var viewModel :  MainViewModel? = null
     private var dashboardSimulado : DashboardSimulado? = null
+    private var dashboardGeralMattersResults : DashboardGeralMattersResults? = null
 
     @SuppressLint("RestrictedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -56,7 +51,9 @@ class DesempenhoSimuladoActivity : BaseActivty() {
     }
 
     override fun mapActionComponents() {
-        resultValue = intent.extras?.get("result_overall") as ResultSimulated
+        var lResultValue = intent.extras?.get("result_overall") as Long
+        resultValue = ResultSimulated.DataBase.loadById(lResultValue)
+
         tvName = findViewById(R.id.tv_name) as TextView
         tvDate = findViewById(R.id.tv_date) as TextView
         tvClock = findViewById(R.id.tv_clock) as TextView
@@ -76,14 +73,24 @@ class DesempenhoSimuladoActivity : BaseActivty() {
             )
             dashboardSimulado?.showDashboard(resultValue!!)
         }
+
+        if(dashboardGeralMattersResults == null) {
+            dashboardGeralMattersResults = DashboardGeralMattersResults(
+                this@DesempenhoSimuladoActivity,
+                findViewById(R.id.card_dashboard_matters)
+            )
+            dashboardGeralMattersResults?.showDashboard(resultValue!!.resultadoMatters!!)
+        }
         setDisplayView()
     }
 
     fun setDisplayView() {
         tvName?.text = resultValue!!.nome
         tvType?.text = ETipoSimulado.getEnun(resultValue!!.tipoSimulado!!).descricao
-        tvDate?.text = StringUtil.data(resultValue!!.dataEnvio!!, "dd/MM/yyyy")
-        tvClock?.text = StringUtil.data(resultValue!!.dataEnvio!!, "HH:mm")
+        resultValue!!.dataEnvio?.let {
+            tvDate?.text = StringUtil.data(resultValue!!.dataEnvio!!, "dd/MM/yyyy")
+            tvClock?.text = StringUtil.data(resultValue!!.dataEnvio!!, "HH:mm")
+        }
         tvDateCreate?.text = StringUtil.data(resultValue!!.dataCriacao!!, "dd/MM/yyyy")
         tvClockCreate?.text = StringUtil.data(resultValue!!.dataCriacao!!, "HH:mm")
 
@@ -94,7 +101,6 @@ class DesempenhoSimuladoActivity : BaseActivty() {
         } else {
             tvType!!.setBackgroundResource(R.drawable.shape_text_view_two)
         }
-
 
         tvAcerto?.text = resultValue!!.resultadoGeral!!.acertos!!.toString()
         tvError?.text = resultValue!!.resultadoGeral!!.erros!!.toString()
@@ -109,38 +115,5 @@ class DesempenhoSimuladoActivity : BaseActivty() {
     }
 
     override fun createRestListener() {
-        viewModel = ViewModelProvider(this,
-            MainViewModelFactory(this@DesempenhoSimuladoActivity)
-        ).get(MainViewModel::class.java)
-        viewModel!!.loadOverallResultPoscompView.observe(this, androidx.lifecycle.Observer {
-
-            if(it.error!!.not()) {
-                dashboardPoscomp?.showDashboard(it.success!!)
-            } else {
-                Toast.makeText(this@DesempenhoSimuladoActivity, it.message, Toast.LENGTH_LONG).show()
-            }
-        })
-
-        viewModel = ViewModelProvider(this,
-            MainViewModelFactory(this@DesempenhoSimuladoActivity)
-        ).get(MainViewModel::class.java)
-        viewModel!!.loadOverallResultEnadeView.observe(this, androidx.lifecycle.Observer {
-            if(it.error!!.not()) {
-                dashboardEnade?.showDashboard(it.success!!)
-            } else {
-                Toast.makeText(this@DesempenhoSimuladoActivity, it.message, Toast.LENGTH_LONG).show()
-            }
-        })
-
-        viewModel = ViewModelProvider(this,
-            MainViewModelFactory(this@DesempenhoSimuladoActivity)
-        ).get(MainViewModel::class.java)
-        viewModel!!.loadOverallResultCustomView.observe(this, androidx.lifecycle.Observer {
-            if(it.error!!.not()) {
-                dashboardSpecificPerformance?.showDashboard(it.success!!)
-            } else {
-                Toast.makeText(this@DesempenhoSimuladoActivity, it.message, Toast.LENGTH_LONG).show()
-            }
-        })
     }
 }

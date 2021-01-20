@@ -1,13 +1,16 @@
 package com.ifsc.lages.sti.tcc.resources.simulated
 
 import com.ifsc.lages.sti.tcc.model.simulated.Simulated
+import com.ifsc.lages.sti.tcc.resources.classroom.ClassroomRequest
 import com.ifsc.lages.sti.tcc.resources.generics.BaseResponse
 import com.ifsc.lages.sti.tcc.resources.question.QuestaoResponse
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoRequest
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoResponse
+import com.ifsc.lages.sti.tcc.resources.result.mapper.MapperResultSimulatedFull
 import com.ifsc.lages.sti.tcc.resources.simulated.mapper.MapperQuestion
 import com.ifsc.lages.sti.tcc.resources.simulated.mapper.MapperRegisterSimulated
 import com.ifsc.lages.sti.tcc.resources.simulated.mapper.MapperSimulated
+import com.ifsc.lages.sti.tcc.resources.simulated.mapper.MapperSimulatedFull
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.observers.DisposableObserver
@@ -123,7 +126,7 @@ class SimuladoRepository {
             .subscribe(observer)
     }
 
-    private fun loadSimulatedByUser(idUsuario : Long) : Single<BaseResponse<MutableList<SimuladoResponse.SimuladoBase>>> {
+    private fun loadSimulatedByUser(idUsuario : Long) : Single<BaseResponse<MutableList<SimuladoResponse.SimuladoCompleto>>> {
         return Single.create {
             try {
                 val response = service.loadSimulatedByUser(idUsuario)
@@ -142,7 +145,32 @@ class SimuladoRepository {
     fun loadSimulatedByUser(idUsuario : Long, observer: DisposableObserver<MutableList<Simulated>>){
         loadSimulatedByUser(idUsuario)
             .toObservable()
-            .map { MapperSimulated().transform(it.data!!) }
+            .map { MapperSimulatedFull().transform(it.data!!) }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(observer)
+    }
+
+    private fun loadSimulatedByClassroom(request : SimuladoRequest.ClassroomRequest) : Single<BaseResponse<MutableList<SimuladoResponse.SimuladoCompleto>>> {
+        return Single.create {
+            try {
+                val response = service.loadSimulatedByClassroom(request)
+                when {
+                    response.success!! -> {
+                        it.onSuccess(response)
+                    }
+                    else -> it.onError(Exception(response.message))
+                }
+            } catch (ex : java.lang.Exception) {
+                it.onError(Exception("Erro buscar os simulados"))
+            }
+        }
+    }
+
+    fun loadSimulatedByClassroom(request : SimuladoRequest.ClassroomRequest, observer: DisposableObserver<MutableList<Simulated>>){
+        loadSimulatedByClassroom(request)
+            .toObservable()
+            .map { MapperSimulatedFull().transform(it.data!!) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
@@ -184,7 +212,7 @@ class SimuladoRepository {
                     else -> it.onError(Exception(response.message))
                 }
             } catch (ex : java.lang.Exception) {
-                it.onError(Exception("Erro buscar as questões do simulado"))
+                it.onError(Exception("Erro ao deletar o simulado"))
             }
         }
     }

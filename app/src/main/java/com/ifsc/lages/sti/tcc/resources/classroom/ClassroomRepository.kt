@@ -1,5 +1,7 @@
 package com.ifsc.lages.sti.tcc.resources.classroom
 
+import com.ifsc.lages.sti.tcc.model.classrom.Classroom
+import com.ifsc.lages.sti.tcc.resources.classroom.mapper.ClassroomMapper
 import com.ifsc.lages.sti.tcc.resources.generics.BaseResponse
 import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoRequest
 import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoResponse
@@ -15,7 +17,7 @@ class ClassroomRepository {
             return ClassroomService()
         }
 
-    private fun createClassroom(request : SimuladoRequest.Register) : Single<BaseResponse<ClassroomResponse.SalaResponse>> {
+    private fun createClassroom(request : ClassroomRequest.Register) : Single<BaseResponse<ClassroomResponse.SalaResponse>> {
         return Single.create {
             try {
                 val response = service.createClassroom(request)
@@ -31,10 +33,10 @@ class ClassroomRepository {
         }
     }
 
-    fun createClassroom(request : SimuladoRequest.Register, observer: DisposableObserver<ClassroomResponse.SalaResponse>){
+    fun createClassroom(request : ClassroomRequest.Register, observer: DisposableObserver<Classroom>){
         createClassroom(request)
             .toObservable()
-            .map { it.data }
+            .map { ClassroomMapper().transform(it.data) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
@@ -51,15 +53,15 @@ class ClassroomRepository {
                     else -> it.onError(Exception(response.message))
                 }
             } catch (ex : java.lang.Exception) {
-                it.onError(Exception("Erro criar a sala de simulados"))
+                it.onError(Exception("Erro ao consultas as salas"))
             }
         }
     }
 
-    fun searchClassroom(idUsuario : Long, observer: DisposableObserver<MutableList<ClassroomResponse.SalaResponse>>){
+    fun searchClassroom(idUsuario : Long, observer: DisposableObserver<MutableList<Classroom>>){
         searchClassroom(idUsuario)
             .toObservable()
-            .map { it.data }
+            .map { ClassroomMapper().transform(it.data!!) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
@@ -82,17 +84,17 @@ class ClassroomRepository {
         }
     }
 
-    fun enterClassroom(request : ClassroomRequest.EnterClassroom, observer: DisposableObserver<MutableList<ClassroomResponse.SimuladoBaseResponse>>){
+    fun enterClassroom(request : ClassroomRequest.EnterClassroom, observer: DisposableObserver<Boolean>){
         enterClassroom(request)
             .toObservable()
-            .map { it.data }
+            .map { it.success }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
     }
 
 
-    private fun deleteClassroom(request : ClassroomRequest.DeleteClassroom) : Single<BaseResponse<SimuladoResponse.SimuladoCompleto>> {
+    private fun deleteClassroom(request : ClassroomRequest.DeleteClassroom) : Single<BaseResponse<ClassroomResponse.SalaResponse>> {
         return Single.create {
             try {
                 val response = service.deleteClassroom(request)
@@ -103,15 +105,15 @@ class ClassroomRepository {
                     else -> it.onError(Exception(response.message))
                 }
             } catch (ex : java.lang.Exception) {
-                it.onError(Exception("Erro criar a sala de simulados"))
+                it.onError(Exception("Erro deletar a sala de simulado"))
             }
         }
     }
 
-    fun deleteClassroom(request : ClassroomRequest.DeleteClassroom, observer: DisposableObserver<SimuladoResponse.SimuladoCompleto>){
+    fun deleteClassroom(request : ClassroomRequest.DeleteClassroom, observer: DisposableObserver<Classroom>){
         deleteClassroom(request)
             .toObservable()
-            .map { it.data }
+            .map { ClassroomMapper().transform(it.data) }
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)

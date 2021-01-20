@@ -26,9 +26,9 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
                 android:layout_toStartOf="@+id/tv_type"
-                android:text="Simulado Enade"
-                android:layout_marginEnd="5dp"
-                android:textStyle="bold" />
+                android:text="Matemática Discreta"
+                android:textSize="18dp"
+                android:layout_marginEnd="5dp"/>
 
             <TextView
                 android:id="@+id/tv_type"

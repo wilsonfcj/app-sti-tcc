@@ -52,6 +52,7 @@ class RegisterGenericSimulatedFragment : BaseFragment(), BottonSheetSimulatedTyp
 
     private var mStartDateCalendar: Calendar? = null
     private var mFinalDateCalendar: Calendar? = null
+    private var idClassroom : Long? = null
 
     private var bottonSheetSimulatedTypeFragment : BottonSheetSimulatedTypeFragment? = null
 
@@ -71,6 +72,10 @@ class RegisterGenericSimulatedFragment : BaseFragment(), BottonSheetSimulatedTyp
     }
 
     override fun mapComponents() {
+        arguments?.let {
+            idClassroom = arguments?.getLong("id_classroom")
+        }
+
         editTextName = view?.findViewById(R.id.edit_text_name)
         editTextDescription = view?.findViewById(R.id.edit_text_description)
         editTextType = view?.findViewById(R.id.edit_text_type)
@@ -127,7 +132,7 @@ class RegisterGenericSimulatedFragment : BaseFragment(), BottonSheetSimulatedTyp
 
     fun startTimesDisplay() {
         val userType = SharedPreferencesUtil.get(activity, KeyPrefs.USER_TYPE, 1)
-        if(EUserType.STUDENT.code == userType) {
+        if(EUserType.TEACHER.code == userType) {
             linearLayoutDates?.visibility = View.VISIBLE
         } else {
             linearLayoutDates?.visibility = View.INVISIBLE
@@ -175,6 +180,11 @@ class RegisterGenericSimulatedFragment : BaseFragment(), BottonSheetSimulatedTyp
         register?.dataInicio = StringUtil.data(mStartDateCalendar!!.time, "yyyy-MM-dd'T'HH:mm:ss")
         register?.dataFimSimulado = StringUtil.data(mFinalDateCalendar!!.time, "yyyy-MM-dd'T'HH:mm:ss")
         register?.idUsuario = userId
+
+        idClassroom?.let {
+            register?.idSala = idClassroom
+        }
+
         if (tipoSimulado!!.codigo == ETipoSimulado.POSCOMP.codigo ||
             tipoSimulado!!.codigo == ETipoSimulado.ENADE.codigo) {
             register?.tempoMaximo = 240

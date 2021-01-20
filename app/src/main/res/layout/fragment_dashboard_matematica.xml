@@ -191,10 +191,11 @@
             android:id="@+id/layout_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="Nenhuma informação encontrada"
+            app:title="@string/prompt_not_result"
             app:iconSrc="@drawable/ic_smile_sad"
             android:layout_centerInParent="true"
-            android:visibility="invisible" />
+            android:visibility="invisible"
+            tools:visibility="visible"/>
 
     </RelativeLayout>
 

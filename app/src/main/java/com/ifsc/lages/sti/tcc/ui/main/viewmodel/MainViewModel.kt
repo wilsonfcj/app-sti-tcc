@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import com.ifsc.lages.sti.tcc.R
+import com.ifsc.lages.sti.tcc.model.result.ResultMatters
 import com.ifsc.lages.sti.tcc.model.result.ResultOverall
 import com.ifsc.lages.sti.tcc.model.result.ResultSimulated
 import com.ifsc.lages.sti.tcc.props.ETipoSimulado
@@ -12,6 +13,8 @@ import com.ifsc.lages.sti.tcc.resources.BaseView
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoRequest
 import com.ifsc.lages.sti.tcc.resources.result.ResultadoRespository
 import com.ifsc.lages.sti.tcc.utilidades.ConnectionUtil
+import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
+import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
 import io.reactivex.observers.DisposableObserver
 
 class MainViewModel (var activity: Context, var repository : ResultadoRespository) : ViewModel()  {
@@ -28,10 +31,11 @@ class MainViewModel (var activity: Context, var repository : ResultadoRespositor
     private val _loadOverallResultCustomView = MutableLiveData<BaseView<ResultOverall>>()
     var loadOverallResultCustomView : LiveData<BaseView<ResultOverall>> = _loadOverallResultCustomView
 
-
     private val _loadLastResult = MutableLiveData<BaseView<MutableList<ResultSimulated>>>()
     var loadLastResult : LiveData<BaseView<MutableList<ResultSimulated>>> = _loadLastResult
 
+    private val _resultMatters = MutableLiveData<BaseView<MutableList<ResultMatters>>>()
+    var resultMatters : LiveData<BaseView<MutableList<ResultMatters>>> = _resultMatters
 
     fun loadOverallResultView(idUsuario : Long) {
         repository.loadOverallResult(idUsuario, object : DisposableObserver<ResultOverall>() {
@@ -138,6 +142,26 @@ class MainViewModel (var activity: Context, var repository : ResultadoRespositor
                     msm = activity.getString(R.string.error_conection)
                 }
                 _loadLastResult.value = BaseView(success = null, error = true, message = msm)
+            }
+        })
+    }
+
+    fun loadResultMatters(userId : Long) {
+        repository.loadPerformanceMatters(userId, object : DisposableObserver<MutableList<ResultMatters>>() {
+
+            override fun onComplete() {
+            }
+
+            override fun onNext(t: MutableList<ResultMatters>) {
+                _resultMatters.value = BaseView(success = t, error = false, message = "Resultado carregado com sucesso")
+            }
+
+            override fun onError(e: Throwable) {
+                var msm = e.message
+                if (ConnectionUtil.isNetworkAvailable(activity).not()) {
+                    msm = activity.getString(R.string.error_conection)
+                }
+                _resultMatters.value = BaseView(success = null, error = true, message = msm)
             }
         })
     }

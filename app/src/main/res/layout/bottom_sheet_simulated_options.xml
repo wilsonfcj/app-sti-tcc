@@ -1,0 +1,147 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/root_view"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:padding="@dimen/size_eight"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <ProgressBar
+        android:id="@+id/pg_motivos"
+        style="@style/Base.Widget.AppCompat.ProgressBar.Horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginBottom="3dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginStart="8dp"
+        android:layout_marginTop="3dp"
+        android:indeterminate="true"
+        android:visibility="gone" />
+
+    <ViewSwitcher
+        android:id="@+id/view_switcher"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:animateFirstView="true"
+        android:animateLayoutChanges="true">
+
+        <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:tools="http://schemas.android.com/tools"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TableLayout
+                android:id="@+id/container_options"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TableRow
+                    android:id="@+id/tv_start"
+                    android:layout_margin="@dimen/size_eight"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        app:srcCompat="@drawable/ic_start"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1.5"
+                        android:text="Iniciar Simulado"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tv_edit"
+                    android:layout_margin="@dimen/size_eight"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center"
+                    android:visibility="gone">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        app:srcCompat="@drawable/ic_edit"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1.5"
+                        android:text="Alterar Simulado"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tv_simulated"
+                    android:layout_margin="@dimen/size_eight"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        app:srcCompat="@drawable/ic_descritption"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1.5"
+                        android:text="Conferir Gabarito"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                </TableRow>
+
+                <TableRow
+                    android:id="@+id/tv_remove"
+                    android:layout_margin="@dimen/size_eight"
+                    android:background="?attr/selectableItemBackgroundBorderless"
+                    android:gravity="center">
+
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_weight=".5"
+                        app:srcCompat="@drawable/ic_delete"
+                        app:tint="@color/colorPrimary" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginEnd="16dp"
+                        android:layout_marginStart="16dp"
+                        android:layout_weight="1.5"
+                        android:text="Deltar Simulado"
+                        android:textColor="@color/colorPrimary"
+                        android:textSize="16sp" />
+
+                </TableRow>
+
+            </TableLayout>
+
+        </RelativeLayout>
+
+    </ViewSwitcher>
+
+</LinearLayout>

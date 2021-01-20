@@ -8,6 +8,7 @@ import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.simulated.Simulated
 import com.ifsc.lages.sti.tcc.resources.BaseView
 import com.ifsc.lages.sti.tcc.resources.question.QuestaoResponse
+import com.ifsc.lages.sti.tcc.resources.result.ResultadoRequest
 import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoRepository
 import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoRequest
 import com.ifsc.lages.sti.tcc.resources.simulated.SimuladoResponse
@@ -19,6 +20,9 @@ class MeusSimuladosViewModel (var activity: Context, var repository: SimuladoRep
     private val _muesSimulados = MutableLiveData<BaseView<MutableList<Simulated>>>()
     var muesSimulados : LiveData<BaseView<MutableList<Simulated>>> = _muesSimulados
 
+    private val _muesSimuladosClassRooom = MutableLiveData<BaseView<MutableList<Simulated>>>()
+    var muesSimuladosClassRooom : LiveData<BaseView<MutableList<Simulated>>> = _muesSimuladosClassRooom
+
     private val _questoesSimulados = MutableLiveData<BaseView<MutableList<QuestaoResponse.Cadastrada>>>()
     var questoesSimulados : LiveData<BaseView<MutableList<QuestaoResponse.Cadastrada>>> = _questoesSimulados
 
@@ -27,6 +31,31 @@ class MeusSimuladosViewModel (var activity: Context, var repository: SimuladoRep
 
     private val _simuladoCompletoRegister = MutableLiveData<BaseView<Simulated>>()
     var simuladoCompletoRegister : LiveData<BaseView<Simulated>> = _simuladoCompletoRegister
+
+    private val _deleteCompleto = MutableLiveData<BaseView<SimuladoResponse.SimuladoCompleto>>()
+    var deleteCompleto : LiveData<BaseView<SimuladoResponse.SimuladoCompleto>> = _deleteCompleto
+
+
+    fun deleteSimulated (usuarioId: Long, simuladoId : Long) {
+        var request = ResultadoRequest.PorUsuarioESimulado()
+        request.idUsuario = usuarioId
+        request.idSimulado = simuladoId
+        repository.deleteSimulated(request, object : DisposableObserver<SimuladoResponse.SimuladoCompleto>() {
+            override fun onComplete() {}
+
+            override fun onNext(t: SimuladoResponse.SimuladoCompleto) {
+                _deleteCompleto.value = BaseView(success = t, error = false, message = "Simulados cadastrado com sucesso")
+            }
+
+            override fun onError(e: Throwable) {
+                var msm = e.message
+                if (ConnectionUtil.isNetworkAvailable(activity).not()) {
+                    msm = activity.getString(R.string.error_conection)
+                }
+                _deleteCompleto.value = BaseView(success = null, error = true, message = msm)
+            }
+        })
+    }
 
     fun createSimulated (request : SimuladoRequest.Register) {
         repository.createSimulated(request, object : DisposableObserver<Simulated>() {
@@ -62,6 +91,30 @@ class MeusSimuladosViewModel (var activity: Context, var repository: SimuladoRep
                     msm = activity.getString(R.string.error_conection)
                 }
                 _muesSimulados.value = BaseView(success = null, error = true, message = msm)
+            }
+
+        })
+    }
+
+    fun loadSimulatedByUser(idUser: Long, idClassroom: Long) {
+        var request = SimuladoRequest.ClassroomRequest()
+        request.idUsuario = idUser
+        request.idSala = idClassroom
+        repository.loadSimulatedByClassroom(request, object : DisposableObserver<MutableList<Simulated>>() {
+            override fun onComplete() {
+
+            }
+
+            override fun onNext(t: MutableList<Simulated>) {
+                _muesSimuladosClassRooom.value = BaseView(success = t, error = false, message = "Simulados carregados com sucesso")
+            }
+
+            override fun onError(e: Throwable) {
+                var msm = e.message
+                if (ConnectionUtil.isNetworkAvailable(activity).not()) {
+                    msm = activity.getString(R.string.error_conection)
+                }
+                _muesSimuladosClassRooom.value = BaseView(success = null, error = true, message = msm)
             }
 
         })

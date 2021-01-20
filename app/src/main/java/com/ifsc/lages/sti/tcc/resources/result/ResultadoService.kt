@@ -46,7 +46,7 @@ class ResultadoService {
         }
     }
 
-    fun loadLatterResult(idUsuario : Long) : BaseResponse<MutableList<ResultadoResponse.Simulado>> {
+    fun loadLatterResult(idUsuario : Long) : BaseResponse<MutableList<ResultadoResponse.SimuladoCompleto>> {
         val lRetrofit = RetrofitImpl().buildRetrofit()
         val api = lRetrofit.create(Api.ResultSimulated::class.java)
         val objectCall = api.loadLatterResult(idUsuario)
@@ -85,5 +85,42 @@ class ResultadoService {
         }
     }
 
+    fun loadPerformanceMatters(idUsuario : Long) : BaseResponse<MutableList<ResultadoResponse.Disciplina>> {
+        val lRetrofit = RetrofitImpl().buildRetrofit()
+        val api = lRetrofit.create(Api.ResultSimulated::class.java)
+        val objectCall = api.loadPerformanceMatters(idUsuario)
+        val execute = objectCall.execute()
+        val body = execute.body()
+        if(body != null) {
+            return body
+        } else {
+            throw Exception("Erro ao realizar a requisição")
+        }
+    }
 
+    fun loadResultUserBySimulatedClassrrom(request: ResultadoRequest.PorUsuarioESimulado) : BaseResponse<MutableList<ResultadoResponse.SimuladoUsuario>> {
+        val lRetrofit = RetrofitImpl().buildRetrofit()
+        val api = lRetrofit.create(Api.ResultSimulated::class.java)
+        val objectCall = api.loadResultUserBySimulatedClassrrom(request)
+        val execute = objectCall.execute()
+        val body = execute.body()
+        if(body != null) {
+            return body
+        } else {
+            throw Exception("Erro ao realizar a requisição")
+        }
+    }
+
+    fun loadFeedbackNotResponseUser(request: ResultadoRequest.PorUsuarioESimulado) : BaseResponse<MutableList<QuestaoResponse.QustaoGabaritoResponse>> {
+        val lRetrofit = RetrofitImpl().buildRetrofit()
+        val api = lRetrofit.create(Api.ResultSimulated::class.java)
+        val objectCall = api.loadFeedbackNotResponseUser(request)
+        val execute = objectCall.execute()
+        val body = execute.body()
+        if(body != null) {
+            return body
+        } else {
+            throw Exception("Erro ao realizar a requisição")
+        }
+    }
 }

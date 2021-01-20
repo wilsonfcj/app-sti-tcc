@@ -24,7 +24,7 @@ sealed class ResultadoResponse {
         var disciplinaCod: Int? = null
 
         @SerializedName(value = "DisciplinaNome")
-        var disciplinaDes: Int? = null
+        var disciplinaDes: String? = null
     }
 
     open class Base {
@@ -50,7 +50,24 @@ sealed class ResultadoResponse {
 
         @SerializedName(value = "SimuladosRespondidos")
         var simuladosRespondidos: Int? = null
+    }
 
+
+    class SimuladoUsuario : Base() {
+        @SerializedName(value = "IdUsuario")
+        var idUsuario: Long? = null
+
+        @SerializedName(value = "IdSimulado")
+        var idSimulado: Long? = null
+
+        @SerializedName(value = "Nome")
+        var nome: String? = null
+
+        @SerializedName(value = "DataEnvio")
+        var dataEnvio: Date? = null
+
+        @SerializedName(value = "TipoSimulado")
+        var tipoSimulado: Int? = null
     }
 
     open class Simulado : Base() {
@@ -71,12 +88,11 @@ sealed class ResultadoResponse {
 
         @SerializedName(value = "TipoSimulado")
         var tipoSimulado: Int? = null
-
     }
 
     open class SimuladoCompleto : Simulado() {
         @SerializedName(value = "ResultadoDisciplinas")
-        private val disciplinas: List<Disciplina>? = null
+        val disciplinas: MutableList<Disciplina>? = null
     }
 
 }
