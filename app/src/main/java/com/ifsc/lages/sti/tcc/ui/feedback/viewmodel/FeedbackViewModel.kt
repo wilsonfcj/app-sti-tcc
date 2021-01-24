@@ -40,4 +40,26 @@ class FeedbackViewModel (var activity: Context, var repository: ResultadoResposi
             }
         })
     }
+
+    fun loadFeedbackByUser (usuarioId: Long, simuladoId : Long) {
+        var request =  ResultadoRequest.PorUsuarioESimulado()
+        request.idUsuario = usuarioId
+        request.idSimulado = simuladoId
+
+        repository.loadFeedbackSimulated(request, object : DisposableObserver<MutableList<QuestionFeedback>>() {
+            override fun onComplete() {}
+
+            override fun onNext(t: MutableList<QuestionFeedback>) {
+                _loadFeedback.value = BaseView(success = t, error = false, message = "Resultados consultados com sucesso")
+            }
+
+            override fun onError(e: Throwable) {
+                var msm = e.message
+                if (ConnectionUtil.isNetworkAvailable(activity).not()) {
+                    msm = activity.getString(R.string.error_conection)
+                }
+                _loadFeedback.value = BaseView(success = null, error = true, message = msm)
+            }
+        })
+    }
 }

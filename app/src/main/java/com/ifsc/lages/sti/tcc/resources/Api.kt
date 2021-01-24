@@ -25,6 +25,9 @@ interface Api {
 
         @PUT("Alterar")
         fun update(@Body request : UserRequest.Register) : Call<BaseResponse<UserResponse.Login>>
+
+        @POST("EnviarEmail")
+        fun sendEmail(@Body request : UserRequest.Email) : Call<BaseResponse<Boolean>>
     }
 
     interface EducationInstitution {

@@ -24,8 +24,7 @@
         <androidx.viewpager.widget.ViewPager
             android:id="@+id/pager_introduction"
             android:layout_width="match_parent"
-            android:layout_height="290dp"
-            />
+            android:layout_height="290dp" />
 
         <LinearLayout
             android:id="@+id/view_pager_count_dots"

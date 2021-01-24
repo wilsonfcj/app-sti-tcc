@@ -20,7 +20,7 @@
             >
 
             <TextView
-                android:id="@+id/tv_name"
+                android:id="@+id/tv_name_user"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentLeft="true"
@@ -36,15 +36,6 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             app:layout_constraintTop_toBottomOf="@+id/textView3">
-
-            <TextView
-                android:id="@+id/tv_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Simulado criado par testar o projeto do TCC"
-                android:layout_marginTop="5dp"
-                android:visibility="gone"
-                android:textStyle="italic"/>
 
             <LinearLayout
                 android:id="@+id/layout_info_send"
@@ -88,7 +79,7 @@
                                 app:srcCompat="@drawable/ic_date"/>
 
                             <TextView
-                                android:id="@+id/tv_date"
+                                android:id="@+id/tv_date_send"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="23/10/1995"
@@ -116,7 +107,7 @@
                                 app:srcCompat="@drawable/ic_clock"/>
 
                             <TextView
-                                android:id="@+id/tv_clock"
+                                android:id="@+id/tv_clock_send"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:text="13:20"

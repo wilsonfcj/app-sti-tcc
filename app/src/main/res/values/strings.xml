@@ -24,6 +24,7 @@
     <string name="prompt_yers_join">Ano Ingresso</string>
     <string name="prompt_next">Próximo</string>
     <string name="prompt_register_simulated">Cadastrar Agora</string>
+    <string name="prompt_send_sugestion">Enivar Sugestão</string>
     <string name="prompt_matters">Disciplinas</string>
     <string name="prompt_plus">Mais informações</string>
     <string name="prompt_result_matters">Desempenho disciplinas</string>
@@ -59,6 +60,11 @@
 
     <string name="error_invalid_old_password">Senha inválida</string>
 
+    <string name="error_invalid_topic">Selecione o assunto</string>
+    <string name="error_empty_topic">Informe o assunto</string>
+    <string name="error_msm_empty">Informe a mensagem</string>
+    <string name="error_msm_legth">A mensagem deve conter mais de 5 carateres</string>
+
     <string name="error_invalid_password">Senha deve conter no mínimo 6 caracteres</string>
     <string name="error_invalid_confirm_password">Senhas não correspondem</string>
     <string name="prompt_send_image">Compartilhar imagem</string>
@@ -70,13 +76,16 @@
     <string name="title_simuladed">SIMULADOS</string>
     <string name="title_new_simulated">NOVO SIMULADO</string>
     <string name="title_my_simuladed">MEUS SIMULADOS</string>
+    <string name="title_feedback">GABARITO SIMULADO</string>
     <string name="title_my_classroom">SALAS DE SIMULADOS</string>
     <string name="title_my_classroom_">MINHAS SALAS</string>
     <string name="title_toolbar_dashboard">DASHBOARD</string>
     <string name="title_specific_performance">DESEMPENHO ESPECÍFICO</string>
     <string name="title_performance_simulado">DESEMPENHO SIMULADO</string>
+    <string name="title_performance_simulado_geral">DESEMPENHO ALUNOS</string>
     <string name="title_toolbar_my_profile">MEU PERFIL</string>
     <string name="title_toolbar_register">CADASTRO</string>
+    <string name="title_toolbar_support">SUPORTE</string>
     <string name="title_toolbar_update">ALTERAR PERFIL</string>
     <string name="title_toolbar_register_simulated">CRIAR SIMULADO</string>
     <string name="title_toolbar_response_students">RESPOSTA ALUNOS</string>
@@ -106,4 +115,5 @@
     <string name="prompt_not_simulated">Nenhum simulado encontrado para seu usuário</string>
     <string name="prompt_not_classroom">Nenhum sala de simulado disponível</string>
     <string name="prompt_response_students">Nenhuma resposta encontrada</string>
+    <string name="prompt_not_feed_back">Gabarito não encontrado para este simulado</string>
 </resources>

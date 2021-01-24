@@ -14,18 +14,21 @@ import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
 import com.ifsc.lages.sti.tcc.model.simulated.Simulated
 import com.ifsc.lages.sti.tcc.props.EOptions
+import com.ifsc.lages.sti.tcc.props.EOptionsStudent
 import com.ifsc.lages.sti.tcc.ui.desepenhoesp.DesempenhoSimuladoActivity
+import com.ifsc.lages.sti.tcc.ui.feedback.FeedbackActivity
 import com.ifsc.lages.sti.tcc.ui.meussimulados.adapter.SimulatedAdapter
 import com.ifsc.lages.sti.tcc.ui.meussimulados.bottomsheet.BottonSheetSimulatedOptionFragment
 import com.ifsc.lages.sti.tcc.ui.meussimulados.bottomsheet.BottonSheetSimulatedTypeFragment
 import com.ifsc.lages.sti.tcc.ui.meussimulados.viewmodel.MeusSimuladosViewModel
 import com.ifsc.lages.sti.tcc.ui.meussimulados.viewmodel.MeusSimuladosViewModelFactory
+import com.ifsc.lages.sti.tcc.ui.registersala.bottomsheet.simulated.student.BottonSheetSimulatedUserOptionFragment
 import com.ifsc.lages.sti.tcc.utilidades.ConnectionUtil
 import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
 import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
 import com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
 
-class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener, BottonSheetSimulatedOptionFragment.CallbackOptions {
+class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener, BottonSheetSimulatedUserOptionFragment.CallbackOptions, BottonSheetSimulatedOptionFragment.CallbackOptions {
 
     private var recyclerView: RecyclerView? = null
     private var lastSimulatedAdapter : SimulatedAdapter? = null
@@ -34,6 +37,7 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener, BottonShee
     private var swipeRefreshLayout: SwipeRefreshLayout? = null
     var userId : Long? = null
     private var bottonSheetSimulatedOptionFragment : BottonSheetSimulatedOptionFragment? = null
+    private var bottonSheetSimulatedUserOptionFragment : BottonSheetSimulatedUserOptionFragment? = null
     var checkSimulated: Simulated? = null
     var customLayoutMsm : CustomLayoutMsm? = null
 
@@ -55,6 +59,13 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener, BottonShee
         bottonSheetSimulatedOptionFragment = BottonSheetSimulatedOptionFragment.newInstance()
         bottonSheetSimulatedOptionFragment!!.show(supportFragmentManager, null)
         bottonSheetSimulatedOptionFragment!!.setListener(this)
+    }
+
+    fun showDialogOptionUserWhiteResponse(response: Simulated) {
+        checkSimulated = response
+        bottonSheetSimulatedUserOptionFragment = BottonSheetSimulatedUserOptionFragment.newInstance()
+        bottonSheetSimulatedUserOptionFragment!!.show(supportFragmentManager, null)
+        bottonSheetSimulatedUserOptionFragment!!.setListener(this)
     }
 
     fun loadSimulated() {
@@ -125,7 +136,7 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener, BottonShee
 
     override fun onItemClick(response: Simulated) {
         if(response.respondido) {
-            openResultSimulated(response)
+            showDialogOptionUserWhiteResponse(response)
         } else {
             showDialogSelected(response)
         }
@@ -185,5 +196,24 @@ class MySimulatedActivity : BaseActivty(), SimulatedAdapter.Listener, BottonShee
                 viewModel!!.deleteSimulated(userId!!, checkSimulated!!._id!!)
             }
         }
+    }
+
+    override fun onClick(options: EOptionsStudent?) {
+        bottonSheetSimulatedUserOptionFragment!!.dismiss()
+        if (options == EOptionsStudent.GERAL) {
+            openResultSimulated(checkSimulated!!)
+        } else {
+            openFeedbackUser(checkSimulated!!)
+        }
+    }
+
+    fun openFeedbackUser(response: Simulated) {
+        var bundle = Bundle()
+        bundle.putSerializable("result_overall", response.simuladoResultado!!._id)
+        bundle.putLong("user_id", userId!!)
+        bundle.putBoolean("result_by_user", true)
+        val intent = Intent(this@MySimulatedActivity, FeedbackActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 }

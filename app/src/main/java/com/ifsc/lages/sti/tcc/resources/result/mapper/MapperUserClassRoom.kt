@@ -19,6 +19,8 @@ class MapperUserClassRoom : MapperUtil<ResultadoResponse.SimuladoUsuario, Result
         resultOverall.resultadoMatematica = transform(resultado!!.resultadoMatematica!!)
         resultOverall.resultadoFundamentoComputacao = transform(resultado!!.resultadoFundamentoComputacao!!)
         resultOverall.resultadoTecnologiaComputacao = transform(resultado!!.resultadoTecnologiaComputacao!!)
+        resultOverall.resultadoMatters = MapperResultMatters().transform(resultado!!.disciplinas!!)
+
         return resultOverall
     }
 

@@ -26,6 +26,7 @@ import com.ifsc.lages.sti.tcc.ui.main.viewmodel.MainViewModelFactory
 import com.ifsc.lages.sti.tcc.ui.meussimulados.MySimulatedActivity
 import com.ifsc.lages.sti.tcc.ui.registersala.classroom.MyClassRoomActivity
 import com.ifsc.lages.sti.tcc.ui.settings.SettingsActivity
+import com.ifsc.lages.sti.tcc.ui.suport.SupportActivity
 import com.ifsc.lages.sti.tcc.utilidades.*
 import com.judemanutd.katexview.KatexView
 import com.mikepenz.materialdrawer.AccountHeader
@@ -383,7 +384,8 @@ class MainActivity() : BaseActivty(), Serializable {
             }
 
             Constants.DashboardEvent.SUPORTE -> {
-                Toast.makeText(this@MainActivity, "Em desenvolvimento", Toast.LENGTH_LONG).show()
+                val lIntent = Intent(this@MainActivity, SupportActivity::class.java)
+                startActivity(lIntent)
             }
 
             Constants.DashboardEvent.SALAS_SIMULADOS -> {

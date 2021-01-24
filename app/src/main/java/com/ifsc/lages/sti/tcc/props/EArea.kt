@@ -6,22 +6,24 @@ enum class EArea(var codigo: Int, var situacao: String) {
     FUNDAMENTOS_DE_COMPUTACAO(2, "Fundamentos de Computação"),
     TECNOLOGIA_DA_COMPUTACAO(3, "Tecnologia da Computação");
 
-    fun getSituacao(aCod: Int): EArea {
-        for (lSituacao in values()) {
-            if (lSituacao.codigo == aCod) {
-                return lSituacao
+    companion object {
+        fun getEnum(aCod: Int): EArea {
+            for (lSituacao in values()) {
+                if (lSituacao.codigo == aCod) {
+                    return lSituacao
+                }
             }
+            return DEFAULT
         }
-        return DEFAULT
-    }
 
-    fun getSituacao(descricao: String?): EArea {
-        for (lSituacao in values()) {
-            if (lSituacao.situacao.equals(descricao, ignoreCase = true)) {
-                return lSituacao
+        fun getEnum(descricao: String?): EArea {
+            for (lSituacao in values()) {
+                if (lSituacao.situacao.equals(descricao, ignoreCase = true)) {
+                    return lSituacao
+                }
             }
+            return DEFAULT
         }
-        return DEFAULT
     }
 
 }

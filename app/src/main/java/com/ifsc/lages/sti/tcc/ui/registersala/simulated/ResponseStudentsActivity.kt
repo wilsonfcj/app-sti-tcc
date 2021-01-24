@@ -1,5 +1,6 @@
 package com.ifsc.lages.sti.tcc.ui.registersala.simulated
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
@@ -13,6 +14,9 @@ import com.ifsc.lages.sti.tcc.model.result.ResultUser
 import com.ifsc.lages.sti.tcc.model.simulated.Simulated
 import com.ifsc.lages.sti.tcc.props.EOptionsResponse
 import com.ifsc.lages.sti.tcc.props.EUserType
+import com.ifsc.lages.sti.tcc.ui.desepenhoesp.PerformanceSimulatedActivity
+import com.ifsc.lages.sti.tcc.ui.desepenhoesp.PerformanceStudantSimulatedActivity
+import com.ifsc.lages.sti.tcc.ui.feedback.FeedbackActivity
 import com.ifsc.lages.sti.tcc.ui.registersala.adapter.ClassroomAdapter
 import com.ifsc.lages.sti.tcc.ui.registersala.adapter.SimulatedResponseUserAdapter
 import com.ifsc.lages.sti.tcc.ui.registersala.bottomsheet.result.BottonSheetResponseUserFragment
@@ -109,5 +113,28 @@ class ResponseStudentsActivity : BaseActivty(), SimulatedResponseUserAdapter.Lis
 
     override fun onClick(options: EOptionsResponse?) {
         bottonSheetResponseUserFragment?.dismiss()
+        if(options!!.codigo == EOptionsResponse.GABARITO.codigo) {
+            openFeedback(response!!)
+        } else {
+            openResultSimulated(response!!)
+        }
+    }
+
+    fun openResultSimulated(response: ResultUser) {
+        var bundle = Bundle()
+        bundle.putSerializable("result_overall", response)
+        val intent = Intent(this@ResponseStudentsActivity, PerformanceStudantSimulatedActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
+    }
+
+    fun openFeedback(response: ResultUser) {
+        var bundle = Bundle()
+        bundle.putSerializable("result_overall", response.idSimulado!!)
+        bundle.putLong("user_id", response.idUsuario!!)
+        bundle.putBoolean("result_by_user", true)
+        val intent = Intent(this@ResponseStudentsActivity, FeedbackActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
     }
 }

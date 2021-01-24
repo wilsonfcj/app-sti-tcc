@@ -6,60 +6,46 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <RelativeLayout
+        android:id="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
 
 
+        <include layout="@layout/widget_logo_toolbar"/>
+
+        <TextView
+            android:id="@+id/tv_number_question"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            tools:text="1/5"
+            android:textSize="15dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="10dp"
+            android:textColor="@color/white"/>
+
+    </RelativeLayout>
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:layout_below="@+id/container_toolbar">
 
-<!--        <include android:id="@+id/container_toolbar" layout="@layout/layout_imagem_header"/>-->
-
-        <include android:id="@+id/container_toolbar" layout="@layout/widget_logo_toolbar"/>
-
-        <LinearLayout
-            android:layout_below="@+id/container_toolbar"
+        <androidx.viewpager.widget.ViewPager
+            android:id="@+id/pager"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <com.judemanutd.katexview.KatexView
-                android:id="@+id/katex_text"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                app:textColor="@color/colorPrimary"
-                android:layout_gravity="top"
-                android:visibility="visible"/>
-
-        </LinearLayout>
-
-        <androidx.swiperefreshlayout.widget.SwipeRefreshLayout
-            android:id="@+id/swipe_refresh_layout"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-
-            android:layout_below="@+id/container_toolbar">
-
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/recycler_view"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="10dp"
-                android:visibility="gone"
-                android:layout_below="@+id/container_toolbar"
-                tools:listitem="@layout/list_item_simulado"/>
-
-        </androidx.swiperefreshlayout.widget.SwipeRefreshLayout>
+            android:layout_height="match_parent" />
 
         <com.ifsc.lages.sti.tcc.utilidades.components.CustomLayoutMsm
             android:id="@+id/layout_error"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            app:title="@string/prompt_not_simulated"
+            app:title="@string/prompt_not_feed_back"
             app:iconSrc="@drawable/ic_descritption"
             android:layout_centerInParent="true"
             android:visibility="invisible"
             tools:visibility="visible"/>
-
 
     </RelativeLayout>
 

@@ -12,9 +12,11 @@ import androidx.recyclerview.widget.RecyclerView
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import br.edu.ifsc.cancontrol.utilidades.BaseActivty
 import com.ifsc.lages.sti.tcc.R
+import com.ifsc.lages.sti.tcc.model.result.ResultUser
 import com.ifsc.lages.sti.tcc.model.simulated.Simulated
 import com.ifsc.lages.sti.tcc.props.*
 import com.ifsc.lages.sti.tcc.ui.desepenhoesp.DesempenhoSimuladoActivity
+import com.ifsc.lages.sti.tcc.ui.desepenhoesp.PerformanceSimulatedActivity
 import com.ifsc.lages.sti.tcc.ui.feedback.FeedbackActivity
 import com.ifsc.lages.sti.tcc.ui.meussimulados.RegisterSimulatedActivity
 import com.ifsc.lages.sti.tcc.ui.meussimulados.adapter.SimulatedAdapter
@@ -48,12 +50,10 @@ class MySimulatedClassroomActivity : BaseActivty(), SimulatedAdapter.Listener,
     private var customLayoutMsm : CustomLayoutMsm? = null
     private var idClasroom : Long? = null
 
-
     private var bottonSheetSimulatedOptionFragment : BottonSheetSimulatedOptionFragment? = null
     private var bottonSheetSimulatedUserOptionFragment : BottonSheetSimulatedUserOptionFragment? = null
     private var bottonSheetSimulatedOptionTeacherFragment : BottonSheetSimulatedOptionTeacherFragment? = null
     private var bottonSheetSimulatedUserOptionStartFragment : BottonSheetSimulatedUserOptionStartFragment? = null
-
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -193,7 +193,7 @@ class MySimulatedClassroomActivity : BaseActivty(), SimulatedAdapter.Listener,
     fun openResultSimulated(response: Simulated) {
         var bundle = Bundle()
         bundle.putSerializable("result_overall", response.simuladoResultado!!._id)
-        val intent = Intent(this@MySimulatedClassroomActivity, DesempenhoSimuladoActivity::class.java)
+        val intent = Intent(this@MySimulatedClassroomActivity, PerformanceSimulatedActivity::class.java)
         intent.putExtras(bundle)
         startActivity(intent)
     }
@@ -283,6 +283,17 @@ class MySimulatedClassroomActivity : BaseActivty(), SimulatedAdapter.Listener,
     fun openFeedback(response: Simulated) {
         var bundle = Bundle()
         bundle.putSerializable("result_overall", response.simuladoResultado!!._id)
+        bundle.putBoolean("result_by_user", false)
+        val intent = Intent(this@MySimulatedClassroomActivity, FeedbackActivity::class.java)
+        intent.putExtras(bundle)
+        startActivity(intent)
+    }
+
+    fun openFeedbackUser(response: Simulated) {
+        var bundle = Bundle()
+        bundle.putSerializable("result_overall", response.simuladoResultado!!._id)
+        bundle.putLong("user_id", userId!!)
+        bundle.putBoolean("result_by_user", true)
         val intent = Intent(this@MySimulatedClassroomActivity, FeedbackActivity::class.java)
         intent.putExtras(bundle)
         startActivity(intent)
@@ -301,7 +312,7 @@ class MySimulatedClassroomActivity : BaseActivty(), SimulatedAdapter.Listener,
         if (options!!.codigo == EOptionsStudent.GERAL.codigo) {
             openResultSimulated(checkSimulated!!)
         } else {
-            Toast.makeText(this@MySimulatedClassroomActivity, "Em breve", Toast.LENGTH_LONG).show()
+            openFeedbackUser(checkSimulated!!)
         }
     }
 

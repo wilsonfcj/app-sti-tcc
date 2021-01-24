@@ -1,0 +1,153 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:id="@+id/radio_group_days"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="bottom"
+        android:layout_marginTop="8dp"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:id="@+id/radio_a"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:background="@drawable/selector_button_balance_statement" android:checked="true"
+            android:orientation="horizontal">
+
+            <com.judemanutd.katexview.KatexView
+                android:id="@+id/katex_question_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textColor="@color/colorPrimary"
+                android:layout_gravity="top"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/img_question_a"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/radio_b"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:background="@drawable/selector_button_balance_statement" android:checked="true"
+            android:orientation="horizontal">
+
+            <com.judemanutd.katexview.KatexView
+                android:id="@+id/katex_question_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textColor="@color/colorPrimary"
+                android:layout_gravity="top"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/img_question_b"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/radio_c"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:background="@drawable/selector_button_balance_statement" android:checked="true"
+            android:orientation="horizontal">
+
+            <com.judemanutd.katexview.KatexView
+                android:id="@+id/katex_question_c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textColor="@color/colorPrimary"
+                android:layout_gravity="top"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/img_question_c"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/radio_d"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:background="@drawable/selector_button_balance_statement" android:checked="true"
+            android:orientation="horizontal">
+
+            <com.judemanutd.katexview.KatexView
+                android:id="@+id/katex_question_d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textColor="@color/colorPrimary"
+                android:layout_gravity="top"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/img_question_d"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/radio_e"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="2dp"
+            android:layout_marginBottom="2dp"
+            android:gravity="center_vertical"
+            android:textColor="@color/white"
+            android:background="@drawable/selector_button_balance_statement" android:checked="true"
+            android:orientation="horizontal">
+
+            <com.judemanutd.katexview.KatexView
+                android:id="@+id/katex_question_e"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                app:textColor="@color/colorPrimary"
+                android:layout_gravity="top"
+                android:visibility="visible"/>
+
+            <ImageView
+                android:id="@+id/img_question_e"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                />
+
+        </LinearLayout>
+
+    </LinearLayout>
+
+</RelativeLayout>

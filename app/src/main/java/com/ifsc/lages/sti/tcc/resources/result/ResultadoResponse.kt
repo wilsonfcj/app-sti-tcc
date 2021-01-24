@@ -68,6 +68,9 @@ sealed class ResultadoResponse {
 
         @SerializedName(value = "TipoSimulado")
         var tipoSimulado: Int? = null
+
+        @SerializedName(value = "ResultadoDisciplinas")
+        val disciplinas: MutableList<Disciplina>? = null
     }
 
     open class Simulado : Base() {

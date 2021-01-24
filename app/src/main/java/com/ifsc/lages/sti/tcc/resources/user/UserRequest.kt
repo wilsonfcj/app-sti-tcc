@@ -9,6 +9,14 @@ import kotlin.collections.ArrayList
 
 sealed class UserRequest {
 
+    open class Email(
+        @SerializedName("Assunto")
+        var assunto: String? = null,
+
+        @SerializedName("Mensagem")
+        var mensagem: String? = null
+    )
+
     open class Login(
         @SerializedName("CPF")
         var cpf: String? = null,

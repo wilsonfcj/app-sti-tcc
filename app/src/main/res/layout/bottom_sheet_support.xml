@@ -38,16 +38,16 @@
                 android:layout_height="wrap_content">
 
                 <TableRow
-                    android:id="@+id/tv_start"
+                    android:id="@+id/tv_sugestao"
                     android:layout_margin="@dimen/size_eight"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5"
-                        app:srcCompat="@drawable/ic_bar_chart"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_weight=".1"
+                        app:srcCompat="@drawable/ic_lens"
                         app:tint="@color/colorPrimary" />
 
                     <TextView
@@ -56,23 +56,23 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_weight="1.5"
-                        android:text="Resultado Geral"
+                        android:text="Sugestão"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
 
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/tv_simulated"
+                    android:id="@+id/tv_ajuda"
                     android:layout_margin="@dimen/size_eight"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5"
-                        app:srcCompat="@drawable/ic_descritption"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_weight=".1"
+                        app:srcCompat="@drawable/ic_lens"
                         app:tint="@color/colorPrimary" />
 
                     <TextView
@@ -81,23 +81,23 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_weight="1.5"
-                        android:text="Conferir gabarito"
+                        android:text="Ajuda"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
 
                 </TableRow>
 
                 <TableRow
-                    android:id="@+id/tv_remove"
+                    android:id="@+id/tv_outro"
                     android:layout_margin="@dimen/size_eight"
                     android:background="?attr/selectableItemBackgroundBorderless"
                     android:gravity="center">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_weight=".5"
-                        app:srcCompat="@drawable/ic_library_book"
+                        android:layout_width="15dp"
+                        android:layout_height="15dp"
+                        android:layout_weight=".1"
+                        app:srcCompat="@drawable/ic_lens"
                         app:tint="@color/colorPrimary" />
 
                     <TextView
@@ -106,7 +106,7 @@
                         android:layout_marginEnd="16dp"
                         android:layout_marginStart="16dp"
                         android:layout_weight="1.5"
-                        android:text="Resposta Alunos"
+                        android:text="Outro"
                         android:textColor="@color/colorPrimary"
                         android:textSize="16sp" />
 

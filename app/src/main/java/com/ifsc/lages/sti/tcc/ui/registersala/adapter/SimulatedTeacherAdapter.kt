@@ -59,10 +59,12 @@ class SimulatedTeacherAdapter (private val dataset: MutableList<Simulated>, priv
         }
 
         if(item.simuladoResultado != null && item.quantidadeResposta!! > 0) {
-            holder.tvAcerto.text = item.simuladoResultado!!.resultadoGeral!!.acertos!!.toString()
-            holder.tvError.text = item.simuladoResultado!!.resultadoGeral!!.erros!!.toString()
-            holder.tvNaoRespondidas.text = item.simuladoResultado!!.resultadoGeral!!.naoRespondidas!!.toString()
             holder.tvEnviadas.text = item.quantidadeResposta.toString()
+            if(item.quantidadeResposta!! == 1) {
+                holder.tvEnviadas.text = "Apenas uma reposta enviada"
+            } else {
+                holder.tvEnviadas.text = "${item.quantidadeResposta} respotas enviadas"
+            }
             holder.layoutInfoFinish.visibility = View.VISIBLE
 
         } else {
@@ -102,10 +104,6 @@ class SimulatedTeacherAdapter (private val dataset: MutableList<Simulated>, priv
 
         val txtDateFinish : TextView = itemView.tv_date_finish
         val txtHourFinish : TextView = itemView.tv_clock_finish
-
-        var tvAcerto : TextView = itemView.tv_geralI
-        var tvError : TextView = itemView.tv_geralII
-        var tvNaoRespondidas : TextView = itemView.tv_geralIII
         var tvEnviadas : TextView = itemView.tv_geralIV
     }
 

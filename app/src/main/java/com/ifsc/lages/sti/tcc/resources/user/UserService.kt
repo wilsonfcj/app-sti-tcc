@@ -45,4 +45,16 @@ class UserService {
         }
     }
 
+    fun sendEmail(request : UserRequest.Email) : BaseResponse<Boolean> {
+        val lRetrofit = RetrofitImpl().buildRetrofit()
+        val api = lRetrofit.create(Api.User::class.java)
+        val objectCall = api.sendEmail(request)
+        val execute = objectCall.execute()
+        val body = execute.body()
+        if(body != null) {
+            return body
+        } else {
+            throw Exception("Erro ao enviar o email")
+        }
+    }
 }

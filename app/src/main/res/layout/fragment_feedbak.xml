@@ -1,0 +1,202 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/card_dashboard_geral"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="5dp"
+    android:elevation="8dp">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp">
+
+                <LinearLayout
+                    android:id="@+id/container_label_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        app:tint="@color/icons"
+                        app:srcCompat="@drawable/ic_descritption"/>
+
+                    <TextView
+                        android:id="@+id/tv_question_number"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:gravity="bottom"
+                        android:layout_gravity="center"
+                        android:layout_marginLeft="5dp"
+                        android:text="Questão 1" />
+
+
+                    <ImageView
+                        android:id="@+id/img_view_collapse_description"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:rotation="180"
+                        app:srcCompat="@drawable/ic_keyboard_arrow_down"
+                        app:tint="@color/icons"
+                        android:visibility="gone"/>
+
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_below="@+id/container_label_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:layout_marginTop="8dp">
+
+                    <RelativeLayout
+                        android:id="@+id/container_infos_simulated"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/tv_area"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:background="@drawable/shape_text_view_three"
+                            tools:text="Matemática "
+                            android:textColor="@color/white"
+                            android:textSize="12dp"
+                            android:padding="4dp"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="5dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_matters"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/shape_text_view_four"
+                            tools:text="Linguagem e paradigamas de programação"
+                            android:textColor="@color/white"
+                            android:textSize="12dp"
+                            android:padding="4dp"
+                            android:textStyle="bold"
+                            android:layout_toEndOf="@+id/tv_area"
+                            android:layout_marginEnd="5dp"/>
+
+                        <TextView
+                            android:id="@+id/tv_type"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/tv_matters"
+                            android:background="@drawable/shape_text_view"
+                            android:gravity="center"
+                            android:minWidth="75dp"
+                            android:padding="4dp"
+                            tools:text="Poscomp"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+
+                        <TextView
+                            android:id="@+id/tv_years"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_toEndOf="@+id/tv_type"
+                            android:background="@drawable/shape_text_view_five"
+                            android:gravity="center"
+                            android:minWidth="75dp"
+                            android:padding="4dp"
+                            tools:text="2010"
+                            android:layout_marginEnd="5dp"
+                            android:textColor="@color/white"
+                            android:textSize="12dp" />
+
+                    </RelativeLayout>
+
+                    <net.cachapa.expandablelayout.ExpandableLayout
+                        android:id="@+id/container_expadable"
+                        android:layout_below="@+id/container_label"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:el_duration="800"
+                        app:el_expanded="true"
+                        tools:el_expanded="true"
+                        app:el_parallax="0">
+
+                        <LinearLayout
+                            android:layout_below="@+id/container_label_description"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <com.judemanutd.katexview.KatexView
+                                android:id="@+id/katex_text"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                app:textColor="@color/colorPrimary"
+                                android:layout_gravity="top"
+                                android:layout_marginTop="8dp"
+                                android:visibility="visible"/>
+
+                            <ImageView
+                                android:id="@+id/img_question_desc"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_gravity="center"
+                                android:layout_marginTop="5dp"
+                                />
+
+                            <RelativeLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content">
+
+                                <include tools:visibility="invisible" layout="@layout/layout_itens_response_question"></include>
+
+                                    <EditText
+                                        android:id="@+id/edit_text_response_question"
+                                        android:layout_width="match_parent"
+                                        android:layout_height="wrap_content"
+                                        android:ems="10"
+                                        android:gravity="start|top"
+                                        android:layout_marginTop="5dp"
+                                        android:focusable="false"
+                                        android:hint="Resposta Discursiva"
+                                        android:textColor="@color/textSecondary"
+                                        android:background="@drawable/shape_square_edit_text"
+                                        android:focusableInTouchMode="false"
+                                        android:inputType="textMultiLine" />
+
+
+                            </RelativeLayout>
+
+
+
+                        </LinearLayout>
+
+                    </net.cachapa.expandablelayout.ExpandableLayout>
+
+                </LinearLayout>
+
+            </RelativeLayout>
+
+        </LinearLayout>
+    </ScrollView>
+
+
+
+</androidx.cardview.widget.CardView>
+

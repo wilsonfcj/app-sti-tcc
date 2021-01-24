@@ -94,4 +94,33 @@ class UserRepository {
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe(observer)
     }
+
+
+    private fun sendEmail(assunto: String, mensagem: String) : Single<BaseResponse<Boolean>> {
+        var request = UserRequest.Email()
+        request.assunto = assunto
+        request.mensagem = mensagem
+        return Single.create {
+            try {
+                val response = service.sendEmail(request)
+                when {
+                    response.success!! -> {
+                        it.onSuccess(response)
+                    }
+                    else -> it.onError(Exception(response.message))
+                }
+            } catch (ex : java.lang.Exception) {
+                it.onError(Exception("Erro ao registrar o usuário"))
+            }
+        }
+    }
+
+    fun sendEmail(assunto: String, mensagem: String, observer: DisposableObserver<Boolean>){
+        sendEmail(assunto, mensagem)
+            .toObservable()
+            .map { it.success }
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(observer)
+    }
 }

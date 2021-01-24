@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <include android:id="@+id/container_toolbar" layout="@layout/widget_logo_toolbar"/>
+
+    <LinearLayout
+        android:layout_below="@+id/container_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="@dimen/size_eight"
+        android:layout_marginStart="@dimen/margin_register_form"
+        android:layout_marginEnd="@dimen/margin_register_form"
+        android:orientation="vertical">
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_assunto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Assunto"
+            android:textColorHint="@color/colorPrimary"
+            app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">
+
+            <EditText
+                android:id="@+id/edit_text_assunto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:maxLength="30"
+                android:focusable="false"
+                android:text="Selecione o assunto"
+                android:focusableInTouchMode="false"
+                android:backgroundTint="@color/colorPrimary"
+                android:inputType="text|textCapWords"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="italic" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_outro_assunto"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Outro"
+            android:visibility="gone"
+            android:textColorHint="@color/colorPrimary"
+            app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">
+
+            <EditText
+                android:id="@+id/edit_text_outro_assunto"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:autofillHints=""
+                android:maxLength="30"
+                android:backgroundTint="@color/colorPrimary"
+                android:inputType="text|textCapWords"
+                android:textColor="@color/colorPrimary"
+                android:textStyle="italic" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/text_input_mensagem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:hint="Mensagem"
+            android:textColorHint="@color/colorPrimary"
+            app:helperTextTextAppearance="@style/TextHelperlAppearance.Login">
+
+            <EditText
+                android:id="@+id/edit_text_mensagem"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:ems="10"
+                android:gravity="start|top"
+                android:inputType="textMultiLine" />
+
+        </com.google.android.material.textfield.TextInputLayout>
+
+    </LinearLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/button_cadastre"
+        android:layout_gravity="bottom|center"
+        android:gravity="bottom|center"
+        android:padding="8dp"
+        android:enabled="false"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:text="@string/prompt_send_sugestion"
+        android:layout_marginStart="@dimen/margin_register_form"
+        android:layout_marginEnd="@dimen/margin_register_form"
+        android:layout_marginBottom="16dp"
+        app:backgroundTint="@color/colorAccent"
+        android:textAppearance="@style/TextAppearance.AppCompat.Inverse"/>
+
+</RelativeLayout>

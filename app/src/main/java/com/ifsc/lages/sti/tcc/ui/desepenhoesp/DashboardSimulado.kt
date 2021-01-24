@@ -28,8 +28,8 @@ class DashboardSimulado(private val mContext: AppCompatActivity, private val mVi
 
     override fun mapComponents() {
         btnPlusInfo = mViewRoot.findViewById(R.id.btn_plus_info)
-        onboardPager = mViewRoot.findViewById(R.id.pager_introduction) as ViewPager
-        pagerIndicator = mViewRoot.findViewById(R.id.view_pager_count_dots) as LinearLayout
+        onboardPager = mViewRoot.findViewById<ViewPager>(R.id.pager_introduction)
+        pagerIndicator = mViewRoot.findViewById<LinearLayout>(R.id.view_pager_count_dots)
     }
     override fun mapActionComponents() {
         btnPlusInfo?.setOnClickListener {

@@ -1,4 +1,4 @@
-package com.ifsc.lages.sti.tcc.ui.registersala.bottomsheet.result
+package com.ifsc.lages.sti.tcc.ui.suport.bottomsheet
 
 import android.content.Context
 import android.os.Bundle
@@ -6,18 +6,17 @@ import android.view.*
 import android.widget.ViewSwitcher
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.ifsc.lages.sti.tcc.R
-import com.ifsc.lages.sti.tcc.props.EOptionsResponse
-import com.ifsc.lages.sti.tcc.props.EOptionsStart
-import com.ifsc.lages.sti.tcc.props.EOptionsStudent
-import com.ifsc.lages.sti.tcc.utilidades.KeyPrefs
-import com.ifsc.lages.sti.tcc.utilidades.SharedPreferencesUtil
+import com.ifsc.lages.sti.tcc.props.ESupport
+import com.ifsc.lages.sti.tcc.props.EUserType
 
-class BottonSheetResponseUserFragment : BottomSheetDialogFragment() {
+class BottonSheetSupportFragment : BottomSheetDialogFragment() {
 
     private var mView: View? = null
     private var mCallbackOptions: CallbackOptions? = null
-    private var mTxtVwResultado: View? = null
-    private var mTxtVwGabarito: View? = null
+    private var mTxtVwSugestao: View? = null
+    private var mTxtVwAjuda: View? = null
+    private var mTxtVwOutro: View? = null
+
 
     private val mViewSwitcher: ViewSwitcher? = null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -33,7 +32,7 @@ class BottonSheetResponseUserFragment : BottomSheetDialogFragment() {
         val lContextThemeWrapper: Context =
             ContextThemeWrapper(activity, R.style.AppTheme)
         return inflater.cloneInContext(lContextThemeWrapper)
-            .inflate(R.layout.bottom_sheet_response_user, container, false)
+            .inflate(R.layout.bottom_sheet_support, container, false)
     }
 
     override fun onViewCreated(
@@ -47,20 +46,26 @@ class BottonSheetResponseUserFragment : BottomSheetDialogFragment() {
     }
 
     private fun mapViews() {
-        mTxtVwResultado = mView!!.findViewById(R.id.tv_resultado)
-        mTxtVwGabarito = mView!!.findViewById(R.id.tv_resposta)
+        mTxtVwSugestao = mView!!.findViewById(R.id.tv_sugestao)
+        mTxtVwAjuda = mView!!.findViewById(R.id.tv_ajuda)
+        mTxtVwOutro = mView!!.findViewById(R.id.tv_outro)
     }
 
     private fun actionsViews() {
-        mTxtVwResultado!!.setOnClickListener { _: View? ->
+        mTxtVwSugestao!!.setOnClickListener { _: View? ->
             mCallbackOptions!!.onClick(
-                EOptionsResponse.RESULTADO
+                ESupport.SUGESTAO
+            )
+        }
+        mTxtVwAjuda!!.setOnClickListener { _: View? ->
+            mCallbackOptions!!.onClick(
+                ESupport.AJUDA
             )
         }
 
-        mTxtVwGabarito!!.setOnClickListener { _: View? ->
+        mTxtVwOutro!!.setOnClickListener { _: View? ->
             mCallbackOptions!!.onClick(
-                EOptionsResponse.GABARITO
+                ESupport.OUTRO
             )
         }
     }
@@ -75,13 +80,13 @@ class BottonSheetResponseUserFragment : BottomSheetDialogFragment() {
     }
 
     interface CallbackOptions {
-        fun onClick(options: EOptionsResponse?)
+        fun onClick(typeUser: ESupport?)
     }
 
     companion object {
         private const val TAG = "BottonSheetOptionsFragment"
-        fun newInstance(): BottonSheetResponseUserFragment {
-            return BottonSheetResponseUserFragment()
+        fun newInstance(): BottonSheetSupportFragment {
+            return BottonSheetSupportFragment()
         }
     }
 }

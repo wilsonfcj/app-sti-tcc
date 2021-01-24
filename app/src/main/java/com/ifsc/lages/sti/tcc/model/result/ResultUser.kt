@@ -1,6 +1,7 @@
 package com.ifsc.lages.sti.tcc.model.result
 
 import io.realm.Realm
+import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 import java.io.Serializable
@@ -17,4 +18,5 @@ open class ResultUser : Serializable {
     var resultadoMatematica: ResultQuantitative? = null
     var resultadoFundamentoComputacao: ResultQuantitative? = null
     var resultadoTecnologiaComputacao: ResultQuantitative? = null
+    var resultadoMatters : MutableList<ResultMatters>? = null
 }

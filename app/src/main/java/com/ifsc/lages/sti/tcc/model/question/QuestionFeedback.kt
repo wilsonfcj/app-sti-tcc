@@ -1,6 +1,8 @@
 package com.ifsc.lages.sti.tcc.model.question
 
-class QuestionFeedback {
+import java.io.Serializable
+
+class QuestionFeedback : Serializable {
 
     var id: Long? = null
     var ano: Int? = null
